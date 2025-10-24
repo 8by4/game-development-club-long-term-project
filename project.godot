@@ -1,0 +1,32 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Game Dev Club Game"
+config/features=PackedStringArray("4.5", "Forward Plus")
+run/flush_stdout_on_print=true
+config/icon="res://icon.svg"
+
+[display]
+
+display_server/driver.linuxbsd="wayland"
+
+[physics]
+
+common/enable_object_picking=false
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+gl_compatibility/driver.macos="opengl3_angle"
+gl_compatibility/nvidia_disable_threaded_optimization=false
+renderer/rendering_method="mobile"
+shader_compiler/shader_cache/strip_debug=true
