@@ -1,0 +1,35 @@
+# Godot 4+ specific ignores
+.godot/
+.nomedia
+/android/
+
+# Godot-specific ignores
+.import/
+export.cfg
+export_credentials.cfg
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# macOS specific ignores
+.DS_Store
+__MACOSX/
+.AppleDouble
+.LSOverride
+
+# Windows specific ignores
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+$RECYCLE.BIN/
+
+# Linux specific ignores
+.directory
+.fuse_hidden*
+.Trash-*
