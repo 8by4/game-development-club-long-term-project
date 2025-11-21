@@ -1,0 +1,1 @@
+# Stores all the script files in the game (exluding plugins)

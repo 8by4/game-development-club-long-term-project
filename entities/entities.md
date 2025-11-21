@@ -1,0 +1,1 @@
+# Stores the .tscn files of entities such as the player, enimies, bosses

@@ -1,0 +1,1 @@
+# Stores game assets such as sprites, animations, shaders, resources
