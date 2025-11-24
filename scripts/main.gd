@@ -29,9 +29,14 @@ func _init() -> void:
 	if not OS.is_userfs_persistent() : push_error("File system persistence unavailable!")
 
 func _enter_tree() -> void:
+	if DisplayServer.get_name() == "headless" : get_tree().quit()
 	get_viewport().disable_3d = true
+	
 	Engine.max_fps = clampi(ceil(DisplayServer.screen_get_refresh_rate()),0,300)
 	current_fps = clampi(ceil(DisplayServer.screen_get_refresh_rate()),0,300)
+	
+	if DisplayServer.screen_get_max_scale() == 2.0: 
+		get_viewport().content_scale_factor = 1.75
 
 #endregion
 
