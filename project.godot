@@ -11,13 +11,23 @@ config_version=5
 [application]
 
 config/name="Game Dev Club Game"
+run/main_scene="uid://dsbvv6hdm54qc"
 config/features=PackedStringArray("4.5", "Forward Plus")
 run/flush_stdout_on_print=true
+boot_splash/image="uid://dxk7uqxqy3l4q"
 config/icon="res://icon.svg"
+
+[autoload]
+
+Main="*res://scripts/main.gd"
 
 [display]
 
 display_server/driver.linuxbsd="wayland"
+
+[editor]
+
+run/main_run_args="--show-fps"
 
 [file_customization]
 

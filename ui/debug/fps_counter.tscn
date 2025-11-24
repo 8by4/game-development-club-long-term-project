@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhlxtmli87akf"]
+
+[ext_resource type="FontFile" uid="uid://bwn8dqduxtlca" path="res://ui/fonts/dogica_pixel.ttf" id="1_0rg4n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_y2h1y"]
+font = ExtResource("1_0rg4n")
+font_size = 24
+
+[sub_resource type="GDScript" id="GDScript_8dr5v"]
+resource_name = "fps_counter"
+script/source = "##		      ::::::::      :::    :::       ::::::::::: 
+##		    :+:    :+:     :+:    :+:           :+:      
+##		   +:+            +:+    +:+           +:+       
+##		  :#:            +#+    +:+           +#+        
+##		 +#+   +#+#     +#+    +#+           +#+         
+##		#+#    #+#     #+#    #+#           #+#          
+##		########       ########        ########### 
+##		 ______                         _____                  _            
+##		|  ____|                       / ____|                | |           
+##		| |__ _ __ __ _ _ __ ___   ___| |     ___  _   _ _ __ | |_ ___ _ __ 
+##		|  __| '__/ _` | '_ ` _ \\ / _ \\ |    / _ \\| | | | '_ \\| __/ _ \\ '__|
+##		| |  | | | (_| | | | | | |  __/ |___| (_) | |_| | | | | ||  __/ |   
+##		|_|  |_|  \\__,_|_| |_| |_|\\___|\\_____\\___/ \\__,_|_| |_|\\__\\___|_|   
+
+extends Label
+
+func _process(_delta : float) -> void:
+	var frames : float = Engine.get_frames_per_second()
+	text = \"FPS : \" + str(int(frames))
+	
+	if frames >= 55:
+		label_settings.font_color = Color(0, 1, 0.1, 1)
+	elif frames <= 25:
+		label_settings.font_color = Color(1, 0, 0, 1)
+	else:
+		label_settings.font_color = Color(1, 1, 0, 1)
+"
+
+[node name="FPScounter" type="CanvasLayer"]
+layer = 2
+
+[node name="FPS_Counter" type="Label" parent="."]
+process_mode = 3
+texture_filter = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0, 1, 0.101961, 1)
+text = "FPS :"
+label_settings = SubResource("LabelSettings_y2h1y")
+script = SubResource("GDScript_8dr5v")
