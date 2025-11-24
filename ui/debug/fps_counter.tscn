@@ -5,6 +5,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_y2h1y"]
 font = ExtResource("1_0rg4n")
 font_size = 24
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.5019608)
+shadow_offset = Vector2(4, 4)
 
 [sub_resource type="GDScript" id="GDScript_8dr5v"]
 resource_name = "fps_counter"
