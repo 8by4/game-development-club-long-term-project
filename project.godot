@@ -46,6 +46,7 @@ folder_colors={
 
 [physics]
 
+common/physics_ticks_per_second=30
 common/enable_object_picking=false
 
 [rendering]
