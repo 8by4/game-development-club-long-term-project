@@ -21,6 +21,11 @@ config/icon="res://icon.svg"
 
 Main="*res://scripts/main.gd"
 
+[debug]
+
+file_logging/log_path="user://game.log"
+file_logging/max_log_files=1
+
 [display]
 
 display_server/driver.linuxbsd="wayland"
