@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://dsbvv6hdm54qc"]
+[gd_scene load_steps=9 format=4 uid="uid://dsbvv6hdm54qc"]
 
 [ext_resource type="PackedScene" uid="uid://coyqn671c8x0q" path="res://entities/player/player.tscn" id="1_2venv"]
 [ext_resource type="Texture2D" uid="uid://cmebfj1ovhbsm" path="res://assets/sprites/temp_sprites/props1.png" id="2_paw1w"]
+[ext_resource type="PackedScene" uid="uid://ddofh18fctxbv" path="res://entities/enemies/large_skeleton.tscn" id="3_j6w7d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p835"]
 size = Vector2(2048, 20)
@@ -2339,3 +2340,8 @@ zoom = Vector2(5, 5)
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAA6AB8AAQABABsAAAA7AB0AAQACABkAAAA7AB4AAQACABoAAAA7AB8AAQACABsAAAA8AB0AAQADABkAAAA8AB4AAQADABoAAAA8AB8AAQADABsAAAA9AB0AAQAEABkAAAA9AB4AAQAEABoAAAA9AB8AAQAEABsAAAAyAB4AAQAXABcAAAAyAB8AAQAXABgAAAAzAB4AAQAYABcAAAAzAB8AAQAYABgAAAA=")
 tile_set = SubResource("TileSet_x4b8f")
+
+[node name="Mobs" type="Node" parent="."]
+
+[node name="LargeSkeleton" parent="Mobs" instance=ExtResource("3_j6w7d")]
+position = Vector2(850, 508)
