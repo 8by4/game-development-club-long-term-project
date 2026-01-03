@@ -22,4 +22,4 @@ script = ExtResource("3_bls4j")
 
 [node name="Camera" type="Camera2D" parent="Sprite"]
 position = Vector2(0, 16)
-zoom = Vector2(5, 5)
+zoom = Vector2(3, 3)
