@@ -3,7 +3,7 @@ class_name Player
 # movement
 var gravity : int = 512
 var walk_speed : int = 128
-var jump_height : int = 144
+var jump_height : int = 180
 # input
 var direction : float = 0
 var jump_queued : bool = false
