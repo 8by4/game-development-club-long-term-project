@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 # movement
 var gravity : int = 512
 var walk_speed : int = 128
