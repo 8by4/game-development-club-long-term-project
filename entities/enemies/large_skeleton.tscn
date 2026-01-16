@@ -1,14 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://ddofh18fctxbv"]
+[gd_scene load_steps=21 format=3 uid="uid://ddofh18fctxbv"]
 
-[ext_resource type="Texture2D" uid="uid://74lnx10eb1td" path="res://assets/sprites/temp_sprites/Animations/Idle/idle1.png" id="1_jw0fh"]
+[ext_resource type="Texture2D" uid="uid://74lnx10eb1td" path="res://assets/sprites/temp_sprites/animations/Idle/idle1.png" id="1_jw0fh"]
 [ext_resource type="Script" uid="uid://bovv2camfmhg8" path="res://scripts/entities/large_skeleton/large_skeleton.gd" id="1_xrwd6"]
-[ext_resource type="Texture2D" uid="uid://63apwy7a1sdx" path="res://assets/sprites/temp_sprites/Animations/Idle/idle2.png" id="2_xrwd6"]
-[ext_resource type="Texture2D" uid="uid://uwrfl3uscc67" path="res://assets/sprites/temp_sprites/Animations/Idle/idle3.png" id="3_rjqyr"]
-[ext_resource type="Texture2D" uid="uid://d0jxu44ju0nxi" path="res://assets/sprites/temp_sprites/Animations/Idle/idle4.png" id="4_tfvx0"]
-[ext_resource type="Texture2D" uid="uid://8eks06djsius" path="res://assets/sprites/temp_sprites/Animations/Idle/idle5.png" id="5_ikm7d"]
-[ext_resource type="Texture2D" uid="uid://bh3opfxml57ek" path="res://assets/sprites/temp_sprites/Animations/Idle/idle6.png" id="6_or8ti"]
-[ext_resource type="Texture2D" uid="uid://dcwj3peeftsd4" path="res://assets/sprites/temp_sprites/Animations/Idle/idle7.png" id="7_t6kqh"]
-[ext_resource type="Texture2D" uid="uid://rhu5nfvfcxpn" path="res://assets/sprites/temp_sprites/Animations/Idle/idle8.png" id="8_f8bp7"]
+[ext_resource type="Texture2D" uid="uid://63apwy7a1sdx" path="res://assets/sprites/temp_sprites/animations/Idle/idle2.png" id="2_xrwd6"]
+[ext_resource type="Texture2D" uid="uid://uwrfl3uscc67" path="res://assets/sprites/temp_sprites/animations/Idle/idle3.png" id="3_rjqyr"]
+[ext_resource type="Texture2D" uid="uid://d0jxu44ju0nxi" path="res://assets/sprites/temp_sprites/animations/Idle/idle4.png" id="4_tfvx0"]
+[ext_resource type="Texture2D" uid="uid://8eks06djsius" path="res://assets/sprites/temp_sprites/animations/Idle/idle5.png" id="5_ikm7d"]
+[ext_resource type="Texture2D" uid="uid://bh3opfxml57ek" path="res://assets/sprites/temp_sprites/animations/Idle/idle6.png" id="6_or8ti"]
+[ext_resource type="Texture2D" uid="uid://dcwj3peeftsd4" path="res://assets/sprites/temp_sprites/animations/Idle/idle7.png" id="7_t6kqh"]
+[ext_resource type="Texture2D" uid="uid://rhu5nfvfcxpn" path="res://assets/sprites/temp_sprites/animations/Idle/idle8.png" id="8_f8bp7"]
+[ext_resource type="Texture2D" uid="uid://cer3nyx46pcot" path="res://assets/sprites/temp_sprites/animations/walk/move1.png" id="10_mwwtt"]
+[ext_resource type="Texture2D" uid="uid://c6ebxxvufxgd1" path="res://assets/sprites/temp_sprites/animations/walk/move2.png" id="11_pmw4c"]
+[ext_resource type="Texture2D" uid="uid://mrob0bx450wr" path="res://assets/sprites/temp_sprites/animations/walk/move3.png" id="12_o1j0l"]
+[ext_resource type="Texture2D" uid="uid://bufq7y1g6fr0i" path="res://assets/sprites/temp_sprites/animations/walk/move4.png" id="13_wkriu"]
+[ext_resource type="Texture2D" uid="uid://d2p5yngro8gpd" path="res://assets/sprites/temp_sprites/animations/walk/move5.png" id="14_rjhwd"]
+[ext_resource type="Texture2D" uid="uid://bbc71sake51tn" path="res://assets/sprites/temp_sprites/animations/walk/move6.png" id="15_87p1a"]
+[ext_resource type="Texture2D" uid="uid://dhtdfcdbrr4xy" path="res://assets/sprites/temp_sprites/animations/walk/move7.png" id="16_cgk1u"]
+[ext_resource type="Texture2D" uid="uid://cry8exp0hptou" path="res://assets/sprites/temp_sprites/animations/walk/move8.png" id="17_2e6yb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jw0fh"]
 size = Vector2(33, 22)
@@ -43,6 +51,35 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_mwwtt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pmw4c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_o1j0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_wkriu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rjhwd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_87p1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_cgk1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_2e6yb")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jw0fh"]
@@ -66,3 +103,4 @@ animation = &"idle"
 shape = SubResource("CircleShape2D_jw0fh")
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]
