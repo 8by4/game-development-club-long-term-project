@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dudexronp5fkg"
-path="res://.godot/imported/dust7.png-9f298a92b43830b36c1a3c099e66bd9f.ctex"
+path="res://.godot/imported/dust7.png-507288964a0109002819510421885ce0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/temp_sprites/animations/dust/dust7.png"
-dest_files=["res://.godot/imported/dust7.png-9f298a92b43830b36c1a3c099e66bd9f.ctex"]
+source_file="res://assets/sprites/temp_sprites/Animations/dust/dust7.png"
+dest_files=["res://.godot/imported/dust7.png-507288964a0109002819510421885ce0.ctex"]
 
 [params]
 
