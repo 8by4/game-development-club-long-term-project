@@ -20,7 +20,9 @@ func _physics_process(_delta : float) -> void:
 func _on_player_detection_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		chase = true
+		get_node("AnimatedSprite2D").play("walk")
 
 func _on_player_detection_body_exited(body: Node2D) -> void:
 	if body.name == "Player":
 		chase = false
+		get_node("AnimatedSprite2D").play("idle")
