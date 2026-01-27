@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://coyqn671c8x0q"]
+[gd_scene format=3 uid="uid://coyqn671c8x0q"]
 
 [ext_resource type="Script" uid="uid://bbnku57i1pyud" path="res://scripts/entities/player/player.gd" id="1_symyc"]
 [ext_resource type="Texture2D" uid="uid://bq737qi1uwm6r" path="res://assets/sprites/temp_sprites/charater_sheet.png" id="2_sglur"]
@@ -11,17 +11,17 @@
 atlas = ExtResource("2_sglur")
 region = Rect2(0, 0, 33, 36)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=446714261]
 script = ExtResource("1_symyc")
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=548396950]
 shape = SubResource("CapsuleShape2D_sglur")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=140090907]
 texture = SubResource("AtlasTexture_fkugw")
 script = ExtResource("3_bls4j")
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="." unique_id=884779342]
 position = Vector2(0, 16)
 zoom = Vector2(3, 3)
 script = ExtResource("4_bls4j")

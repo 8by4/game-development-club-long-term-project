@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Game Dev Club Game"
 run/main_scene="uid://dqdtdl2fa2y7e"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Mobile")
 run/flush_stdout_on_print=true
 boot_splash/image="uid://dxk7uqxqy3l4q"
 config/icon="res://icon.svg"
