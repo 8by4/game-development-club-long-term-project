@@ -71,6 +71,12 @@ action={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="AI"
+
 [physics]
 
 common/physics_ticks_per_second=30

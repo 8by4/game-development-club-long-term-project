@@ -2740,7 +2740,7 @@ shape = SubResource("RectangleShape2D_3p835")
 texture = SubResource("GradientTexture2D_paw1w")
 
 [node name="Player" parent="." unique_id=1237976974 instance=ExtResource("1_2venv")]
-position = Vector2(904, 464)
+position = Vector2(904, 493)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1199911947]
 position = Vector2(33, -3)
@@ -2748,4 +2748,4 @@ tile_map_data = PackedByteArray("AAA9AB0AAQAEABkAAAAoACAAAQA7ABgAAAAoACEAAQBBABk
 tile_set = SubResource("TileSet_x4b8f")
 
 [node name="LargeSkeleton" parent="." unique_id=1043108153 instance=ExtResource("3_j6w7d")]
-position = Vector2(850, 507)
+position = Vector2(850, 484)

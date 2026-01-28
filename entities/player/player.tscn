@@ -12,6 +12,7 @@ atlas = ExtResource("2_sglur")
 region = Rect2(0, 0, 33, 36)
 
 [node name="Player" type="CharacterBody2D" unique_id=446714261]
+collision_layer = 2
 script = ExtResource("1_symyc")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=548396950]

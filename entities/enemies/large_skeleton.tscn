@@ -18,8 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://dhtdfcdbrr4xy" path="res://assets/sprites/temp_sprites/animations/walk/move7.png" id="16_cgk1u"]
 [ext_resource type="Texture2D" uid="uid://cry8exp0hptou" path="res://assets/sprites/temp_sprites/animations/walk/move8.png" id="17_2e6yb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jw0fh"]
-size = Vector2(33, 22)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwwtt"]
+radius = 16.0
+height = 48.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6eu7i"]
 animations = [{
@@ -86,20 +87,21 @@ animations = [{
 radius = 113.04
 
 [node name="LargeSkeleton" type="CharacterBody2D" unique_id=242127989]
+collision_layer = 4
 script = ExtResource("1_xrwd6")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=752205722]
-position = Vector2(0.5, -11)
-shape = SubResource("RectangleShape2D_jw0fh")
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1919799425]
+shape = SubResource("CapsuleShape2D_mwwtt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
-position = Vector2(0, -27)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
 animation = &"idle"
 
 [node name="PlayerDetection" type="Area2D" parent="." unique_id=1556969930]
+collision_layer = 2
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection" unique_id=2114202901]
+[node name="Collision" type="CollisionShape2D" parent="PlayerDetection" unique_id=2114202901]
 shape = SubResource("CircleShape2D_jw0fh")
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
