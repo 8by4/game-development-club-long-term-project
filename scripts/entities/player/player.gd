@@ -8,10 +8,11 @@ var jump_height : int = 270
 var direction : float = 0
 var jump_queued : bool = false
 # nodes
-@onready var sprite : Sprite2D = $Sprite
+@onready var sprite : AnimatedSprite2D = $Sprite
 
 func _input(_event : InputEvent) -> void:
 	direction = Input.get_axis("move_left", "move_right")
+	
 	if Input.is_action_just_pressed("jump") : jump_queued = true
 	
 	if direction < 0:
@@ -24,7 +25,14 @@ func _physics_process(delta : float) -> void:
 	
 	if is_on_floor():
 		velocity = velocity.lerp(target_velocity, (16 * delta))
-		if jump_queued : velocity.y = -jump_height
+		if jump_queued:
+			velocity.y = -jump_height
+			sprite.play("jump")
+		else:
+			if direction == 0:
+				sprite.play("idle")
+			else:
+				sprite.play("walk")
 	else:
 		velocity.y += gravity * delta
 		if velocity.dot(Vector2(direction,0)) < 64:
