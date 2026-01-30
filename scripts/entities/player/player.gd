@@ -34,6 +34,7 @@ func _physics_process(delta : float) -> void:
 			else:
 				sprite.play("walk")
 	else:
+		sprite.play("jump") # falling
 		velocity.y += gravity * delta
 		if velocity.dot(Vector2(direction,0)) < 64:
 			velocity += target_velocity * delta

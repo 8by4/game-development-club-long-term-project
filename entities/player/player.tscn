@@ -104,6 +104,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" unique_id=446714261]
 collision_layer = 2
+floor_snap_length = 4.0
 script = ExtResource("1_symyc")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=548396950]
