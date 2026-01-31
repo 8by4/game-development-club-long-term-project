@@ -19,4 +19,5 @@ func _physics_process(_delta : float) -> void:
 	current_pos = target.global_position
 
 func _process(_delta : float) -> void:
-	global_position = last_pos + ((current_pos - last_pos) * Engine.get_physics_interpolation_fraction())
+	var f = Engine.get_physics_interpolation_fraction()
+	global_position = last_pos + ((current_pos - last_pos) * f)

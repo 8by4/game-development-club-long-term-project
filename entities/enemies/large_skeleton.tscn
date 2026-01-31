@@ -18,6 +18,11 @@
 [ext_resource type="Texture2D" uid="uid://dhtdfcdbrr4xy" path="res://assets/sprites/temp_sprites/animations/walk/move7.png" id="16_cgk1u"]
 [ext_resource type="Texture2D" uid="uid://cry8exp0hptou" path="res://assets/sprites/temp_sprites/animations/walk/move8.png" id="17_2e6yb"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="18_pmw4c"]
+[ext_resource type="Script" uid="uid://u5y2fdiw2hal" path="res://scripts/components/states/state_machine_manager.gd" id="19_87p1a"]
+[ext_resource type="Script" uid="uid://daqivb4u6kdxg" path="res://scripts/components/states/state_idle.gd" id="20_cgk1u"]
+[ext_resource type="Script" uid="uid://b0te6cfrhr16d" path="res://scripts/components/states/state_walk.gd" id="21_2e6yb"]
+[ext_resource type="Script" uid="uid://c3tu3m67gngg" path="res://scripts/components/states/state_jump.gd" id="22_iokcd"]
+[ext_resource type="Script" uid="uid://byrxq87vrrm3g" path="res://scripts/components/states/state_fall.gd" id="23_cgk1u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwwtt"]
 radius = 16.0
@@ -105,6 +110,22 @@ collision_mask = 2
 
 [node name="Collision" type="CollisionShape2D" parent="PlayerDetection" unique_id=2114202901]
 shape = SubResource("CircleShape2D_jw0fh")
+
+[node name="StateMachineManager" type="Node" parent="." unique_id=673288324 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("19_87p1a")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachineManager" unique_id=1618799135]
+script = ExtResource("20_cgk1u")
+
+[node name="Walk" type="Node" parent="StateMachineManager" unique_id=394249899]
+script = ExtResource("21_2e6yb")
+
+[node name="Jump" type="Node" parent="StateMachineManager" unique_id=1140711552]
+script = ExtResource("22_iokcd")
+
+[node name="Fall" type="Node" parent="StateMachineManager" unique_id=320626992]
+script = ExtResource("23_cgk1u")
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
 [connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]

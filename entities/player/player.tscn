@@ -4,6 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://bq737qi1uwm6r" path="res://assets/sprites/temp_sprites/charater_sheet.png" id="2_sglur"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="3_bls4j"]
 [ext_resource type="Script" uid="uid://iji6kubl20t3" path="res://scripts/components/camera.gd" id="4_bls4j"]
+[ext_resource type="Script" uid="uid://u5y2fdiw2hal" path="res://scripts/components/states/state_machine_manager.gd" id="5_26q78"]
+[ext_resource type="Script" uid="uid://daqivb4u6kdxg" path="res://scripts/components/states/state_idle.gd" id="6_bectd"]
+[ext_resource type="Script" uid="uid://b0te6cfrhr16d" path="res://scripts/components/states/state_walk.gd" id="7_wvtmh"]
+[ext_resource type="Script" uid="uid://c3tu3m67gngg" path="res://scripts/components/states/state_jump.gd" id="8_7thud"]
+[ext_resource type="Script" uid="uid://byrxq87vrrm3g" path="res://scripts/components/states/state_fall.gd" id="9_bectd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sglur"]
 
@@ -110,7 +115,7 @@ script = ExtResource("1_symyc")
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=548396950]
 shape = SubResource("CapsuleShape2D_sglur")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1883516456]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1883516456]
 sprite_frames = SubResource("SpriteFrames_sglur")
 animation = &"idle"
 script = ExtResource("3_bls4j")
@@ -119,3 +124,19 @@ script = ExtResource("3_bls4j")
 position = Vector2(0, 16)
 zoom = Vector2(3, 3)
 script = ExtResource("4_bls4j")
+
+[node name="StateMachineManager" type="Node" parent="." unique_id=1495533482 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_26q78")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachineManager" unique_id=1424328903]
+script = ExtResource("6_bectd")
+
+[node name="Walk" type="Node" parent="StateMachineManager" unique_id=523458871]
+script = ExtResource("7_wvtmh")
+
+[node name="Jump" type="Node" parent="StateMachineManager" unique_id=318817506]
+script = ExtResource("8_7thud")
+
+[node name="Fall" type="Node" parent="StateMachineManager" unique_id=1037349118]
+script = ExtResource("9_bectd")
