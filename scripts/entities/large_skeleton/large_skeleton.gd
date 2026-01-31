@@ -1,8 +1,5 @@
 extends Actor
 
-#@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-var target : Node2D
-
 ## The variable we use to toggle AI behavior
 var chase : bool = false
 var player_in_range: bool = false
@@ -20,32 +17,44 @@ func _ready() -> void:
 	#ready_navigation()
 	pass
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	#process_navigation()
-	follow_player()
+	chase_player()
+	update(delta) # see actor.gd
 
-func _on_detection_area_body_entered(body: Node2D) -> void:
+func _on_player_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = true
 		target_player = body
 
-func _on_detection_area_body_exited(body: Node2D) -> void:
+func _on_player_detection_body_exited(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = false
 		target_player = null
 
-func follow_player() -> void:
+func chase_player() -> void:
 	# Simple AI: Walk toward player if seen, else 0
 	if target_player and player_in_range:
+		var delta_x = target_player.global_position.x - global_position.x
+		var delta_y = global_position.y - target_player.global_position.y
+		
 		# Set the 'intent' variable for the FSM to read
-		direction = sign(target_player.global_position.x - global_position.x)
+		if abs(delta_x) > deadzone:
+			direction = sign(delta_x)
+		else:
+			direction = 0
+		
+		# Allow the AI to do basic jumps.
+		# Navigation will require 'smart' jumping.
+		if delta_y > jump_height / 10.0 and delta_y < jump_height:
+			jump_queued = true
 	else:
 		# Stop moving if the player is gone
 		direction = 0
 
 ## Both ready_navigation() and process_navigation() are prototypes
-## for navigating the scene. For now, the skeleton will just use a 
-## simplistic player follow approach.
+## for navigating the scene. For now, the skeleton will just chase 
+## the player.
 func ready_navigation() -> void:
 	# Set the target (e.g., the Player)
 	# In a real scenario, you'd update this dynamically

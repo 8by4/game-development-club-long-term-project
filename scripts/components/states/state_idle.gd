@@ -3,6 +3,8 @@ extends State
 func enter() -> void:
 	print("LOG: Entered IDLE state")
 	actor.play_animation("idle")
+	actor.direction = 0
+	actor.velocity.x = 0
 
 func physics_update(delta: float) -> void:
 	if not actor.is_on_floor():

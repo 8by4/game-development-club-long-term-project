@@ -14,6 +14,7 @@ extends CharacterBody2D
 
 @export_group("AI Settings")
 @export var path_update_rate: float = 0.1
+@export var deadzone: float = 5.0
 
 ## --- State Data ---
 @onready var state_machine: StateMachineManager = $StateMachineManager
@@ -24,16 +25,30 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _ready() -> void:
 	state_machine.initial_state = $StateMachineManager/Idle
 
+
+func _process(delta: float) -> void:
+	update(delta)
+
+func update(delta: float) -> void:
+	if state_machine:
+		state_machine.update(delta)
+
 func _physics_process(delta: float) -> void:
 	# Universal movement execution
-	actor_move_and_slide(delta)
+	physics_update(delta)
 
-func actor_move_and_slide(delta: float) -> void:
+func physics_update(delta: float) -> void:
+	# Handle Sprite Flipping (Standard for both Player and Enemy)
+	if direction > 0:
+		sprite.flip_h = false
+	elif direction < 0:
+		sprite.flip_h = true
+		
 	if state_machine:
 		state_machine.physics_update(delta)
 		
 	move_and_slide()
-	
+
 func play_animation(anim_name: String) -> void:
 	if sprite: 
 		sprite.play(anim_name)

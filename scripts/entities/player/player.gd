@@ -7,36 +7,25 @@ func _init() -> void:
 	walk_speed = 128
 	jump_height = 270
 
-func _process(delta: float) -> void:
-	# 1. Update the State Machine's visual logic
-	if state_machine:
-		state_machine.update(delta)
-	
-	# 2. Handle Sprite Flipping (Standard for both Player and Enemy)
-	if direction > 0:
-		sprite.flip_h = false
-	elif direction < 0:
-		sprite.flip_h = true
-
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
 		jump_queued = true
-	
+		
 #	if event.is_action_pressed("attack"):
-#		# You can trigger transitions directly from input if preferred
-#		state_machine.TransitionTo("Attack")
-
+#		state_machine.transition_to("Attack")
+#		return
+		
 #	if event.is_action_pressed("dash"):
-#		# You can signal the FSM to check for transition
-#		state_machine.TransitionTo("Dash")
+#		state_machine.transition_to("Dash")
+#		return
 
 func _physics_process(delta: float) -> void:
 	# 1. Capture continuous horizontal input (Movement Intent)
 	direction = Input.get_axis("move_left", "move_right")
 		
 	# 2. Execute movement (The State has already modified velocity)
-	# actor_move_and_slide is defined in actor.gd
-	actor_move_and_slide(delta)
+	# physics_update is defined in actor.gd
+	physics_update(delta)
 
 """
 # PREVIOUS IMPLEMENTATION OF PLAYER
