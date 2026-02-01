@@ -1,3 +1,5 @@
+## Contributors: Mathew Carter, Richard Johnson
+
 class_name Player
 extends Actor
 

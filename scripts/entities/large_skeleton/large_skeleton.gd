@@ -1,3 +1,5 @@
+## Contributors: Mathew Carter, Richard Johnson
+
 extends Actor
 
 ## The variable we use to toggle AI behavior

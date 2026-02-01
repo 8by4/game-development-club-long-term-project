@@ -1,3 +1,5 @@
+## Contributors: Richard Johnson
+
 extends State
 
 func enter() -> void:
