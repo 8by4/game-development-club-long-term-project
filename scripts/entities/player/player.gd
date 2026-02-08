@@ -1,21 +1,30 @@
 ## Contributors: Mathew Carter, Richard Johnson
-
 class_name Player
 extends Actor
 
-func _init() -> void:
+func _ready() -> void:
 	# Overrides the Actor.gd default
+	ai = false
 	gravity = 512
 	walk_speed = 128
-	jump_height = 270
+#	jump_height = -270
+	
+	attack_power = 70
+	
+	ready() # from actor.gd
 
 func _input(event: InputEvent) -> void:
+	if collapsed:
+#		if event.is_action_pressed("action"):
+#			get_tree().reload_current_scene()
+		return
+	
 	if event.is_action_pressed("jump"):
 		jump_queued = true
 		
-#	if event.is_action_pressed("attack"):
-#		state_machine.transition_to("Attack")
-#		return
+	if event.is_action_pressed("action"):
+		body_state.transition_to("Attack")
+		return
 		
 #	if event.is_action_pressed("dash"):
 #		state_machine.transition_to("Dash")
@@ -23,55 +32,9 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	# 1. Capture continuous horizontal input (Movement Intent)
-	direction = Input.get_axis("move_left", "move_right")
-		
+	if collapsed == false:
+		direction = Input.get_axis("move_left", "move_right")
+	
 	# 2. Execute movement (The State has already modified velocity)
 	# physics_update is defined in actor.gd
 	physics_update(delta)
-
-"""
-# PREVIOUS IMPLEMENTATION OF PLAYER
-extends CharacterBody2D
-class_name Player
-# movement
-var gravity : int = 512
-var walk_speed : int = 128
-var jump_height : int = 270
-# input
-var direction : float = 0
-var jump_queued : bool = false
-# nodes
-@onready var sprite : AnimatedSprite2D = $Sprite
-
-func _input(_event : InputEvent) -> void:
-	direction = Input.get_axis("move_left", "move_right")
-	
-	if Input.is_action_just_pressed("jump") : jump_queued = true
-	
-	if direction < 0:
-		sprite.flip_h = true
-	elif direction > 0:
-		sprite.flip_h = false
-
-func _physics_process(delta : float) -> void:
-	var target_velocity : Vector2 = Vector2(direction * walk_speed, 0)
-	
-	if is_on_floor():
-		velocity = velocity.lerp(target_velocity, (16 * delta))
-		if jump_queued:
-			velocity.y = -jump_height
-			sprite.play("jump")
-		else:
-			if direction == 0:
-				sprite.play("idle")
-			else:
-				sprite.play("walk")
-	else:
-		sprite.play("jump") # falling
-		velocity.y += gravity * delta
-		if velocity.dot(Vector2(direction,0)) < 64:
-			velocity += target_velocity * delta
-	
-	move_and_slide()
-	jump_queued = false
-"""

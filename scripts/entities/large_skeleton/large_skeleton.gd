@@ -1,58 +1,37 @@
 ## Contributors: Mathew Carter, Richard Johnson
-
 extends Actor
 
-## The variable we use to toggle AI behavior
-var chase : bool = false
-var player_in_range: bool = false
-## Reference to the player for pathfinding calculations
-var target_player: Player = null
-@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
-
-func _init() -> void:
+func _ready() -> void:
 	# Overrides the Actor.gd default
 	gravity = 512
 	walk_speed = 50
-	jump_height = 270
-
-func _ready() -> void:
+	jump_height = -270
+	
+	max_health = 250
+	health = 250
+	attack_power = 10
+	attack_range = 50.0
+	
 	#ready_navigation()
-	pass
+	
+	ready() # from actor.gd
 
 func _process(delta: float) -> void:
-	#process_navigation()
-	chase_player()
-	update(delta) # see actor.gd
+#	process_navigation()
+#	update(delta) # see actor.gd
+	pass
 
 func _on_player_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = true
-		target_player = body
+		target = body
+		mind_state.transition_to("Chase")
 
 func _on_player_detection_body_exited(body: Node2D) -> void:
 	if body is Player:
 		player_in_range = false
-		target_player = null
-
-func chase_player() -> void:
-	# Simple AI: Walk toward player if seen, else 0
-	if target_player and player_in_range:
-		var delta_x = target_player.global_position.x - global_position.x
-		var delta_y = global_position.y - target_player.global_position.y
-		
-		# Set the 'intent' variable for the FSM to read
-		if abs(delta_x) > deadzone:
-			direction = sign(delta_x)
-		else:
-			direction = 0
-		
-		# Allow the AI to do basic jumps.
-		# Navigation will require 'smart' jumping.
-		if delta_y > jump_height / 10.0 and delta_y < jump_height:
-			jump_queued = true
-	else:
-		# Stop moving if the player is gone
-		direction = 0
+		target = null
+		mind_state.transition_to("Wait")
 
 ## Both ready_navigation() and process_navigation() are prototypes
 ## for navigating the scene. For now, the skeleton will just chase 
@@ -66,44 +45,10 @@ func process_navigation() -> void:
 	if nav_agent.is_navigation_finished():
 		direction = 0.0
 		return
-		
+	
 	# Calculate the next path position
 	var next_path_pos = nav_agent.get_next_path_position()
 	
 	# Determine the horizontal direction (-1, 0, or 1)
 	# Pass this "Intent" to the FSM via the shared variable
 	var direction = sign(next_path_pos.x - global_position.x)
-
-"""
-# PREVIOUS IMPLEMENTATION OF LARGE_SKELETON
-extends CharacterBody2D
-
-@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-var chase : bool = false
-var speed : float = 50
-var target : Node2D
-
-func _physics_process(_delta : float) -> void:
-	if chase == true:
-		var direction = (target.position - self.position).normalized()
-		if direction.x > 0:
-			sprite.flip_h = false
-		else:
-			sprite.flip_h = true
-		velocity.x = direction.x * speed
-	else:
-		velocity.x = 0
-	move_and_slide()
-
-func _on_player_detection_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		sprite.play("walk")
-		target = body
-		chase = true
-
-func _on_player_detection_body_exited(body: Node2D) -> void:
-	if body.name == "Player":
-		sprite.play("idle")
-		target = body
-		chase = false
-"""

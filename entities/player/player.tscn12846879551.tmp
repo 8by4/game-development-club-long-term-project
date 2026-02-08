@@ -13,15 +13,10 @@
 [ext_resource type="Script" uid="uid://d2fac1mea5e51" path="res://scripts/components/states/body/state_attack.gd" id="10_wvtmh"]
 [ext_resource type="Script" uid="uid://cjad74lqmtgq2" path="res://scripts/components/states/body/state_land.gd" id="11_7thud"]
 [ext_resource type="Script" uid="uid://s7otyxm0u08l" path="res://scripts/components/states/body/state_hurt.gd" id="12_a1qjk"]
-[ext_resource type="Script" uid="uid://dq3l5mc8yavpn" path="res://scripts/components/states/body/state_collapse.gd" id="14_afbqv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sglur"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_afbqv"]
-size = Vector2(16, 16)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3ovn"]
-size = Vector2(42, 17)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gx6sm"]
 atlas = ExtResource("2_sglur")
@@ -241,28 +236,28 @@ region = Rect2(224, 96, 32, 32)
 [sub_resource type="SpriteFrames" id="SpriteFrames_sglur"]
 animations = [{
 "frames": [{
-"duration": 0.1,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_gx6sm")
 }, {
-"duration": 0.2,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_yqrof")
 }, {
-"duration": 0.2,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_3wlsy")
 }, {
-"duration": 0.3,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_b2kln")
 }, {
-"duration": 0.5,
+"duration": 0.75,
 "texture": SubResource("AtlasTexture_we0b7")
 }, {
-"duration": 0.3,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_mtric")
 }, {
-"duration": 0.2,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_eyb6c")
 }, {
-"duration": 0.1,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_221hk")
 }],
 "loop": false,
@@ -453,21 +448,10 @@ script = ExtResource("1_symyc")
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=548396950]
 shape = SubResource("CapsuleShape2D_sglur")
 
-[node name="Hurtbox" type="Area2D" parent="." unique_id=1061217955]
-collision_layer = 4
-collision_mask = 0
-
-[node name="HurtCollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=266265733]
-position = Vector2(-1, 0)
-shape = SubResource("RectangleShape2D_afbqv")
-
 [node name="Hitbox" type="Area2D" parent="." unique_id=158393872]
-collision_layer = 0
-collision_mask = 16
 script = ExtResource("2_j3ovn")
 
-[node name="HitCollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1599356119]
-position = Vector2(0, -0.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1599356119]
 shape = SubResource("RectangleShape2D_j3ovn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1883516456]
@@ -504,8 +488,3 @@ script = ExtResource("10_wvtmh")
 
 [node name="Hurt" type="Node" parent="BodyFSM" unique_id=1135236548]
 script = ExtResource("12_a1qjk")
-
-[node name="Collapse" type="Node" parent="BodyFSM" unique_id=1210517158]
-script = ExtResource("14_afbqv")
-
-[connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]

@@ -1,6 +1,4 @@
-# state_machine_manager.gd
 ## Contributors: Richard Johnson
-
 class_name StateMachineManager
 extends Node
 

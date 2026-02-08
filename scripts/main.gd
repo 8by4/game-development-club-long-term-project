@@ -28,6 +28,9 @@ func _init() -> void:
 	
 	if not OS.is_userfs_persistent() : push_error("File system persistence unavailable!")
 
+#func _ready():
+#	$FadeLayer/AnimationPlayer.play("fade_in")
+
 func _enter_tree() -> void:
 	if DisplayServer.get_name() == "headless" : get_tree().quit()
 	get_viewport().disable_3d = true
@@ -67,4 +70,18 @@ func display_fps() -> void:
 	var frame_counter = load("res://ui/debug/fps_counter.tscn").instantiate()
 	add_child(frame_counter)
 
+"""
+func game_over():
+	await get_tree().create_timer(3.0).timeout
+	
+	# 1. Play the animation
+#	$FadeLayer/AnimationPlayer.play("fade_to_black")
+	
+	# 2. Wait for the animation to finish
+#	await $FadeLayer/AnimationPlayer.animation_finished
+	
+	# 3. Now reload the game
+	get_tree().reload_current_scene()
+	
 #endregion
+"""

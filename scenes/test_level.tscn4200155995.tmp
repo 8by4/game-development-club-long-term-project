@@ -2745,7 +2745,7 @@ tile_map_data = PackedByteArray("AAA9AB0AAQAEABkAAAAoACAAAQA7ABgAAAAoACEAAQBBABk
 tile_set = SubResource("TileSet_x4b8f")
 
 [node name="LargeSkeleton" parent="." unique_id=1043108153 instance=ExtResource("3_j6w7d")]
-position = Vector2(797, 481)
+position = Vector2(772, 482)
 
 [node name="Player" parent="." unique_id=1237976974 instance=ExtResource("1_2venv")]
-position = Vector2(911, 493)
+position = Vector2(925, 493)
