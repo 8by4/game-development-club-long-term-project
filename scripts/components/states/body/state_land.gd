@@ -12,7 +12,7 @@ func enter() -> void:
 #	actor.velocity.x *= 0.1
 	actor.velocity = Vector2.ZERO
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	# Allow gravity just in case of ledges
 	if not actor.is_on_floor():
 		state_machine_manager.transition_to("Fall") 

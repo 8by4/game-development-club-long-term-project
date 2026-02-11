@@ -15,10 +15,10 @@ extends CharacterBody2D
 
 ## The variable we use to toggle AI behavior
 @export_group("AI Settings")
-@onready var mind: StateMachineManager = $MindFSM
+@onready var mind: StateMachineManager = get_node_or_null('MindFSM')
 @export var ai : bool = true
 @export var chase : bool = false
-@onready var player_detection = $PlayerDetection
+@onready var player_detection = get_node_or_null('PlayerDetection')
 @export var target: Player = null
 @export var player_in_range: bool = false
 @export var player_in_reach: bool = false
@@ -26,7 +26,7 @@ extends CharacterBody2D
 
 ## Reference to the player for pathfinding calculations
 @export var path_update_rate: float = 0.1
-@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var nav_agent: NavigationAgent2D = get_node_or_null('NavigationAgent2D')
 
 ## --- Body State Data ---
 @onready var body: StateMachineManager = $BodyFSM
@@ -116,7 +116,9 @@ func physics_update(delta: float) -> void:
 
 func play_animation(anim_name: String) -> void:
 	if sprite: 
-		sprite.play(anim_name)
+		# Check if the sprite has the animation before playing it
+		if sprite.sprite_frames.has_animation(anim_name):
+			sprite.play(anim_name)
 	else:
 		printerr("Warning: No sprite found on ", anim_name)
 

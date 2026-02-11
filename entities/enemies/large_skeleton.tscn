@@ -274,7 +274,7 @@ shape = SubResource("CapsuleShape2D_mwwtt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
 sprite_frames = SubResource("SpriteFrames_6eu7i")
-animation = &"collapse"
+animation = &"attack"
 script = ExtResource("18_pmw4c")
 
 [node name="PlayerDetection" type="Area2D" parent="." unique_id=1556969930]

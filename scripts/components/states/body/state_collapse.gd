@@ -16,18 +16,18 @@ func enter() -> void:
 		actor.mind.set_physics_process(false)
 	
 	if actor.player_detection:
-		actor.player_detection.monitoring = false
+		actor.player_detection.set_deferred('monitoring', false)
 		actor.target = null
 	
 	# 4. Turn off hitboxes/hurtboxes so the corpse can't hit or be hit
-	actor.hitbox.monitoring = false
-	actor.hurtbox.monitorable = false
+	actor.hitbox.set_deferred('monitorable', false)
+	actor.hurtbox.set_deferred('monitorable', false)
 	
 	# 5. Optional: Disable collision with the player 
 	# (so you can walk over the bones)
 	actor.collision_layer = 0
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	if not actor.sprite.is_playing() or actor.sprite.animation != "collapse":
 		# Stop the _physics_process and _process functions
 		actor.set_physics_process(false)

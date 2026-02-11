@@ -7,7 +7,7 @@ func enter() -> void:
 	actor.direction = 0
 	actor.velocity.x = 0
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	if not actor.is_on_floor():
 		state_machine_manager.transition_to("Fall")
 		return

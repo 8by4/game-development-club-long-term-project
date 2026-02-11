@@ -24,5 +24,5 @@ func update(delta: float) -> void:
 func physics_update(delta: float) -> void:
 	pass
 
-func print_debug_log(str: String) -> void:
-	if OS.is_debug_build(): print("LOG: ", str)
+func print_debug_log(string: String) -> void:
+	if OS.is_debug_build(): print("LOG: ", string)

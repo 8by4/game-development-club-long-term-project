@@ -5,7 +5,7 @@ func enter() -> void:
 	print("LOG: Entered CHASE AI state")
 	actor.body.transition_to("Walk")
 	
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 #	var player = get_tree().get_first_node_in_group("player")
 	# Simple AI: Walk toward player if seen, else 0
 	var player = actor.target

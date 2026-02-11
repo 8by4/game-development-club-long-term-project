@@ -18,19 +18,19 @@ func _ready() -> void:
 	ready() # from actor.gd
 	set_variable_hitbox()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 #	process_navigation()
 #	update(delta) # see actor.gd
 	pass
 
-func _on_player_detection_body_entered(body: Node2D) -> void:
-	if body is Player:
+func _on_player_detection_body_entered(detected_body: Node2D) -> void:
+	if detected_body is Player:
 		player_in_range = true
-		target = body
+		target = detected_body
 		mind.transition_to("Chase")
 
-func _on_player_detection_body_exited(body: Node2D) -> void:
-	if body is Player:
+func _on_player_detection_body_exited(detected_body: Node2D) -> void:
+	if detected_body is Player:
 		player_in_range = false
 		target = null
 		mind.transition_to("Wait")
@@ -53,4 +53,4 @@ func process_navigation() -> void:
 	
 	# Determine the horizontal direction (-1, 0, or 1)
 	# Pass this "Intent" to the FSM via the shared variable
-	var direction = sign(next_path_pos.x - global_position.x)
+	var new_direction = sign(next_path_pos.x - global_position.x)
