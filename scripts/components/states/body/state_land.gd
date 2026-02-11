@@ -2,7 +2,7 @@
 extends State
 
 func enter() -> void:
-	print("LOG: Entered LAND (STUN) state")
+	print_debug_log("Entered LAND (STUN) state")
 	actor.play_animation("stunned")
 	
 	# Start blinking for 1.5 seconds every 0.1 seconds
@@ -19,7 +19,7 @@ func physics_update(delta: float) -> void:
 		return
 		
 	# Transition to Idle or Walk once the landing animation finishes
-	if not actor.sprite.is_playing() or actor.sprite.animation != "stunned":
+	if actor.animation_is_finished("stunned"):
 		# This fixes the walk animation when the 
 		# entity is already moving horizontally.
 		actor.velocity = Vector2.ZERO

@@ -7,7 +7,7 @@ extends State
 var timer: float = 0.0
 
 func enter() -> void:
-	print("LOG: Entered HURT state")
+	print_debug_log("Entered HURT state")
 	actor.play_animation("hurt")
 	
 	# Start blinking for 1.5 seconds every 0.1 seconds

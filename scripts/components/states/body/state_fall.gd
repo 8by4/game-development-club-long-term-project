@@ -2,7 +2,7 @@
 extends State
 
 func enter() -> void:
-	print("LOG: Entered FALL state")
+	print_debug_log("Entered FALL state")
 	actor.start_height = actor.global_position.y
 	actor.play_animation("fall")
 

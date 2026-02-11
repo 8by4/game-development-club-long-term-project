@@ -2,9 +2,13 @@
 extends Area2D
 
 func enter_attack_window():
+# Toggle monitoring to force a fresh scan of the area
+	monitoring = false
 	monitoring = true
+	
 	# Manually check for bodies already inside
 	var overlapping_areas = get_overlapping_areas()
+	
 	for area in overlapping_areas:
 		_on_area_entered(area) # Force the signal logic to run
 

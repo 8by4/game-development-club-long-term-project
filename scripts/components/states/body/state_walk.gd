@@ -2,7 +2,7 @@
 extends State
 
 func enter() -> void:
-	print("LOG: Entered WALK state")
+	print_debug_log("Entered WALK state")
 	actor.play_animation("walk")
 
 func physics_update(delta: float) -> void:

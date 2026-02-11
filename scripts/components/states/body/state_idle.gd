@@ -2,7 +2,7 @@
 extends State
 
 func enter() -> void:
-	print("LOG: Entered IDLE state")
+	print_debug_log("Entered IDLE state")
 	actor.play_animation("idle")
 	actor.direction = 0
 	actor.velocity.x = 0

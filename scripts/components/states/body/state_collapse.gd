@@ -2,7 +2,7 @@
 extends State
 
 func enter() -> void:
-	print("LOG: Entered COLLAPSE state")
+	print_debug_log("Entered COLLAPSE state")
 	# 1. Play the death/collapse animation
 	actor.play_animation("collapse")
 	

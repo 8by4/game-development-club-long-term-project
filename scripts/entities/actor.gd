@@ -55,6 +55,8 @@ func ready() -> void:
 	
 	if mind:
 		mind.initial_state = $StateMachineManager/Wait
+		
+	hurtbox.monitorable = true
 
 func _process(delta: float) -> void:
 	update(delta)
@@ -82,6 +84,13 @@ func play_animation(anim_name: String) -> void:
 		sprite.play(anim_name)
 	else:
 		printerr("Warning: No sprite found on ", anim_name)
+
+func animation_is_finished(anim: String) -> bool:
+	if sprite.animation != anim:
+		return true
+	
+	var frame_count = sprite.sprite_frames.get_frame_count(anim)
+	return sprite.frame == frame_count - 1
 
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return

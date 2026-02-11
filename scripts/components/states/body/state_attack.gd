@@ -2,20 +2,10 @@
 extends State
 
 func enter() -> void:
-	print("LOG: Entered ATTACK state")
+	print_debug_log("Entered ATTACK state")
 	actor.play_animation("attack")
+	actor.hitbox.monitoring = true
 	actor.hitbox.enter_attack_window()
-#	start_attack()
-
-func start_attack():
-	actor.hitbox.monitoring = true  # Turn it on
-	
-	# NEW: Manually check for bodies already overlapping
-	var overlapping_areas = actor.hitbox.get_overlapping_areas()
-	
-	for area in overlapping_areas:
-		# Manually call the same function the signal would call
-		actor.hitbox._on_area_entered(area)
 
 func physics_update(delta: float) -> void:
 	# 1. Allow continued horizontal movement/drift 
@@ -35,17 +25,22 @@ func physics_update(delta: float) -> void:
 		if fall_distance > actor.land_stun_threashold:
 			state_machine_manager.transition_to("Land")
 			return
-		
+			
 	# 3. Transition back once the attack is done
-	# (Logic to check if animation finished)
-	if not actor.sprite.is_playing() or actor.sprite.animation != "attack":
-		if actor.direction == 0:
-			state_machine_manager.transition_to("Idle")
-			return
-		
-		if actor.is_on_floor():
-			state_machine_manager.transition_to("Walk")
-		elif actor.velocity.y < 0:
-			state_machine_manager.transition_to("Jump")
-		else:
-			state_machine_manager.transition_to("Fall")
+	if actor.animation_is_finished("attack"):
+		transition_after_attack()
+		return
+
+func transition_after_attack():
+	actor.hitbox.monitoring = false
+	
+	if actor.direction == 0:
+		state_machine_manager.transition_to("Idle")
+		return
+	
+	if actor.is_on_floor():
+		state_machine_manager.transition_to("Walk")
+	elif actor.velocity.y < 0:
+		state_machine_manager.transition_to("Jump")
+	else:
+		state_machine_manager.transition_to("Fall")
