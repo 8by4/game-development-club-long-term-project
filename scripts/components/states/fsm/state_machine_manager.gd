@@ -49,3 +49,12 @@ func transition_to(state_name: String) -> void:
 		
 	new_state.enter()
 	current_state = new_state
+
+func get_state() -> String:
+	return current_state.name.to_lower();
+
+func is_state(state: String) -> bool:
+	return state.to_lower() == get_state()
+
+func not_state(state: String) -> bool:
+	return state.to_lower() != get_state()

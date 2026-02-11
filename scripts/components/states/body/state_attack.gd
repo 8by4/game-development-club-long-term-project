@@ -4,8 +4,10 @@ extends State
 func enter() -> void:
 	print_debug_log("Entered ATTACK state")
 	actor.play_animation("attack")
+	
 	actor.hitbox.monitoring = true
 	actor.hitbox.enter_attack_window()
+	
 	if actor.hitbox_variable:
 		actor.reset_hitbox_width()
 

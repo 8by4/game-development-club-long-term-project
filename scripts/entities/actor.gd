@@ -57,11 +57,10 @@ func _ready() -> void:
 	ready()
 
 func ready() -> void:
-	body.initial_state = $StateMachineManager/Idle
+	if body: body.initial_state = $StateMachineManager/Idle
+	if mind: mind.initial_state = $StateMachineManager/Wait
 	
-	if mind:
-		mind.initial_state = $StateMachineManager/Wait
-		
+	hitbox.monitoring = false
 	hurtbox.monitorable = true
 
 func set_variable_hitbox() -> void:
@@ -142,19 +141,27 @@ func collapse() -> void:
 	collapsed = true
 	body.transition_to("Collapse")
 
+func revive() -> void:
+	health = max_health
+	velocity = Vector2.ZERO
+	
+	hitbox.monitoring = false
+	hurtbox.monitorable = true
+	collision_layer = 1
+	
+	if body: body.transition_to("Idle")
+	if mind: mind.transition_to("Wait")
+	
+	if body: body.set_physics_process(true)
+	if mind: mind.set_physics_process(true)
+	
+	set_physics_process(true)
+	set_process(true)
+
 func blink(duration: float, frequency: float) -> void:
 	var tween = create_tween().set_loops(int(duration / frequency))
-	tween.tween_property(sprite, "visible", false, frequency / 2)
-	tween.tween_property(sprite, "visible", true, frequency / 2)
+	tween.tween_property(sprite, "visible", false, frequency / 2.0)
+	tween.tween_property(sprite, "visible", true, frequency / 2.0)
 	
 	# Ensure sprite is visible when finished
 	tween.finished.connect(func(): sprite.visible = true)
-
-func get_state() -> String:
-	return body.current_state.name.to_lower();
-
-func is_state(state: String) -> bool:
-	return state.to_lower() == get_state()
-
-func not_state(state: String) -> bool:
-	return state.to_lower() != get_state()

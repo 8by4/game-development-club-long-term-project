@@ -15,12 +15,12 @@ func enter_attack_window():
 func _on_area_entered(area: Area2D) -> void:
 	var attacker = get_parent()
 	
-	if attacker.not_state("attack"):
+	if attacker.body.not_state("attack"):
 		return
 	
 	var victim = area.get_parent()
 	
-	if victim.is_state("hurt"):
+	if victim.body.is_state("hurt"):
 		return # invisible for a short time while already hurt
 	
 	# Calculate direction for knockback

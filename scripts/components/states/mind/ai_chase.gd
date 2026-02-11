@@ -16,7 +16,7 @@ func physics_update(delta: float) -> void:
 		var delta_y = abs(actor.global_position.y - player.global_position.y)
 		var jump_height = abs(actor.jump_height)
 		
-		if actor.not_state("attack"):
+		if actor.body.not_state("attack"):
 			if actor.attack_stationary and not actor.is_on_floor():
 				pass
 			else:
@@ -30,7 +30,7 @@ func physics_update(delta: float) -> void:
 		else:
 			actor.direction = 0
 		
-		if actor.attack_stationary and actor.is_state("attack"):
+		if actor.attack_stationary and actor.body.is_state("attack"):
 			pass
 		else:
 			# Allow the AI to do basic jumps.
