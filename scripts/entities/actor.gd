@@ -57,8 +57,8 @@ func _ready() -> void:
 	ready()
 
 func ready() -> void:
-	if body: body.initial_state = $StateMachineManager/Idle
-	if mind: mind.initial_state = $StateMachineManager/Wait
+	if body: body.initial_state = $BodyFSM/Idle
+	if mind: mind.initial_state = $MindFSM/Wait
 	
 	hitbox.monitoring = false
 	hurtbox.monitorable = true
