@@ -2,10 +2,21 @@
 extends State
 
 func enter() -> void:
-#	print("LOG: Entered ATTACK state")
+	print("LOG: Entered ATTACK state")
 	actor.play_animation("attack")
-	start_attack()
+	actor.hitbox.enter_attack_window()
+#	start_attack()
+
+func start_attack():
+	actor.hitbox.monitoring = true  # Turn it on
 	
+	# NEW: Manually check for bodies already overlapping
+	var overlapping_areas = actor.hitbox.get_overlapping_areas()
+	
+	for area in overlapping_areas:
+		# Manually call the same function the signal would call
+		actor.hitbox._on_area_entered(area)
+
 func physics_update(delta: float) -> void:
 	# 1. Allow continued horizontal movement/drift 
 	var target_velocity_x = actor.direction * actor.walk_speed
@@ -20,6 +31,7 @@ func physics_update(delta: float) -> void:
 	else:
 		var fall_distance =  actor.global_position.y - actor.start_height
 		
+		# Hard land which will leave the actor stunned
 		if fall_distance > actor.land_stun_threashold:
 			state_machine_manager.transition_to("Land")
 			return
@@ -37,13 +49,3 @@ func physics_update(delta: float) -> void:
 			state_machine_manager.transition_to("Jump")
 		else:
 			state_machine_manager.transition_to("Fall")
-
-func start_attack():
-	actor.hitbox.monitoring = true  # Turn it on
-	
-	# NEW: Manually check for bodies already overlapping
-	var overlapping_areas = actor.hitbox.get_overlapping_areas()
-	
-	for area in overlapping_areas:
-		# Manually call the same function the signal would call
-		actor.hitbox._on_area_entered(area)

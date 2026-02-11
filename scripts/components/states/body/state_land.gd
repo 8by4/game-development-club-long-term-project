@@ -17,13 +17,13 @@ func physics_update(delta: float) -> void:
 	if not actor.is_on_floor():
 		state_machine_manager.transition_to("Fall") 
 		return
-
+		
 	# Transition to Idle or Walk once the landing animation finishes
 	if not actor.sprite.is_playing() or actor.sprite.animation != "stunned":
 		# This fixes the walk animation when the 
 		# entity is already moving horizontally.
 		actor.velocity = Vector2.ZERO
-
+		
 		if actor.direction == 0:
 			state_machine_manager.transition_to("Idle")
 		else:

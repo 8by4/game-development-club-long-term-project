@@ -460,6 +460,7 @@ collision_mask = 0
 [node name="HurtCollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=266265733]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_afbqv")
+debug_color = Color(0.71763885, 0.48138058, 0.033553872, 0.41960785)
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=158393872]
 collision_layer = 0
@@ -469,6 +470,7 @@ script = ExtResource("2_j3ovn")
 [node name="HitCollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1599356119]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_j3ovn")
+debug_color = Color(0.9464956, 0.21265957, 0.25174215, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1883516456]
 sprite_frames = SubResource("SpriteFrames_sglur")

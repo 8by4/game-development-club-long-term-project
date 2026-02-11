@@ -12,8 +12,8 @@ func enter() -> void:
 	actor.direction = 0
 	
 	# 3. Disable the AI so it stops chasing the player
-	if actor.mind_state:
-		actor.mind_state.set_physics_process(false)
+	if actor.mind:
+		actor.mind.set_physics_process(false)
 	
 	if actor.player_detection:
 		actor.player_detection.monitoring = false
@@ -22,15 +22,16 @@ func enter() -> void:
 	# 4. Turn off hitboxes/hurtboxes so the corpse can't hit or be hit
 	actor.hitbox.monitoring = false
 	actor.hurtbox.monitorable = false
-
+	
 	# 5. Optional: Disable collision with the player 
 	# (so you can walk over the bones)
 	actor.collision_layer = 0
 
-func _on_animation_finished(anim_name):
-	# Stop the _physics_process and _process functions
-	actor.set_physics_process(false)
-	actor.set_process(false)
-	
-	if actor.body_state:
-		actor.body_state.set_physics_process(false)
+func physics_update(delta: float) -> void:
+	if not actor.sprite.is_playing() or actor.sprite.animation != "collapse":
+		# Stop the _physics_process and _process functions
+		actor.set_physics_process(false)
+		actor.set_process(false)
+		
+		if actor.body:
+			actor.body.set_physics_process(false)

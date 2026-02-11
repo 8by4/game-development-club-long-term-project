@@ -23,7 +23,7 @@ func _input(event: InputEvent) -> void:
 		jump_queued = true
 		
 	if event.is_action_pressed("action"):
-		body_state.transition_to("Attack")
+		body.transition_to("Attack")
 		return
 		
 #	if event.is_action_pressed("dash"):

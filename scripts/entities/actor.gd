@@ -15,7 +15,7 @@ extends CharacterBody2D
 
 ## The variable we use to toggle AI behavior
 @export_group("AI Settings")
-@onready var mind_state: StateMachineManager = $MindFSM
+@onready var mind: StateMachineManager = $MindFSM
 @export var ai : bool = true
 @export var chase : bool = false
 @onready var player_detection = $PlayerDetection
@@ -29,7 +29,7 @@ extends CharacterBody2D
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 
 ## --- Body State Data ---
-@onready var body_state: StateMachineManager = $BodyFSM
+@onready var body: StateMachineManager = $BodyFSM
 var direction : float = 0.0
 var start_height : float = 0.0
 var jump_queued : bool = false
@@ -39,7 +39,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var max_health : int = 100
 @export var health : int = 100
 @export var attack_power : int = 10
-@export var attack_range: float = 20.0
+@export var attack_range: float = 20.0 # For AI
 @onready var hitbox: Area2D = $Hitbox 
 @onready var hurtbox: Area2D = $Hurtbox 
 @onready var hitbox_shape: CollisionShape2D = $Hitbox/CollisionShape2D
@@ -51,17 +51,16 @@ func _ready() -> void:
 	ready()
 
 func ready() -> void:
-	body_state.initial_state = $StateMachineManager/Idle
+	body.initial_state = $StateMachineManager/Idle
 	
-	if mind_state:
-		mind_state.initial_state = $StateMachineManager/Wait
+	if mind:
+		mind.initial_state = $StateMachineManager/Wait
 
 func _process(delta: float) -> void:
 	update(delta)
 
 func update(delta: float) -> void:
-	if body_state:
-		body_state.update(delta)
+	if body: body.update(delta)
 
 func _physics_process(delta: float) -> void:
 	# Universal movement execution
@@ -74,8 +73,7 @@ func physics_update(delta: float) -> void:
 	elif direction < 0:
 		sprite.flip_h = true
 	
-	if body_state:
-		body_state.physics_update(delta)
+	if body: body.physics_update(delta)
 		
 	move_and_slide()
 
@@ -93,11 +91,11 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if health <= 0:
 		collapse()
 	else:
-		body_state.transition_to("Hurt")
+		body.transition_to("Hurt")
 
 func collapse() -> void:
 	collapsed = true
-	body_state.transition_to("Collapse")
+	body.transition_to("Collapse")
 
 func blink(duration: float, frequency: float) -> void:
 	var tween = create_tween().set_loops(int(duration / frequency))
@@ -106,3 +104,12 @@ func blink(duration: float, frequency: float) -> void:
 	
 	# Ensure sprite is visible when finished
 	tween.finished.connect(func(): sprite.visible = true)
+
+func get_state() -> String:
+	return body.current_state.name.to_lower();
+
+func is_state(state: String) -> bool:
+	return state.to_lower() == get_state()
+
+func not_state(state: String) -> bool:
+	return state.to_lower() != get_state()
