@@ -6,11 +6,19 @@ func enter() -> void:
 	actor.play_animation("attack")
 	actor.hitbox.monitoring = true
 	actor.hitbox.enter_attack_window()
+	if actor.hitbox_variable:
+		actor.reset_hitbox_width()
 
 func physics_update(delta: float) -> void:
+	if actor.hitbox_variable:
+		actor.update_hitbox_width()
+	
 	# 1. Allow continued horizontal movement/drift 
-	var target_velocity_x = actor.direction * actor.walk_speed
-	actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
+	if actor.attack_stationary == false:
+		var target_velocity_x = actor.direction * actor.walk_speed
+		actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
+	else:
+		actor.velocity.x = 0.0
 	
 	# 2. Continue applying gravity if they are in the air
 	if not actor.is_on_floor():

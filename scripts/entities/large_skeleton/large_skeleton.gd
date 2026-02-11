@@ -10,11 +10,13 @@ func _ready() -> void:
 	max_health = 250
 	health = 250
 	attack_power = 10
-	attack_range = 50.0
+	attack_range = 35.0
+	attack_stationary = true
 	
 	#ready_navigation()
 	
 	ready() # from actor.gd
+	set_variable_hitbox()
 
 func _process(delta: float) -> void:
 #	process_navigation()

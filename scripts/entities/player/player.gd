@@ -19,9 +19,17 @@ func _input(event: InputEvent) -> void:
 #			get_tree().reload_current_scene()
 		return
 	
+	# Queue the jump action
 	if event.is_action_pressed("jump"):
 		jump_queued = true
-		
+	
+	# Allow for variable jump heights:
+	# If the button is released while moving up, reduce upward momentum
+	if event.is_action_released("jump") and velocity.y < 0:
+		var time_ratio = clamp(jump_timer / 1.0, 0.0, 1.0)
+		var dynamic_cutoff = 0.5 + lerp(0.2, 0.5, time_ratio) 
+		velocity.y *= dynamic_cutoff
+	
 	if event.is_action_pressed("action"):
 		body.transition_to("Attack")
 		return

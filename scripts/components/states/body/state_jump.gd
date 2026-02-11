@@ -4,6 +4,7 @@ extends State
 func enter() -> void:
 	print_debug_log("Entered JUMP state")
 	actor.play_animation("jump")
+	actor.jump_timer = 0.0
 
 func physics_update(delta: float) -> void:
 	# 1. Handle Horizontal Movement (Air Control)
@@ -18,6 +19,7 @@ func physics_update(delta: float) -> void:
 		actor.velocity.y += actor.gravity * delta / 4.0
 		
 	actor.jump_queued = false
+	actor.jump_timer += delta
 	
 	# 3. THE TRANSITION: If Y velocity is positive, we are falling
 	if actor.velocity.y > 0:

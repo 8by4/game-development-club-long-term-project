@@ -17,9 +17,12 @@ func physics_update(delta: float) -> void:
 		var jump_height = abs(actor.jump_height)
 		
 		if actor.not_state("attack"):
-			var distance = actor.global_position.distance_to(player.global_position)
-			if distance <= actor.attack_range:
-				actor.body.transition_to("Attack")
+			if actor.attack_stationary and not actor.is_on_floor():
+				pass
+			else:
+				var distance = actor.global_position.distance_to(player.global_position)
+				if distance <= actor.attack_range:
+					actor.body.transition_to("Attack")
 		
 		# Set the 'intent' variable for the FSM to read
 		if delta_x > actor.deadzone:
@@ -27,11 +30,14 @@ func physics_update(delta: float) -> void:
 		else:
 			actor.direction = 0
 		
-		# Allow the AI to do basic jumps.
-		# Navigation will require 'smart' jumping.
-		if delta_y > jump_height / 10.0 and delta_y < jump_height:
-			actor.jump_queued = true
-			actor.body.transition_to("Jump")
+		if actor.attack_stationary and actor.is_state("attack"):
+			pass
+		else:
+			# Allow the AI to do basic jumps.
+			# Navigation will require 'smart' jumping.
+			if delta_y > jump_height / 10.0 and delta_y < jump_height:
+				actor.jump_queued = true
+				actor.body.transition_to("Jump")
 	else:
 		# Stop moving if the player is gone
 		state_machine_manager.transition_to("Wait")
