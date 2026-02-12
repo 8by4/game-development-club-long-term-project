@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://80u5tweb504v"]
+
+[ext_resource type="Script" uid="uid://u5y2fdiw2hal" path="res://scripts/components/states/fsm/state_machine_manager.gd" id="1_qg5w2"]
+[ext_resource type="Script" uid="uid://b3ivu1dymfrf2" path="res://scripts/components/states/mind/ai_patrol.gd" id="2_tomwt"]
+[ext_resource type="Script" uid="uid://bdasamsw04prn" path="res://scripts/components/states/mind/ai_chase.gd" id="3_6wuve"]
+[ext_resource type="Script" uid="uid://ouwamt7imshm" path="res://scripts/components/states/mind/ai_wait.gd" id="4_7fe6h"]
+
+[node name="MindFSM" type="Node" unique_id=1906764199]
+script = ExtResource("1_qg5w2")
+
+[node name="Patrol" type="Node" parent="." unique_id=446216879]
+script = ExtResource("2_tomwt")
+
+[node name="Chase" type="Node" parent="." unique_id=1870974903]
+script = ExtResource("3_6wuve")
+
+[node name="Wait" type="Node" parent="." unique_id=68541687]
+script = ExtResource("4_7fe6h")

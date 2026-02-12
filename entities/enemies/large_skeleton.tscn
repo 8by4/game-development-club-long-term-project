@@ -42,16 +42,10 @@
 [ext_resource type="Texture2D" uid="uid://dgbj1jk5phwd8" path="res://assets/sprites/temp_sprites/animations/hurt/hurt5.png" id="18_gauol"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="18_pmw4c"]
 [ext_resource type="Texture2D" uid="uid://n06k6d6r1cdl" path="res://assets/sprites/temp_sprites/animations/death/death6.png" id="19_0fwit"]
-[ext_resource type="Script" uid="uid://u5y2fdiw2hal" path="res://scripts/components/states/fsm/state_machine_manager.gd" id="19_87p1a"]
-[ext_resource type="Script" uid="uid://daqivb4u6kdxg" path="res://scripts/components/states/body/state_idle.gd" id="20_cgk1u"]
 [ext_resource type="Texture2D" uid="uid://d24duy5iocll0" path="res://assets/sprites/temp_sprites/animations/death/death7.png" id="20_ga67b"]
-[ext_resource type="Script" uid="uid://b0te6cfrhr16d" path="res://scripts/components/states/body/state_walk.gd" id="21_2e6yb"]
 [ext_resource type="Texture2D" uid="uid://bbvdxeva5dnhj" path="res://assets/sprites/temp_sprites/animations/death/death8.png" id="21_yx7n3"]
 [ext_resource type="Texture2D" uid="uid://g3arrspxhkcl" path="res://assets/sprites/temp_sprites/animations/death/death9.png" id="22_h81ms"]
-[ext_resource type="Script" uid="uid://c3tu3m67gngg" path="res://scripts/components/states/body/state_jump.gd" id="22_iokcd"]
-[ext_resource type="Script" uid="uid://byrxq87vrrm3g" path="res://scripts/components/states/body/state_fall.gd" id="23_cgk1u"]
 [ext_resource type="Texture2D" uid="uid://4r5ypo1jco42" path="res://assets/sprites/temp_sprites/animations/death/death10.png" id="23_kaor1"]
-[ext_resource type="Script" uid="uid://cjad74lqmtgq2" path="res://scripts/components/states/body/state_land.gd" id="24_2e6yb"]
 [ext_resource type="Texture2D" uid="uid://e7mg3hbkfm83" path="res://assets/sprites/temp_sprites/animations/death/death11.png" id="24_gn0dr"]
 [ext_resource type="Texture2D" uid="uid://bmpw1uahu0uh2" path="res://assets/sprites/temp_sprites/animations/death/death12.png" id="25_mj8uh"]
 [ext_resource type="Texture2D" uid="uid://c68bhd2raivdw" path="res://assets/sprites/temp_sprites/animations/death/death13.png" id="26_u8ijs"]
@@ -59,12 +53,8 @@
 [ext_resource type="Texture2D" uid="uid://8egvr8r3e7cp" path="res://assets/sprites/temp_sprites/animations/death/death15.png" id="28_oer6b"]
 [ext_resource type="Texture2D" uid="uid://b0apdueppkq48" path="res://assets/sprites/temp_sprites/animations/death/death16.png" id="29_tga3u"]
 [ext_resource type="Texture2D" uid="uid://cgbjfc4spfw38" path="res://assets/sprites/temp_sprites/animations/death/death17.png" id="30_iopvq"]
-[ext_resource type="Script" uid="uid://d2fac1mea5e51" path="res://scripts/components/states/body/state_attack.gd" id="42_bqkr6"]
-[ext_resource type="Script" uid="uid://b3ivu1dymfrf2" path="res://scripts/components/states/mind/ai_patrol.gd" id="42_e3h6b"]
-[ext_resource type="Script" uid="uid://bdasamsw04prn" path="res://scripts/components/states/mind/ai_chase.gd" id="43_gauol"]
-[ext_resource type="Script" uid="uid://s7otyxm0u08l" path="res://scripts/components/states/body/state_hurt.gd" id="43_micol"]
-[ext_resource type="Script" uid="uid://ouwamt7imshm" path="res://scripts/components/states/mind/ai_wait.gd" id="44_bqkr6"]
-[ext_resource type="Script" uid="uid://dq3l5mc8yavpn" path="res://scripts/components/states/body/state_collapse.gd" id="62_xgnly"]
+[ext_resource type="PackedScene" uid="uid://dv65al7lyd1yu" path="res://assets/prefabs/body_fsm.tscn" id="54_0mswf"]
+[ext_resource type="PackedScene" uid="uid://80u5tweb504v" path="res://assets/prefabs/mind_fsm.tscn" id="55_pvevh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwwtt"]
 radius = 16.0
@@ -303,45 +293,9 @@ position = Vector2(0.5, -0.5)
 shape = SubResource("RectangleShape2D_xgnly")
 debug_color = Color(0.65520483, 0.5173877, 0.017607192, 0.41960785)
 
-[node name="BodyFSM" type="Node" parent="." unique_id=673288324 node_paths=PackedStringArray("initial_state")]
-script = ExtResource("19_87p1a")
-initial_state = NodePath("Idle")
+[node name="BodyFSM" parent="." unique_id=1732092856 instance=ExtResource("54_0mswf")]
 
-[node name="Idle" type="Node" parent="BodyFSM" unique_id=1618799135]
-script = ExtResource("20_cgk1u")
-
-[node name="Walk" type="Node" parent="BodyFSM" unique_id=394249899]
-script = ExtResource("21_2e6yb")
-
-[node name="Jump" type="Node" parent="BodyFSM" unique_id=1140711552]
-script = ExtResource("22_iokcd")
-
-[node name="Fall" type="Node" parent="BodyFSM" unique_id=320626992]
-script = ExtResource("23_cgk1u")
-
-[node name="Land" type="Node" parent="BodyFSM" unique_id=2106276350]
-script = ExtResource("24_2e6yb")
-
-[node name="Attack" type="Node" parent="BodyFSM" unique_id=568537539]
-script = ExtResource("42_bqkr6")
-
-[node name="Hurt" type="Node" parent="BodyFSM" unique_id=661003413]
-script = ExtResource("43_micol")
-
-[node name="Collapse" type="Node" parent="BodyFSM" unique_id=1581546059]
-script = ExtResource("62_xgnly")
-
-[node name="MindFSM" type="Node" parent="." unique_id=181239076]
-script = ExtResource("19_87p1a")
-
-[node name="Patrol" type="Node" parent="MindFSM" unique_id=939365722]
-script = ExtResource("42_e3h6b")
-
-[node name="Chase" type="Node" parent="MindFSM" unique_id=1972880416]
-script = ExtResource("43_gauol")
-
-[node name="Wait" type="Node" parent="MindFSM" unique_id=1680931978]
-script = ExtResource("44_bqkr6")
+[node name="MindFSM" parent="." unique_id=1906764199 instance=ExtResource("55_pvevh")]
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
 [connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]

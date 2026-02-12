@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dv65al7lyd1yu"]
+
+[ext_resource type="Script" uid="uid://u5y2fdiw2hal" path="res://scripts/components/states/fsm/state_machine_manager.gd" id="1_b4ir7"]
+[ext_resource type="Script" uid="uid://daqivb4u6kdxg" path="res://scripts/components/states/body/state_idle.gd" id="2_e3ndx"]
+[ext_resource type="Script" uid="uid://b0te6cfrhr16d" path="res://scripts/components/states/body/state_walk.gd" id="3_pmaq5"]
+[ext_resource type="Script" uid="uid://c3tu3m67gngg" path="res://scripts/components/states/body/state_jump.gd" id="4_m5gjr"]
+[ext_resource type="Script" uid="uid://byrxq87vrrm3g" path="res://scripts/components/states/body/state_fall.gd" id="5_t0shk"]
+[ext_resource type="Script" uid="uid://cjad74lqmtgq2" path="res://scripts/components/states/body/state_land.gd" id="6_7bksr"]
+[ext_resource type="Script" uid="uid://d2fac1mea5e51" path="res://scripts/components/states/body/state_attack.gd" id="7_cidbf"]
+[ext_resource type="Script" uid="uid://s7otyxm0u08l" path="res://scripts/components/states/body/state_hurt.gd" id="8_pn2qs"]
+[ext_resource type="Script" uid="uid://dq3l5mc8yavpn" path="res://scripts/components/states/body/state_collapse.gd" id="9_hxem5"]
+
+[node name="BodyFSM" type="Node" unique_id=1732092856 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_b4ir7")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="." unique_id=577724551]
+script = ExtResource("2_e3ndx")
+
+[node name="Walk" type="Node" parent="." unique_id=36242944]
+script = ExtResource("3_pmaq5")
+
+[node name="Jump" type="Node" parent="." unique_id=962411153]
+script = ExtResource("4_m5gjr")
+
+[node name="Fall" type="Node" parent="." unique_id=943335923]
+script = ExtResource("5_t0shk")
+
+[node name="Land" type="Node" parent="." unique_id=771049931]
+script = ExtResource("6_7bksr")
+
+[node name="Attack" type="Node" parent="." unique_id=1186782005]
+script = ExtResource("7_cidbf")
+
+[node name="Hurt" type="Node" parent="." unique_id=2106399301]
+script = ExtResource("8_pn2qs")
+
+[node name="Collapse" type="Node" parent="." unique_id=1289829792]
+script = ExtResource("9_hxem5")
