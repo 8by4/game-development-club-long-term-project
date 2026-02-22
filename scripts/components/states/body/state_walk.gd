@@ -15,10 +15,12 @@ func physics_update(delta: float) -> void:
 			actor.velocity.x = 0
 			
 	if actor.jump_queued and actor.velocity.y >= 0:
+		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Jump")
 		return
 		
 	if actor.velocity.y > 0 or not actor.is_on_floor():
+		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Fall")
 		return
 		

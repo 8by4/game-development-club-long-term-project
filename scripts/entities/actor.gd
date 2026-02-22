@@ -34,6 +34,8 @@ var direction : float = 0.0
 var start_height : float = 0.0
 var jump_queued : bool = false
 var jump_timer : float = 0.0
+var coyote_time : float = 0.0
+var coyote_threshold : float = 0.3
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 ## --- Entity Data ---
@@ -128,6 +130,9 @@ func animation_is_finished(anim: String) -> bool:
 	
 	var frame_count = sprite.sprite_frames.get_frame_count(anim)
 	return sprite.frame == frame_count - 1
+
+func can_jump() -> bool:
+	return coyote_time < coyote_threshold
 
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return

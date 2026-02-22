@@ -13,13 +13,15 @@ func physics_update(delta: float) -> void:
 	actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
 	
 	# 2. Initiate Jump or Apply Gravity
-	if actor.jump_queued and actor.is_on_floor():
+	if actor.jump_queued and (actor.is_on_floor() or actor.can_jump()):
+		print_debug_log("SET")
 		actor.velocity.y = actor.jump_height * delta * 16
 	else:
 		actor.velocity.y += actor.gravity * delta / 4.0
 		
 	actor.jump_queued = false
 	actor.jump_timer += delta
+	actor.coyote_time = actor.coyote_threshold
 	
 	# 3. THE TRANSITION: If Y velocity is positive, we are falling
 	if actor.velocity.y > 0:

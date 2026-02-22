@@ -10,12 +10,18 @@ func physics_update(delta: float) -> void:
 	# 1. Horizontal Movement (Keep momentum)
 	var target_velocity_x = actor.direction * actor.walk_speed
 	actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
+	actor.coyote_time += delta
 	
-	# 2. Apply Gravity
+	# 2. Check coyote time and transition
+	if actor.jump_queued and actor.can_jump():
+		state_machine_manager.transition_to("Jump")
+		return
+	
+	# 3. Apply Gravity
 	actor.velocity.y += actor.gravity * delta / 2.0
 	actor.jump_queued = false
 	
-	# 3. THE TRANSITION: Look for the floor
+	# 4. THE TRANSITION: Look for the floor
 	if actor.is_on_floor():
 		var fall_distance =  actor.global_position.y - actor.start_height
 		if fall_distance > actor.land_stun_threashold:

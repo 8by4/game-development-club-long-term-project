@@ -9,6 +9,7 @@ func enter() -> void:
 
 func physics_update(_delta: float) -> void:
 	if not actor.is_on_floor():
+		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Fall")
 		return
 		
@@ -19,6 +20,7 @@ func physics_update(_delta: float) -> void:
 	
 	# Logic: If jump is pressed, jump
 	if actor.jump_queued and actor.is_on_floor():
+		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Jump")
 		return
 		
