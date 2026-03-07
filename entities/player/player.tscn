@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bbnku57i1pyud" path="res://scripts/entities/player/player.gd" id="1_symyc"]
 [ext_resource type="Script" uid="uid://cn1nwct7w3q0k" path="res://scripts/components/combat/hitbox.gd" id="2_j3ovn"]
-[ext_resource type="Texture2D" uid="uid://b2cl3n4q1nnjt" path="res://assets/sprites/temp_sprites/charater_sheet.png" id="2_sglur"]
+[ext_resource type="Texture2D" uid="uid://b2cl3n4q1nnjt" path="res://assets/sprites/temp_sprites/sprite_sheets/charater_sheet.png" id="2_sglur"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="3_bls4j"]
 [ext_resource type="Script" uid="uid://iji6kubl20t3" path="res://scripts/components/camera.gd" id="4_bls4j"]
 [ext_resource type="PackedScene" uid="uid://dv65al7lyd1yu" path="res://assets/prefabs/body_fsm.tscn" id="6_8fjmc"]
