@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cm1wb5t5jxnd3"
-path="res://.godot/imported/dust2.png-89cee34e5a159934b63eca1cfe10a5e9.ctex"
+path="res://.godot/imported/dust2.png-6195fe81e4d604329734ce80e4ffec3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/temp_sprites/animations/dust/dust2.png"
-dest_files=["res://.godot/imported/dust2.png-89cee34e5a159934b63eca1cfe10a5e9.ctex"]
+source_file="res://assets/sprites/temp_sprites/Animations/dust/dust2.png"
+dest_files=["res://.godot/imported/dust2.png-6195fe81e4d604329734ce80e4ffec3b.ctex"]
 
 [params]
 
