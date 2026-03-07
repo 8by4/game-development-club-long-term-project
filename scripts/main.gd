@@ -83,5 +83,5 @@ func game_over():
 	# 3. Now reload the game
 	get_tree().reload_current_scene()
 	
-#endregion
 """
+#endregion
