@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://blejtpw18blt3"]
 
+[ext_resource type="Script" uid="uid://cokdmm3piyv2j" path="res://scripts/ui/player_hud.gd" id="1_wcf1j"]
+
 [node name="PlayerHud" type="Control" unique_id=1905799776]
 layout_mode = 3
 anchors_preset = 15
@@ -8,3 +10,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_wcf1j")
