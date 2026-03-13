@@ -139,7 +139,7 @@ atlas = ExtResource("2_sglur")
 region = Rect2(32, 192, 32, 32)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bectd"]
-load_path = "res://.godot/imported/charater_sheet.png-558c6ebeb285323b3d65f472c77e332b.ctex"
+load_path = "res://.godot/imported/charater_sheet.png-604ae71e4be558772464c4fd2b45cd5b.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bls4j"]
 atlas = SubResource("CompressedTexture2D_bectd")
