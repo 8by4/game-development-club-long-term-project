@@ -8,7 +8,7 @@ func _ready() -> void:
 	gravity = 512
 	walk_speed = 128
 	
-	attack_power = 70
+	attack_power = 25
 	
 	ready() # from actor.gd
 

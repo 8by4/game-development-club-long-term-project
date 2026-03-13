@@ -24,6 +24,10 @@ extends CharacterBody2D
 @export var player_in_reach: bool = false
 @export var deadzone: float = 5.0
 
+@export var attack_stationary : bool = false
+@export var jump_enabled : bool = true
+@export var patrol_enabled : bool = false
+
 ## Reference to the player for pathfinding calculations
 @export var path_update_rate: float = 0.1
 @onready var nav_agent: NavigationAgent2D = get_node_or_null('NavigationAgent2D')
@@ -43,7 +47,6 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var health : int = 100
 @export var attack_power : int = 10
 @export var attack_range : float = 20.0 # For AI
-@export var attack_stationary : bool = false
 @onready var hitbox: Area2D = $Hitbox 
 @onready var hurtbox: Area2D = $Hurtbox 
 @onready var hitbox_shape: CollisionShape2D = $Hitbox/HitCollisionShape2D

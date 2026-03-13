@@ -13,7 +13,7 @@ func physics_update(_delta: float) -> void:
 	if player and actor.player_in_range:
 		var d = player.global_position.x - actor.global_position.x
 		var delta_x = abs(d)
-		var delta_y = abs(actor.global_position.y - player.global_position.y)
+		var delta_y = actor.global_position.y - player.global_position.y
 		var jump_height = abs(actor.jump_height)
 		
 		if actor.body.not_state("attack"):
@@ -38,6 +38,8 @@ func physics_update(_delta: float) -> void:
 			if delta_y > jump_height / 10.0 and delta_y < jump_height:
 				actor.jump_queued = true
 				actor.body.transition_to("Jump")
+	elif actor.patrol_enabled:
+		state_machine_manager.transition_to("Patrol")
 	else:
 		# Stop moving if the player is gone
 		state_machine_manager.transition_to("Wait")
