@@ -1,11 +1,24 @@
 ## Contributors: Richard Johnson
-class_name GroundEnemy
+class_name Enemy
 extends Actor
+
+# Optional AI State Behaviors
+@export var patrol_enabled : bool = false
+
+# Player Detection and Chase
+@export var target: Player = null
+@export var player_in_range: bool = false
+@export var deadzone: float = 5.0
+
+# Pathfinding and Navigation
+@export var path_update_rate: float = 0.1
+@onready var nav_agent: NavigationAgent2D = get_node_or_null('NavigationAgent2D')
 
 func _ready() -> void:
 	ready_enemy()
 	
 func ready_enemy() -> void:
+	ai = self
 	#ready_navigation()
 	ready() # from actor.gd
 	set_variable_hitbox()

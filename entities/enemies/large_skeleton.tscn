@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddofh18fctxbv"]
 
 [ext_resource type="Texture2D" uid="uid://74lnx10eb1td" path="res://assets/sprites/temp_sprites/animation_frames/skeleton_idle/idle1.png" id="1_jw0fh"]
-[ext_resource type="Script" uid="uid://bovv2camfmhg8" path="res://scripts/entities/large_skeleton/large_skeleton.gd" id="1_xrwd6"]
+[ext_resource type="Script" uid="uid://bovv2camfmhg8" path="res://scripts/entities/enemies/heavy_enemy.gd" id="1_xrwd6"]
 [ext_resource type="Script" uid="uid://cn1nwct7w3q0k" path="res://scripts/components/combat/hitbox.gd" id="2_micol"]
 [ext_resource type="Texture2D" uid="uid://63apwy7a1sdx" path="res://assets/sprites/temp_sprites/animation_frames/skeleton_idle/idle2.png" id="2_xrwd6"]
 [ext_resource type="Texture2D" uid="uid://vojgtlhk1cnq" path="res://assets/sprites/temp_sprites/animation_frames/attack/attack1.png" id="2_ycmpr"]

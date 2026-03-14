@@ -7,30 +7,17 @@ extends CharacterBody2D
 
 ## --- Golden Metrics (Editable in Inspector) ---
 @export_group("Movement Metrics")
-@export var walk_speed: float = 100.0
-@export var run_speed: float = 200.0
-@export var jump_height: float = -400.0
-@export var acceleration: float = 1200.0
+@export var walk_speed : float = 100.0
+@export var run_speed : float = 200.0
+@export var jump_height : float = -400.0
+@export var acceleration : float = 1200.0
 #@export var friction: float = 800.0
 
 ## The variable we use to toggle AI behavior
 @export_group("AI Settings")
+@export var ai : Enemy = null
 @onready var mind: StateMachineManager = get_node_or_null('MindFSM')
-@export var ai : bool = true
-@export var chase : bool = false
 @onready var player_detection = get_node_or_null('PlayerDetection')
-@export var target: Player = null
-@export var player_in_range: bool = false
-@export var player_in_reach: bool = false
-@export var deadzone: float = 5.0
-
-@export var attack_stationary : bool = false
-@export var jump_enabled : bool = true
-@export var patrol_enabled : bool = false
-
-## Reference to the player for pathfinding calculations
-@export var path_update_rate: float = 0.1
-@onready var nav_agent: NavigationAgent2D = get_node_or_null('NavigationAgent2D')
 
 ## --- Body State Data ---
 @onready var body: StateMachineManager = $BodyFSM
@@ -55,6 +42,18 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hitbox_min_width : float = 0.0
 @onready var hitbox_variable : bool = false
 @export var land_stun_threashold : float = 300.0
+
+## --- Abilities ---
+@export var indestructible : bool = false
+@export var knockback_enabled : bool = true
+@export var attack_uninterruptible : bool = false
+@export var attack_stationary : bool = false
+@export var fall_attack : bool = false
+@export var jump_attack : bool = false
+@export var jump_enabled : bool = false
+@export var fly_enabled : bool = false
+@export var fly_always : bool = false
+
 var knockback_direction : int = 0
 var collapsed : bool = false
 
@@ -135,15 +134,20 @@ func animation_is_finished(anim: String) -> bool:
 	return sprite.frame == frame_count - 1
 
 func can_jump() -> bool:
-	return coyote_time < coyote_threshold
+	return (jump_enabled == true) and (coyote_time < coyote_threshold)
 
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
+	if body.is_state("Hurt"): return
 	
-	health -= amount
+	if indestructible == false:
+		health -= amount
+		if health <= 0:
+			collapse()
+			return
 	
-	if health <= 0:
-		collapse()
+	if body.is_state("Attack") and attack_uninterruptible:
+		pass
 	else:
 		body.transition_to("Hurt")
 

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cmebfj1ovhbsm" path="res://assets/sprites/temp_sprites/props1.png" id="2_paw1w"]
 [ext_resource type="PackedScene" uid="uid://ddofh18fctxbv" path="res://entities/enemies/large_skeleton.tscn" id="3_j6w7d"]
 [ext_resource type="PackedScene" uid="uid://dy38vgb5rwiup" path="res://entities/enemies/crab.tscn" id="3_x4b8f"]
+[ext_resource type="PackedScene" uid="uid://xacvi83ho0ld" path="res://entities/enemies/golem.tscn" id="4_tmr53"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p835"]
 size = Vector2(2048, 20)
@@ -2747,26 +2748,12 @@ tile_set = SubResource("TileSet_x4b8f")
 
 [node name="LargeSkeleton" parent="." unique_id=1043108153 instance=ExtResource("3_j6w7d")]
 position = Vector2(797, 481)
-walk_speed = null
-run_speed = null
-jump_height = null
-acceleration = null
-ai = null
-chase = null
-player_in_range = null
-player_in_reach = null
-deadzone = null
-path_update_rate = null
-max_health = null
-health = null
-attack_power = null
-attack_range = null
-attack_stationary = null
-jump_enabled = null
-land_stun_threashold = null
 
 [node name="Crab" parent="." unique_id=242127989 instance=ExtResource("3_x4b8f")]
 position = Vector2(599, 333)
+
+[node name="Golem" parent="." unique_id=2056629210 instance=ExtResource("4_tmr53")]
+position = Vector2(1183, 194)
 
 [node name="Player" parent="." unique_id=1237976974 instance=ExtResource("1_2venv")]
 position = Vector2(911, 493)

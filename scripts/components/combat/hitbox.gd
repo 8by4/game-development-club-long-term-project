@@ -24,8 +24,6 @@ func _on_area_entered(area: Area2D) -> void:
 		return # invisible for a short time while already hurt
 	
 	# Calculate direction for knockback
-#	var impact_dir = (victim.global_position - attacker.global_position).normalized()
-	# We flip the X force based on which way the actor is facing
 	victim.knockback_direction = 1 if attacker.sprite.flip_h else -1	
 	
 	victim.take_damage(attacker.attack_power, attacker.global_position)

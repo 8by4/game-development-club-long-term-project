@@ -32,7 +32,7 @@ func physics_update(_delta: float) -> void:
 		
 		if actor.attack_stationary and actor.body.is_state("attack"):
 			pass
-		else:
+		elif actor.jump_enabled:
 			# Allow the AI to do basic jumps.
 			# Navigation will require 'smart' jumping.
 			if delta_y > jump_height / 10.0 and delta_y < jump_height:

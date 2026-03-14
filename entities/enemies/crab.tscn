@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://dy38vgb5rwiup"]
 
-[ext_resource type="Script" uid="uid://bxa6bfe4b7bfg" path="res://scripts/entities/crab/crab.gd" id="1_7wdkx"]
+[ext_resource type="Script" uid="uid://bxa6bfe4b7bfg" path="res://scripts/entities/enemies/light_enemy.gd" id="1_7wdkx"]
 [ext_resource type="Texture2D" uid="uid://2ww5e6c5frtv" path="res://assets/sprites/temp_sprites/sprite_sheets/crab/crab_full.png" id="2_l42ek"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="52_nqbp7"]
 [ext_resource type="Script" uid="uid://cn1nwct7w3q0k" path="res://scripts/components/combat/hitbox.gd" id="53_nbjve"]
 [ext_resource type="PackedScene" uid="uid://dv65al7lyd1yu" path="res://assets/prefabs/body_fsm.tscn" id="54_04hfy"]
 [ext_resource type="PackedScene" uid="uid://80u5tweb504v" path="res://assets/prefabs/mind_fsm.tscn" id="55_hlk1k"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwwtt"]
-height = 28.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l42ek"]
+size = Vector2(20, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kmq5"]
 atlas = ExtResource("2_l42ek")
@@ -210,7 +210,7 @@ animations = [{
 radius = 142.00352
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_micol"]
-size = Vector2(11, 11.5)
+size = Vector2(11, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xgnly"]
 size = Vector2(22, 13)
@@ -220,12 +220,12 @@ collision_layer = 8
 script = ExtResource("1_7wdkx")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1919799425]
-shape = SubResource("CapsuleShape2D_mwwtt")
+shape = SubResource("RectangleShape2D_l42ek")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
-position = Vector2(4, -10)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
 animation = &"attack"
+offset = Vector2(3, -10)
 script = ExtResource("52_nqbp7")
 
 [node name="PlayerDetection" type="Area2D" parent="." unique_id=1556969930]
@@ -241,7 +241,6 @@ collision_mask = 4
 script = ExtResource("53_nbjve")
 
 [node name="HitCollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1451677516]
-position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_micol")
 debug_color = Color(0.988113, 0.06689725, 0.21971399, 0.41960785)
 

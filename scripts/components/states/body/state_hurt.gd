@@ -14,7 +14,14 @@ func enter() -> void:
 	actor.blink(1.5, 0.1)
 	
 	# 1. Apply Knockback
-	actor.velocity = Vector2(knockback_force.x * actor.knockback_direction, knockback_force.y)  
+	if actor.knockback_enabled:
+		var x = knockback_force.x * actor.knockback_direction
+		var v = Vector2(x, knockback_force.y)  
+		
+		if actor.indestructible:
+			actor.velocity = v / 8.0
+		else:
+			actor.velocity = v
 	
 	# 2. Reset timer
 	timer = stun_duration

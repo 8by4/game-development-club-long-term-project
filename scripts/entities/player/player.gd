@@ -3,12 +3,27 @@ class_name Player
 extends Actor
 
 func _ready() -> void:
-	# Overrides the Actor.gd default
-	ai = false
+	# Attributes
+	max_health = 100
+	health = 100
+	attack_power = 25
+	
+	# Abilities
+	indestructible = false
+	knockback_enabled = true
+	attack_uninterruptible = false
+	attack_stationary = false
+	fall_attack = true
+	jump_attack = true
+	jump_enabled = true
+	fly_enabled = false
+	fly_always = false
+	ai = null
+	
+	# Movement
 	gravity = 512
 	walk_speed = 128
-	
-	attack_power = 25
+	jump_height = -400
 	
 	ready() # from actor.gd
 
@@ -19,7 +34,7 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	# Queue the jump action
-	if event.is_action_pressed("jump"):
+	if event.is_action_pressed("jump") and (jump_enabled == true):
 		jump_queued = true
 		
 		# Allow for variable jump heights:
@@ -30,8 +45,12 @@ func _input(event: InputEvent) -> void:
 			velocity.y *= dynamic_cutoff
 	
 	if event.is_action_pressed("action"):
-		body.transition_to("Attack")
-		return
+		if body.is_state("Jump") and jump_attack == false:
+			pass
+		elif body.is_state("Fall") and fall_attack == false:
+			pass
+		else:
+			body.transition_to("Attack")
 		
 #	if event.is_action_pressed("dash"):
 #		state_machine.transition_to("Dash")
