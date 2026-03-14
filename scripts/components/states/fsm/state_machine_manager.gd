@@ -6,6 +6,7 @@ extends Node
 @export var initial_state : State
 
 var current_state : State
+var previous_state : State
 var states : Dictionary = {}
 
 func _ready() -> void:
@@ -21,6 +22,7 @@ func _ready() -> void:
 	if initial_state:
 		current_state = initial_state
 		current_state.enter()
+		previous_state = null
 
 func _process(delta: float) -> void:
 	update(delta)
@@ -46,12 +48,20 @@ func transition_to(state_name: String) -> void:
 	
 	if current_state:
 		current_state.exit()
-		
+	
 	new_state.enter()
+	previous_state = current_state
 	current_state = new_state
 
 func get_state() -> String:
 	return current_state.name.to_lower();
+
+func get_previous_state() -> String:
+	if previous_state == null: return "None"
+	return previous_state.name.to_lower();
+
+func previous_state_was(state: String) -> bool:
+	return state.to_lower() == get_previous_state()
 
 func is_state(state: String) -> bool:
 	return state.to_lower() == get_state()

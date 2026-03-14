@@ -57,6 +57,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var fly_always : bool = false
 
 var knockback_direction : int = 0
+var knockback_scale : float = 1.0
 var collapsed : bool = false
 
 func _ready() -> void:
@@ -90,30 +91,27 @@ func update_hitbox_width() -> void:
 	
 	# 1. Normalize progress (0.0 at start, 1.0 at last frame)
 	var progress = float(current) / float(frames - 1)
-	
-	# 2. Ping-pong the progress
-	#var weight = 1.0 - abs(2.0 * (progress - 0.5))
-	
-	var weight = 0.0
-	
-	if progress <= 0.5:
-		# Ramp up: 0.0 to 1.0 over the first half
-		weight = remap(progress, 0.0, 0.5, 0.0, 1.0)
-	elif progress < 0.75:
-		# Plateau: Stay at max width for this window
-		weight = 1.0
-	else:
-		# Ramp down: 1.0 back to 0.0 over the last 25%
-		weight = remap(progress, 0.75, 1.0, 1.0, 0.0)
-	
-	# Safety clamp to ensure we never go below 0 or above 1
-	weight = clamp(weight, 0.0, 1.0)
-	
+	# 2. Find the weight based on progress
+	var weight = compute_linear_weight(progress, 0.75)
 	# 3. Interpolate the width
 	var current_width = lerp(hitbox_min_width, hitbox_max_width, weight)
 	
 	# 4. Apply to shape
 	set_hitbox_width(current_width)
+
+func compute_linear_weight(x: float, bias: float) -> float:
+	var w = 0.0
+	bias = clamp(bias, 0.5, 0.95)
+	
+	if x <= 0.5:
+		w = remap(x, 0.0, 0.5, 0.0, 1.0)
+	elif x <= bias:
+		w = 1.0
+	else:
+		w = remap(x, bias, 1.0, 1.0, 0.0)
+	
+	# Safety clamp to ensure we never go below 0 or above 1
+	return clamp(w, 0.0, 1.0)
 
 func _process(delta: float) -> void:
 	update(delta)
@@ -133,7 +131,7 @@ func physics_update(delta: float) -> void:
 		sprite.flip_h = true
 	
 	if body: body.physics_update(delta)
-		
+	
 	move_and_slide()
 
 func play_animation(anim_name: String) -> void:
@@ -152,7 +150,7 @@ func animation_is_finished(anim: String) -> bool:
 	return sprite.frame == frame_count - 1
 
 func can_jump() -> bool:
-	return (jump_enabled == true) and (coyote_time < coyote_threshold)
+	return jump_enabled and (coyote_time < coyote_threshold)
 
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
@@ -161,17 +159,13 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if not indestructible:
 		health -= amount
 		if health <= 0:
-			collapse()
-			return
+			collapsed = true
 	
 	if body.is_state("Attack") and attack_uninterruptible:
 		pass
 	else:
+		knockback_scale = (amount / 25.0) * 0.5 + 0.5
 		body.transition_to("Hurt")
-
-func collapse() -> void:
-	collapsed = true
-	body.transition_to("Collapse")
 
 func revive() -> void:
 	health = max_health

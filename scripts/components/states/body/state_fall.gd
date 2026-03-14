@@ -8,8 +8,12 @@ func enter() -> void:
 
 func physics_update(delta: float) -> void:
 	# 1. Horizontal Movement (Keep momentum)
-	var target_velocity_x = actor.direction * actor.walk_speed
-	actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
+	if actor.knockback_enabled and actor.body.previous_state_was("Hurt"):
+		pass # no control during knockback
+	else:
+		var target_velocity_x = actor.direction * actor.walk_speed
+		actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
+	
 	actor.coyote_time += delta
 	
 	# 2. Check coyote time and transition
@@ -23,6 +27,10 @@ func physics_update(delta: float) -> void:
 	
 	# 4. THE TRANSITION: Look for the floor
 	if actor.is_on_floor():
+		if actor.collapsed:
+			actor.body.transition_to("Collapse")
+			return
+		
 		var fall_distance =  actor.global_position.y - actor.start_height
 		if fall_distance > actor.land_stun_threashold:
 			state_machine_manager.transition_to("Land")

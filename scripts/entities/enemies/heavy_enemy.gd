@@ -6,7 +6,7 @@ func _ready() -> void:
 	max_health = 75
 	health = 75
 	attack_power = 25
-	attack_range = 30.0
+	attack_range = 32.0
 	
 	# Abilities
 	move_enabled = true
