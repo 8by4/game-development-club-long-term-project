@@ -98,15 +98,13 @@ func update_hitbox_width() -> void:
 	
 	if progress <= 0.5:
 		# Ramp up: 0.0 to 1.0 over the first half
-		weight = 2.0 * progress
+		weight = remap(progress, 0.0, 0.5, 0.0, 1.0)
 	elif progress < 0.75:
 		# Plateau: Stay at max width for this window
 		weight = 1.0
 	else:
 		# Ramp down: 1.0 back to 0.0 over the last 25%
-		# (1.0 - progress) gives us the remaining distance to the end
-		# Dividing by 0.25 scales that distance back to a 1.0 to 0.0 range
-		weight = (1.0 - progress) / 0.25
+		weight = remap(progress, 0.75, 1.0, 1.0, 0.0)
 	
 	# Safety clamp to ensure we never go below 0 or above 1
 	weight = clamp(weight, 0.0, 1.0)
