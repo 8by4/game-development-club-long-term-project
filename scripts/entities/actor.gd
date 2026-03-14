@@ -101,10 +101,10 @@ func update_hitbox_width() -> void:
 
 func compute_weight(progress: float, hold: float, shake_intensity: float) -> float:
 	var weight = 0.0
-	hold = clamp(hold, 0.5, 0.95)
+	hold = clamp(hold, 0.6, 0.95)
 	
-	if progress <= 0.5:
-		weight = remap(progress, 0.0, 0.5, 0.0, 1.0)
+	if progress <= 0.6:
+		weight = remap(progress, 0.0, 0.6, 0.0, 1.0)
 	elif progress <= hold:
 		weight = 1.0 + randf_range(-shake_intensity, shake_intensity)
 	else:
