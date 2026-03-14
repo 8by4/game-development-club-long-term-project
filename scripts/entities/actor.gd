@@ -92,26 +92,26 @@ func update_hitbox_width() -> void:
 	# 1. Normalize progress (0.0 at start, 1.0 at last frame)
 	var progress = float(current) / float(frames - 1)
 	# 2. Find the weight based on progress
-	var weight = compute_linear_weight(progress, 0.75)
+	var weight = compute_weight(progress, 0.75, 0.1)
 	# 3. Interpolate the width
 	var current_width = lerp(hitbox_min_width, hitbox_max_width, weight)
 	
 	# 4. Apply to shape
 	set_hitbox_width(current_width)
 
-func compute_linear_weight(x: float, bias: float) -> float:
-	var w = 0.0
-	bias = clamp(bias, 0.5, 0.95)
+func compute_weight(progress: float, hold: float, shake_intensity: float) -> float:
+	var weight = 0.0
+	hold = clamp(hold, 0.5, 0.95)
 	
-	if x <= 0.5:
-		w = remap(x, 0.0, 0.5, 0.0, 1.0)
-	elif x <= bias:
-		w = 1.0
+	if progress <= 0.5:
+		weight = remap(progress, 0.0, 0.5, 0.0, 1.0)
+	elif progress <= hold:
+		weight = 1.0 + randf_range(-shake_intensity, shake_intensity)
 	else:
-		w = remap(x, bias, 1.0, 1.0, 0.0)
+		progress = remap(progress, hold, 1.0, 1.0, 0.0)
 	
 	# Safety clamp to ensure we never go below 0 or above 1
-	return clamp(w, 0.0, 1.0)
+	return clamp(weight, 0.0, 1.0)
 
 func _process(delta: float) -> void:
 	update(delta)
@@ -156,6 +156,11 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
 	if body.is_state("Hurt"): return
 	
+	if not ai and amount >= 50:
+		var camera = get_viewport().get_camera_2d()
+		var shake_strength = remap(amount, 50.0, 100.0, 5.0, 10.0)
+		camera.apply_shake(shake_strength)
+		
 	if not indestructible:
 		health -= amount
 		if health <= 0:
