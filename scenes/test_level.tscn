@@ -4,7 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cmebfj1ovhbsm" path="res://assets/sprites/temp_sprites/props1.png" id="2_paw1w"]
 [ext_resource type="PackedScene" uid="uid://ddofh18fctxbv" path="res://entities/enemies/large_skeleton.tscn" id="3_j6w7d"]
 [ext_resource type="PackedScene" uid="uid://dy38vgb5rwiup" path="res://entities/enemies/crab.tscn" id="3_x4b8f"]
+[ext_resource type="PackedScene" uid="uid://bkjypjkr8a7ws" path="res://entities/enemies/demon.tscn" id="4_88ety"]
 [ext_resource type="PackedScene" uid="uid://xacvi83ho0ld" path="res://entities/enemies/golem.tscn" id="4_tmr53"]
+[ext_resource type="Script" uid="uid://bypdmih8tv273" path="res://scripts/entities/enemies/large_slow_enemy.gd" id="5_ahbqi"]
+[ext_resource type="Script" uid="uid://chn7n2rgg76fu" path="res://scripts/entities/enemies/large_fixed_enemy.gd" id="7_ahbqi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p835"]
 size = Vector2(2048, 20)
@@ -2752,8 +2755,13 @@ position = Vector2(797, 481)
 [node name="Crab" parent="." unique_id=242127989 instance=ExtResource("3_x4b8f")]
 position = Vector2(599, 333)
 
+[node name="Demon" parent="." unique_id=1495329372 instance=ExtResource("4_88ety")]
+position = Vector2(1284, 187)
+script = ExtResource("5_ahbqi")
+
 [node name="Golem" parent="." unique_id=2056629210 instance=ExtResource("4_tmr53")]
-position = Vector2(1183, 194)
+position = Vector2(1494, 474)
+script = ExtResource("7_ahbqi")
 
 [node name="Player" parent="." unique_id=1237976974 instance=ExtResource("1_2venv")]
 position = Vector2(911, 493)

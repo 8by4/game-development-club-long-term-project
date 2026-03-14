@@ -210,7 +210,7 @@ animations = [{
 radius = 142.00352
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_micol"]
-size = Vector2(11, 12)
+size = Vector2(11, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xgnly"]
 size = Vector2(22, 13)
@@ -241,6 +241,7 @@ collision_mask = 4
 script = ExtResource("53_nbjve")
 
 [node name="HitCollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1451677516]
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_micol")
 debug_color = Color(0.988113, 0.06689725, 0.21971399, 0.41960785)
 

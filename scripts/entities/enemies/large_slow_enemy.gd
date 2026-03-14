@@ -6,9 +6,11 @@ func _ready() -> void:
 	max_health = 1000
 	health = 1000
 	attack_power = 50
-	attack_range = 200.0
+	attack_range = 120.0
 	
 	# Abilities
+	move_enabled = true
+	turning_enabled = true
 	indestructible = true
 	knockback_enabled = true
 	attack_uninterruptible = true
@@ -22,7 +24,7 @@ func _ready() -> void:
 	
 	# Movement
 	gravity = 768
-	walk_speed = 10
+	walk_speed = 20
 	jump_height = 0
 	
 	ready_enemy() # from enemy.gd

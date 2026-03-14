@@ -3,17 +3,17 @@ extends Enemy
 
 func _ready() -> void:
 	# Attributes
-	max_health = 75
-	health = 75
-	attack_power = 25
-	attack_range = 30.0
+	max_health = 1000
+	health = 1000
+	attack_power = 100.0
+	attack_range = 100.0
 	
 	# Abilities
-	move_enabled = true
-	turning_enabled = true
-	indestructible = false
+	move_enabled = false
+	turning_enabled = false
+	indestructible = true
 	knockback_enabled = true
-	attack_uninterruptible = false
+	attack_uninterruptible = true
 	attack_stationary = true
 	fall_attack = false
 	jump_attack = false
@@ -23,8 +23,8 @@ func _ready() -> void:
 	patrol_enabled = false
 	
 	# Movement
-	gravity = 512
-	walk_speed = 50
+	gravity = 768
+	walk_speed = 0
 	jump_height = 0
 	
 	ready_enemy() # from enemy.gd

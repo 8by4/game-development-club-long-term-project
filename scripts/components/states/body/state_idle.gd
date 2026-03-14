@@ -14,7 +14,7 @@ func physics_update(_delta: float) -> void:
 		return
 		
 	# Logic: If there is horizontal input, start walking
-	if actor.direction != 0:
+	if actor.direction != 0 and actor.move_enabled:
 		state_machine_manager.transition_to("Walk")
 		return
 	

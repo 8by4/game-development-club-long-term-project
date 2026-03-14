@@ -16,7 +16,7 @@ func physics_update(delta: float) -> void:
 		actor.update_hitbox_width()
 	
 	# 1. Allow continued horizontal movement/drift 
-	if actor.attack_stationary == false:
+	if not actor.attack_stationary:
 		var target_velocity_x = actor.direction * actor.walk_speed
 		actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
 	else:
@@ -44,8 +44,11 @@ func physics_update(delta: float) -> void:
 func transition_after_attack():
 	actor.hitbox.monitoring = false
 	
-	if actor.direction == 0:
-		state_machine_manager.transition_to("Idle")
+	if actor.direction == 0 or not actor.move_enabled:
+		if actor.velocity.y > 0:
+			state_machine_manager.transition_to("Fall")
+		else:
+			state_machine_manager.transition_to("Idle")
 		return
 	
 	if actor.is_on_floor():

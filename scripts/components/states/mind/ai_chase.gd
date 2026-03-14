@@ -3,8 +3,12 @@ extends State
 
 func enter() -> void:
 	print("LOG: Entered CHASE AI state")
-	actor.body.transition_to("Walk")
 	
+	if actor.move_enabled:
+		actor.body.transition_to("Walk")
+	else:
+		actor.body.transition_to("Idle")
+
 func physics_update(_delta: float) -> void:
 #	var player = get_tree().get_first_node_in_group("player")
 	# Simple AI: Walk toward player if seen, else 0
@@ -25,10 +29,11 @@ func physics_update(_delta: float) -> void:
 					actor.body.transition_to("Attack")
 		
 		# Set the 'intent' variable for the FSM to read
-		if delta_x > actor.deadzone:
-			actor.direction = sign(d)
-		else:
-			actor.direction = 0
+		if actor.turning_enabled:
+			if delta_x > actor.deadzone:
+				actor.direction = sign(d)
+			else:
+				actor.direction = 0
 		
 		if actor.attack_stationary and actor.body.is_state("attack"):
 			pass

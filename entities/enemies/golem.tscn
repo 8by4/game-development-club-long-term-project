@@ -197,19 +197,19 @@ region = Rect2(810, 0, 90, 64)
 [sub_resource type="SpriteFrames" id="SpriteFrames_6eu7i"]
 animations = [{
 "frames": [{
-"duration": 0.25,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_68j2i")
 }, {
-"duration": 0.25,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_d7b1a")
 }, {
-"duration": 0.25,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_4ncyh")
 }, {
-"duration": 0.5,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_y63y2")
 }, {
-"duration": 0.5,
+"duration": 0.25,
 "texture": SubResource("AtlasTexture_xbhoh")
 }, {
 "duration": 0.5,
@@ -379,6 +379,7 @@ scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
 animation = &"attack"
 offset = Vector2(0, -18.5)
+flip_h = true
 script = ExtResource("3_m3bo4")
 
 [node name="PlayerDetection" type="Area2D" parent="." unique_id=1556969930]

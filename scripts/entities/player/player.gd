@@ -9,6 +9,8 @@ func _ready() -> void:
 	attack_power = 25
 	
 	# Abilities
+	move_enabled = true
+	turning_enabled = true
 	indestructible = false
 	knockback_enabled = true
 	attack_uninterruptible = false
@@ -34,7 +36,7 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	# Queue the jump action
-	if event.is_action_pressed("jump") and (jump_enabled == true):
+	if event.is_action_pressed("jump") and jump_enabled:
 		jump_queued = true
 		
 		# Allow for variable jump heights:
@@ -58,7 +60,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	# 1. Capture continuous horizontal input (Movement Intent)
-	if collapsed == false:
+	if collapsed == false and turning_enabled:
 		direction = Input.get_axis("move_left", "move_right")
 	
 	# 2. Execute movement (The State has already modified velocity)

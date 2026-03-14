@@ -32,7 +32,7 @@ func physics_update(delta: float) -> void:
 		# entity is already moving horizontally.
 		actor.velocity = Vector2.ZERO
 
-		if actor.direction == 0:
+		if actor.direction == 0 or not actor.move_enabled:
 			state_machine_manager.transition_to("Idle")
 		else:
 			state_machine_manager.transition_to("Walk")

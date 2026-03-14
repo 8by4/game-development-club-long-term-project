@@ -44,6 +44,8 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var land_stun_threashold : float = 300.0
 
 ## --- Abilities ---
+@export var move_enabled : bool = true
+@export var turning_enabled : bool = true
 @export var indestructible : bool = false
 @export var knockback_enabled : bool = true
 @export var attack_uninterruptible : bool = false
@@ -68,9 +70,8 @@ func ready() -> void:
 	hurtbox.monitorable = true
 
 func set_variable_hitbox() -> void:
-	hitbox_max_width = hurtbox_shape.shape.size.x
-	hitbox_min_width = hitbox_max_width / 2.0
-	attack_range = 	hitbox_min_width + 5
+	hitbox_max_width = attack_range * 2.0
+	hitbox_min_width = hitbox_max_width / 4.0
 	set_hitbox_width(hitbox_min_width)
 	hitbox_variable = true
 
@@ -89,8 +90,27 @@ func update_hitbox_width() -> void:
 	
 	# 1. Normalize progress (0.0 at start, 1.0 at last frame)
 	var progress = float(current) / float(frames - 1)
-	# 2. Ping-pong the progress so 0.0 -> 0.0, 0.5 -> 1.0, 1.0 -> 0.0
-	var weight = 1.0 - abs(2.0 * (progress - 0.5))
+	
+	# 2. Ping-pong the progress
+	#var weight = 1.0 - abs(2.0 * (progress - 0.5))
+	
+	var weight = 0.0
+	
+	if progress <= 0.5:
+		# Ramp up: 0.0 to 1.0 over the first half
+		weight = 2.0 * progress
+	elif progress < 0.75:
+		# Plateau: Stay at max width for this window
+		weight = 1.0
+	else:
+		# Ramp down: 1.0 back to 0.0 over the last 25%
+		# (1.0 - progress) gives us the remaining distance to the end
+		# Dividing by 0.25 scales that distance back to a 1.0 to 0.0 range
+		weight = (1.0 - progress) / 0.25
+	
+	# Safety clamp to ensure we never go below 0 or above 1
+	weight = clamp(weight, 0.0, 1.0)
+	
 	# 3. Interpolate the width
 	var current_width = lerp(hitbox_min_width, hitbox_max_width, weight)
 	
@@ -140,7 +160,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
 	if body.is_state("Hurt"): return
 	
-	if indestructible == false:
+	if not indestructible:
 		health -= amount
 		if health <= 0:
 			collapse()
