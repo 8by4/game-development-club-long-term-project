@@ -42,6 +42,7 @@ func physics_update(delta: float) -> void:
 		return
 
 func transition_after_attack():
+	actor.set_attack_cooldown()
 	actor.hitbox.monitoring = false
 	
 	if actor.direction == 0 or not actor.move_enabled:

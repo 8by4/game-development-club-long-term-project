@@ -47,6 +47,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var move_enabled : bool = true
 @export var turning_enabled : bool = true
 @export var indestructible : bool = false
+@export var block_enabled : bool = false
 @export var knockback_enabled : bool = true
 @export var attack_uninterruptible : bool = false
 @export var attack_stationary : bool = false
@@ -56,8 +57,11 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var fly_enabled : bool = false
 @export var fly_always : bool = false
 
-var knockback_direction : int = 0
-var knockback_scale : float = 1.0
+@export var attack_cooldown : float = 0.2
+@export var attack_cooldown_timer : float = 0.0
+@export var knockback_direction : int = 0
+@export var knockback_scale : float = 1.0
+@export var fade_away_time : float = 0.7
 var collapsed : bool = false
 
 func _ready() -> void:
@@ -69,6 +73,16 @@ func ready() -> void:
 	
 	hitbox.monitoring = false
 	hurtbox.monitorable = true
+
+func set_attack_cooldown() -> void:
+	attack_cooldown_timer = attack_cooldown
+
+func can_attack_again() -> bool:
+	if body.is_state("Attack"): return false
+	if not jump_attack and body.is_state("Jump"): return false
+	if not fall_attack and body.is_state("Fall"): return false
+	if attack_stationary and not is_on_floor(): return false
+	return attack_cooldown_timer <= 0.0
 
 func set_variable_hitbox() -> void:
 	hitbox_max_width = attack_range * 2.0
@@ -130,7 +144,11 @@ func physics_update(delta: float) -> void:
 	elif direction < 0:
 		sprite.flip_h = true
 	
-	if body: body.physics_update(delta)
+	if body:
+		body.physics_update(delta)
+		
+		if not body.is_state("attack"):
+			attack_cooldown_timer -= delta
 	
 	move_and_slide()
 
@@ -148,6 +166,9 @@ func animation_is_finished(anim: String) -> bool:
 	
 	var frame_count = sprite.sprite_frames.get_frame_count(anim)
 	return sprite.frame == frame_count - 1
+
+func set_animation_last_frame(anim: String) -> void:
+	sprite.frame = sprite.sprite_frames.get_frame_count(anim) - 1
 
 func can_jump() -> bool:
 	return jump_enabled and (coyote_time < coyote_threshold)
@@ -183,8 +204,8 @@ func revive() -> void:
 	if body: body.transition_to("Idle")
 	if mind: mind.transition_to("Wait")
 	
-	if body: body.set_physics_process(true)
-	if mind: mind.set_physics_process(true)
+#	if body: body.set_physics_process(true)
+#	if mind: mind.set_physics_process(true)
 	
 	set_physics_process(true)
 	set_process(true)
@@ -196,3 +217,14 @@ func blink(duration: float, frequency: float) -> void:
 	
 	# Ensure sprite is visible when finished
 	tween.finished.connect(func(): sprite.visible = true)
+
+func fade_away() -> void:
+	var tween = create_tween().set_parallel(true)
+	var purple_tint = Color(0.1, 0.05, 0.3, 0.0)
+#	var purple_tint = Color(0.15, 0.05, 0.3, 0.0) 
+#	var purple_tint = Color(0.2, 0.1, 0.4, 0.0) 
+	
+	tween.tween_property(sprite, "self_modulate", purple_tint, fade_away_time).set_trans(Tween.TRANS_SINE)
+
+	await tween.finished
+	if ai: queue_free()

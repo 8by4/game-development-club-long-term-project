@@ -1,4 +1,5 @@
 ## Contributors: Richard Johnson
+class_name LightEnemy
 extends Enemy
 
 func _ready() -> void:
@@ -12,6 +13,7 @@ func _ready() -> void:
 	move_enabled = true
 	turning_enabled = true
 	indestructible = false
+	block_enabled = false
 	knockback_enabled = true
 	attack_uninterruptible = false
 	attack_stationary = false
@@ -26,5 +28,8 @@ func _ready() -> void:
 	gravity = 384
 	walk_speed = 100
 	jump_height = -384
+	
+	attack_cooldown = 0.5
+	fade_away_time = 0.7
 	
 	ready_enemy() # from enemy.gd

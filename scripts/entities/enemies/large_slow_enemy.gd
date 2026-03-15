@@ -1,4 +1,5 @@
 ## Contributors: Richard Johnson
+class_name LargeSlowEnemy
 extends Enemy
 
 func _ready() -> void:
@@ -12,6 +13,7 @@ func _ready() -> void:
 	move_enabled = true
 	turning_enabled = true
 	indestructible = true
+	block_enabled = false
 	knockback_enabled = true
 	attack_uninterruptible = true
 	attack_stationary = true
@@ -26,5 +28,7 @@ func _ready() -> void:
 	gravity = 768
 	walk_speed = 20
 	jump_height = 0
+	
+	attack_cooldown = 3.0
 	
 	ready_enemy() # from enemy.gd

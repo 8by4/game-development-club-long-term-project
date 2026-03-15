@@ -1,35 +1,32 @@
 ## Contributors: Richard Johnson
-class_name HeavyEnemy
+class_name FlyingEnemy
 extends Enemy
 
 func _ready() -> void:
 	# Attributes
-	max_health = 75
-	health = 75
-	attack_power = 25
-	attack_range = 32.0
+	max_health = 50
+	health = 50
+	attack_power = 10
+	attack_range = 16.0
 	
 	# Abilities
 	move_enabled = true
 	turning_enabled = true
 	indestructible = false
-	block_enabled = true
+	block_enabled = false
 	knockback_enabled = true
 	attack_uninterruptible = false
-	attack_stationary = true
+	attack_stationary = false
 	fall_attack = false
 	jump_attack = false
 	jump_enabled = false
-	fly_enabled = false
-	fly_always = false
+	fly_enabled = true
+	fly_always = true
 	patrol_enabled = false
 	
 	# Movement
 	gravity = 512
-	walk_speed = 50
+	walk_speed = 75
 	jump_height = 0
 	
-	attack_cooldown = 1.0
-	fade_away_time = 1.2
-	
-	ready_enemy() # from enemy.gd
+	fade_away_time = 0.7

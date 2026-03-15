@@ -12,6 +12,7 @@ func _ready() -> void:
 	move_enabled = true
 	turning_enabled = true
 	indestructible = false
+	block_enabled = true
 	knockback_enabled = true
 	attack_uninterruptible = false
 	attack_stationary = false
@@ -26,6 +27,9 @@ func _ready() -> void:
 	gravity = 512
 	walk_speed = 128
 	jump_height = -400
+	
+	attack_cooldown = 0.0
+	fade_away_time = 2.0
 	
 	ready() # from actor.gd
 
@@ -60,11 +64,9 @@ func handle_input_jump(event: InputEvent) -> void:
 
 func handle_input_action(event: InputEvent) -> void:
 	if event.is_action_pressed("action"):
-		if body.is_state("Jump") and jump_attack == false:
-			pass
-		elif body.is_state("Fall") and fall_attack == false:
-			pass
-		else:
+		# Context sensitive logic goes here
+		
+		if can_attack_again():
 			body.transition_to("Attack")
 
 func _physics_process(delta: float) -> void:

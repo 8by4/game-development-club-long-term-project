@@ -14,19 +14,20 @@ func physics_update(_delta: float) -> void:
 	# Simple AI: Walk toward player if seen, else 0
 	var player = actor.target
 	
-	if player and actor.player_in_range:
+	if player and player.collapsed:
+		actor.disengage_target()
+		actor.body.transition_to("Idle")
+		actor.mind.transition_to("Wait")
+	elif player and actor.player_in_range:
 		var d = player.global_position.x - actor.global_position.x
 		var delta_x = abs(d)
 		var delta_y = actor.global_position.y - player.global_position.y
 		var jump_height = abs(actor.jump_height)
 		
-		if actor.body.not_state("attack"):
-			if actor.attack_stationary and not actor.is_on_floor():
-				pass
-			else:
-				var distance = actor.global_position.distance_to(player.global_position)
-				if distance <= actor.attack_range:
-					actor.body.transition_to("Attack")
+		if actor.can_attack_again():
+			var distance = actor.global_position.distance_to(player.global_position)
+			if distance <= actor.attack_range:
+				actor.body.transition_to("Attack")
 		
 		# Set the 'intent' variable for the FSM to read
 		if actor.turning_enabled:

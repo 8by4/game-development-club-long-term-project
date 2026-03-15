@@ -28,10 +28,9 @@ func enter() -> void:
 	actor.collision_layer = 0
 
 func physics_update(_delta: float) -> void:
-	if not actor.sprite.is_playing() or actor.sprite.animation != "collapse":
-		# Stop the _physics_process and _process functions
-		actor.set_physics_process(false)
-		actor.set_process(false)
-		
-		if actor.body:
-			actor.body.set_physics_process(false)
+	await actor.sprite.animation_finished
+	actor.sprite.stop()
+	actor.set_animation_last_frame("collapse")
+	actor.set_physics_process(false)
+	actor.set_process(false)
+	actor.fade_away()

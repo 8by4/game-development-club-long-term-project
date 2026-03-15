@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cmebfj1ovhbsm" path="res://assets/sprites/temp_sprites/props1.png" id="2_paw1w"]
 [ext_resource type="PackedScene" uid="uid://ddofh18fctxbv" path="res://entities/enemies/large_skeleton.tscn" id="3_j6w7d"]
 [ext_resource type="PackedScene" uid="uid://dy38vgb5rwiup" path="res://entities/enemies/crab.tscn" id="3_x4b8f"]
+[ext_resource type="PackedScene" uid="uid://d2rj62hptj1nl" path="res://entities/enemies/blight_bulb.tscn" id="4_7gix3"]
 [ext_resource type="PackedScene" uid="uid://bkjypjkr8a7ws" path="res://entities/enemies/demon.tscn" id="4_88ety"]
 [ext_resource type="PackedScene" uid="uid://xacvi83ho0ld" path="res://entities/enemies/golem.tscn" id="4_tmr53"]
 [ext_resource type="Script" uid="uid://bypdmih8tv273" path="res://scripts/entities/enemies/large_slow_enemy.gd" id="5_ahbqi"]
@@ -2754,6 +2755,8 @@ position = Vector2(797, 481)
 
 [node name="Crab" parent="." unique_id=242127989 instance=ExtResource("3_x4b8f")]
 position = Vector2(599, 333)
+
+[node name="BlightBulb" parent="." unique_id=1854826014 instance=ExtResource("4_7gix3")]
 
 [node name="Demon" parent="." unique_id=1495329372 instance=ExtResource("4_88ety")]
 position = Vector2(1284, 187)
