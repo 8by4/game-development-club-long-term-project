@@ -14,9 +14,16 @@ func enter_attack_window():
 
 func get_edge_pos(attacker: Actor, target: Actor) -> Vector2:
 	var dir = (target.global_position - attacker.global_position).normalized()
-	var reach = attacker.hitbox_shape.shape.size.x / 2.0
-	return attacker.global_position + (dir * reach)
 	
+	# The point where the attacker's reach ends
+	var attacker_edge = attacker.hitbox_shape.shape.size.x / 2.0
+	
+	# Optional: If you want it on the ENEMY'S surface instead:
+	# var target_edge = target.collision_shape.shape.radius # If using circles
+	# return target.global_position - (dir * target_edge)
+	
+	return attacker.global_position + (dir * attacker_edge)
+
 func _on_area_entered(area: Area2D) -> void:
 	var attacker = get_parent()
 	
