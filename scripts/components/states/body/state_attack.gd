@@ -15,6 +15,14 @@ func physics_update(delta: float) -> void:
 	if actor.hitbox_variable:
 		actor.update_hitbox_width()
 	
+	if actor.deflected and not actor.repelled:
+		var current_anim = actor.sprite.animation
+		var total_frames = actor.sprite.sprite_frames.get_frame_count(current_anim)
+	
+		if actor.sprite.frame >= (total_frames / 2.5):
+			actor.repelled = true
+			bounce_attack()
+	
 	# 1. Allow continued horizontal movement/drift 
 	if not actor.attack_stationary:
 		var target_velocity_x = actor.direction * actor.walk_speed
@@ -41,9 +49,37 @@ func physics_update(delta: float) -> void:
 		transition_after_attack()
 		return
 
+func bounce_attack():
+	# 1. Capture the frame where the hit occurred
+	var impact_frame = actor.sprite.frame
+	
+	# 2. Freeze the animation (Hitstop)
+	actor.sprite.pause() 
+	
+	# 3. Micro-delay to sell the impact 
+	# This 'sticks' the weapon to the indestructible enemy for a moment
+	await get_tree().create_timer(0.08).timeout
+	
+	# 4. Reverse the animation
+	# Setting a negative speed_scale plays the current animation backward
+	actor.sprite.speed_scale = -1.5 
+	actor.sprite.play() 
+	
+	# 5. Clean up: Stop reversing once we reach the start
+	# We can use a signal to reset the speed for the next normal attack
+	if not actor.sprite.animation_finished.is_connected(_on_bounce_finished):
+		actor.sprite.animation_finished.connect(_on_bounce_finished, CONNECT_ONE_SHOT)
+
+func _on_bounce_finished():
+	actor.sprite.stop()
+	actor.sprite.speed_scale = 1.0 # Reset to forward play
+	transition_after_attack()
+
 func transition_after_attack():
 	actor.set_attack_cooldown()
 	actor.hitbox.monitoring = false
+	actor.deflected = false
+	actor.repelled = false
 	
 	if actor.ai and actor.no_more_target():
 		actor.disengage_target()

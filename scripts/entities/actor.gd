@@ -5,6 +5,9 @@ extends CharacterBody2D
 # This reference will now be shared by all children (Player/Enemies)
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+# Generated assets
+@export var spark_scene: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
+
 ## --- Golden Metrics (Editable in Inspector) ---
 @export_group("Movement Metrics")
 @export var walk_speed : float = 100.0
@@ -62,7 +65,14 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var knockback_direction : int = 0
 @export var knockback_scale : float = 1.0
 @export var fade_away_time : float = 0.7
+
+var blocking : bool = false
+var deflected : bool = false
+var repelled: bool = false
 var collapsed : bool = false
+
+# Visual Effects
+var glow_tween : Tween
 
 func _ready() -> void:
 	ready()
@@ -73,6 +83,9 @@ func ready() -> void:
 	
 	hitbox.monitoring = false
 	hurtbox.monitorable = true
+	
+	if sprite and sprite.material:
+		sprite.material = sprite.material.duplicate()
 
 func set_attack_cooldown() -> void:
 	attack_cooldown_timer = attack_cooldown
@@ -217,6 +230,41 @@ func blink(duration: float, frequency: float) -> void:
 	
 	# Ensure sprite is visible when finished
 	tween.finished.connect(func(): sprite.visible = true)
+
+func chrome_glow() -> bool:
+	if not sprite or not sprite.material is ShaderMaterial:
+		return false
+		
+	var mat = sprite.material as ShaderMaterial
+	
+	# 1. THE RESET: Kill the old animation if it's still running
+	if glow_tween:
+		glow_tween.kill()
+	
+	# 2. Reset the shader parameter to max immediately
+	# This ensures that even if the last hit was at 0.2 intensity, 
+	# it snaps back to 1.0 for the new hit.
+	mat.set_shader_parameter("hit_intensity", 1.0)
+	
+	# 3. Create a fresh tween
+	glow_tween = create_tween()
+	
+	# 4. Animate back to zero
+	# Using TRANS_EXPO or TRANS_QUART makes the 'fade' feel more metallic/snappy
+	glow_tween.tween_property(mat, "shader_parameter/hit_intensity", 0.0, 0.6)\
+		.set_trans(Tween.TRANS_QUART)\
+		.set_ease(Tween.EASE_OUT)
+	
+	return true
+
+func spawn_spark(pos: Vector2, target_pos: Vector2):
+	var spark = spark_scene.instantiate()
+	get_tree().current_scene.add_child(spark)
+	spark.global_position = pos
+	
+	# Look away from the target so sparks fly toward the player/air
+	spark.look_at(target_pos)
+	spark.rotation += PI # Flip 180 degrees to face away
 
 func fade_away() -> void:
 	var tween = create_tween().set_parallel(true)

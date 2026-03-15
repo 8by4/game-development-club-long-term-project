@@ -12,19 +12,31 @@ func enter_attack_window():
 	for area in overlapping_areas:
 		_on_area_entered(area) # Force the signal logic to run
 
+func get_edge_pos(attacker: Actor, target: Actor) -> Vector2:
+	var dir = (target.global_position - attacker.global_position).normalized()
+	var reach = attacker.hitbox_shape.shape.size.x / 2.0
+	return attacker.global_position + (dir * reach)
+	
 func _on_area_entered(area: Area2D) -> void:
 	var attacker = get_parent()
 	
 	if attacker.body.not_state("Attack"):
 		return
 	
-	var victim = area.get_parent()
+	var target = area.get_parent()
 	
-	if victim.body.is_state("Hurt"):
+	if target.indestructible or target.blocking:
+		attacker.deflected = true
+		var impact_pos = get_edge_pos(attacker, target)
+		attacker.spawn_spark(impact_pos, target.global_position)
+	else:
+		attacker.deflected = false
+	
+	if target.body.is_state("Hurt"):
 		return # invisible for a short time while already hurt
 	
 	# Calculate direction for knockback
-	victim.knockback_direction = 1 if attacker.sprite.flip_h else -1	
+	target.knockback_direction = 1 if attacker.sprite.flip_h else -1	
 	
-	victim.take_damage(attacker.attack_power, attacker.global_position)
+	target.take_damage(attacker.attack_power, attacker.global_position)
 	print("Hit connected!")

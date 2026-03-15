@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bkjypjkr8a7ws"]
 
 [ext_resource type="Script" uid="uid://bxa6bfe4b7bfg" path="res://scripts/entities/enemies/light_enemy.gd" id="1_7jn65"]
+[ext_resource type="Shader" uid="uid://bnks7tfion52n" path="res://shaders/chrome_glow.gdshader" id="2_0wq6w"]
 [ext_resource type="Texture2D" uid="uid://dq30cgst6hla4" path="res://assets/sprites/temp_sprites/sprite_sheets/demon_slime.png" id="2_7jn65"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="3_einmy"]
 [ext_resource type="Script" uid="uid://cn1nwct7w3q0k" path="res://scripts/components/combat/hitbox.gd" id="4_ebne4"]
@@ -9,6 +10,12 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l42ek"]
 size = Vector2(54, 68)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wq6w"]
+shader = ExtResource("2_0wq6w")
+shader_parameter/chrome_color = Color(0, 0.8, 1, 1)
+shader_parameter/hit_intensity = 0.0
+shader_parameter/speed = 5.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0wq6w"]
 atlas = ExtResource("2_7jn65")
@@ -476,6 +483,7 @@ script = ExtResource("1_7jn65")
 shape = SubResource("RectangleShape2D_l42ek")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
+material = SubResource("ShaderMaterial_0wq6w")
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
 animation = &"attack"

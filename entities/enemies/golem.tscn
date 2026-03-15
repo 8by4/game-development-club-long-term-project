@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bypdmih8tv273" path="res://scripts/entities/enemies/large_slow_enemy.gd" id="1_jaxyu"]
 [ext_resource type="Texture2D" uid="uid://crfkagtohdck0" path="res://assets/sprites/temp_sprites/sprite_sheets/golem/golem_1_attack.png" id="2_q5d0k"]
+[ext_resource type="Shader" uid="uid://bnks7tfion52n" path="res://shaders/chrome_glow.gdshader" id="2_w7er2"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="3_m3bo4"]
 [ext_resource type="Texture2D" uid="uid://halvvvkhikw6" path="res://assets/sprites/temp_sprites/sprite_sheets/golem/golem_1_die.png" id="3_w7er2"]
 [ext_resource type="Script" uid="uid://cn1nwct7w3q0k" path="res://scripts/components/combat/hitbox.gd" id="4_3pxqr"]
@@ -13,6 +14,12 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5d0k"]
 size = Vector2(76, 78)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ksw16"]
+shader = ExtResource("2_w7er2")
+shader_parameter/chrome_color = Color(0, 1, 1, 1)
+shader_parameter/hit_intensity = 0.0
+shader_parameter/speed = 5.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_68j2i"]
 atlas = ExtResource("2_q5d0k")
@@ -375,6 +382,7 @@ position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_q5d0k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
+material = SubResource("ShaderMaterial_ksw16")
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
 animation = &"attack"

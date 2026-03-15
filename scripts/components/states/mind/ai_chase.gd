@@ -14,10 +14,6 @@ func physics_update(_delta: float) -> void:
 	# Simple AI: Walk toward player if seen, else 0
 	var player = actor.target
 	
-#	if player and player.collapsed:
-#		actor.disengage_target()
-#		actor.body.transition_to("Idle")
-#		actor.mind.transition_to("Wait")
 	if player and actor.player_in_range:
 		var d = player.global_position.x - actor.global_position.x
 		var delta_x = abs(d)
