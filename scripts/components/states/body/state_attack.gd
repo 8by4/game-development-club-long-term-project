@@ -45,6 +45,10 @@ func transition_after_attack():
 	actor.set_attack_cooldown()
 	actor.hitbox.monitoring = false
 	
+	if actor.ai and actor.no_more_target():
+		actor.disengage_target()
+		return
+	
 	if actor.direction == 0 or not actor.move_enabled:
 		if actor.velocity.y > 0:
 			state_machine_manager.transition_to("Fall")

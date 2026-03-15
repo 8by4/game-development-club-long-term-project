@@ -14,7 +14,6 @@ func physics_update(delta: float) -> void:
 	
 	# 2. Initiate Jump or Apply Gravity
 	if actor.jump_queued and (actor.is_on_floor() or actor.can_jump()):
-		print_debug_log("SET")
 		actor.velocity.y = actor.jump_height * delta * 16
 	else:
 		actor.velocity.y += actor.gravity * delta / 4.0

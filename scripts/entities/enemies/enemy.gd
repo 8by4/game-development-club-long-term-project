@@ -37,11 +37,16 @@ func _on_player_detection_body_entered(detected_body: Node2D) -> void:
 func _on_player_detection_body_exited(detected_body: Node2D) -> void:
 	if detected_body is Player:
 		disengage_target()
-		mind.transition_to("Wait")
 
 func disengage_target() -> void:
 	player_in_range = false
 	target = null
+	mind.transition_to("Wait")
+	
+func no_more_target() -> bool:
+	if not target: return true
+	print(target.collapsed)
+	return target.collapsed
 
 ## Both ready_navigation() and process_navigation() are prototypes
 ## for navigating the scene. For now, the skeleton will just chase 
