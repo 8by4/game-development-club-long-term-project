@@ -158,8 +158,8 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	
 	if not ai and amount >= 50:
 		var camera = get_viewport().get_camera_2d()
-		var shake_strength = remap(amount, 50.0, 100.0, 5.0, 10.0)
-		camera.apply_shake(shake_strength)
+		var shake_strength = remap(amount, 50.0, 100.0, 7.5, 15.0)
+		camera.apply_shake(shake_strength, 2.5)
 		
 	if not indestructible:
 		health -= amount

@@ -25,5 +25,6 @@ func _process(delta : float) -> void:
 			randf_range(-shake_strength, shake_strength)
 		)
 
-func apply_shake(strength: float):
+func apply_shake(strength: float, fade: float):
 	shake_strength = strength
+	shake_fade = fade

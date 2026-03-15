@@ -265,16 +265,16 @@ animations = [{
 "duration": 0.2,
 "texture": SubResource("AtlasTexture_fqemp")
 }, {
-"duration": 0.2,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_acxwl")
 }, {
-"duration": 0.2,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_q6l5n")
 }, {
-"duration": 0.2,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_1jkg3")
 }, {
-"duration": 0.25,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_urcf3")
 }, {
 "duration": 0.25,
@@ -478,7 +478,7 @@ shape = SubResource("RectangleShape2D_l42ek")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
-animation = &"walk"
+animation = &"attack"
 offset = Vector2(0, -45)
 flip_h = true
 script = ExtResource("3_einmy")
