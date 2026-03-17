@@ -31,5 +31,6 @@ func _ready() -> void:
 	jump_height = 0
 	
 	attack_cooldown = 5.0
+	damage_begin_threshold = 0.5
 	
 	ready_enemy() # from enemy.gd

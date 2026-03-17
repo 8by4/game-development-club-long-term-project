@@ -5,24 +5,26 @@ extends State
 func enter() -> void:
 	print_debug_log("Entered ATTACK state")
 	actor.play_animation("attack")
-	
-	actor.hitbox.monitoring = true
-	actor.hitbox.enter_attack_window()
-	
+		
 	if actor.hitbox_variable:
 		actor.reset_hitbox_width()
 
 func physics_update(delta: float) -> void:
+	var progress = actor.get_animation_progress()
+	
+	if progress > actor.damage_begin_threshold:
+		actor.hitbox.monitoring = true
+		actor.hitbox.enter_attack_window()
+	
 	if actor.hitbox_variable:
 		actor.update_hitbox_width()
 	
 	if actor.deflected and not actor.repelled:
-		var current_anim = actor.sprite.animation
-		var total_frames = actor.sprite.sprite_frames.get_frame_count(current_anim)
-	
-		if actor.sprite.frame >= (total_frames / 2.5):
+		if progress > 0.4:
 			actor.repelled = true
 			bounce_attack()
+	elif actor.ai and actor.ai.can_spawn_effects():
+		actor.ai.spawn_impact_effect()
 	
 	# 1. Allow continued horizontal movement/drift 
 	if not actor.attack_stationary:
@@ -79,6 +81,7 @@ func _on_bounce_finished():
 func transition_after_attack():
 	actor.set_attack_cooldown()
 	actor.hitbox.monitoring = false
+	actor.attack_effect_spawned = false
 	actor.deflected = false
 	actor.repelled = false
 	

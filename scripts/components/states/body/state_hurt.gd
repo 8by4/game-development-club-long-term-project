@@ -17,7 +17,7 @@ func enter() -> void:
 		# Start blinking for 1.5 seconds every 0.1 seconds
 		actor.blink(1.5, 0.1)
 	
-	# 1. Apply Knockback
+	# Apply Knockback
 	if actor.knockback_enabled:
 		var f = knockback_force * actor.knockback_scale
 		var x = f.x * actor.knockback_direction
@@ -28,20 +28,22 @@ func enter() -> void:
 		else:
 			actor.velocity = v
 	
-	# 2. Reset timer
+	# Reset timer
 	stun_timer = stun_duration
 
 func physics_update(delta: float) -> void:
-	# 3. Apply Gravity while in hit-stun
+	# Apply Gravity while in hit-stun
 	actor.velocity.y += actor.gravity * delta 
+
+	if actor.collapsed:
+		if actor.is_on_floor() and actor.get_animation_progress() > 0.2:
+			state_machine_manager.transition_to("Collapse")
+			return
 	
-	# 4. Handle Stun Timer
+	# Handle Stun Timer
 	stun_timer -= delta
 	if stun_timer <= 0:
 		if actor.is_on_floor():
-			if actor.collapsed:
-				state_machine_manager.transition_to("Collapse")
-			else:
-				state_machine_manager.transition_to("Idle")
+			state_machine_manager.transition_to("Idle")
 		else:
 			state_machine_manager.transition_to("Fall")

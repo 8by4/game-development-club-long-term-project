@@ -68,3 +68,71 @@ func process_navigation() -> void:
 	# Determine the horizontal direction (-1, 0, or 1)
 	# Pass this "Intent" to the FSM via the shared variable
 	var new_direction = sign(next_path_pos.x - global_position.x)
+
+func get_self_direction_sign() -> float:
+	return (-1.0 if sprite.flip_h else 1.0)
+
+func get_self_direction() -> Vector2:
+	return Vector2(get_self_direction_sign(), 0)
+
+func get_direction_to_target_sign() -> float:
+	var diff_x = target.global_position.x - global_position.x
+	if abs(diff_x) < 0.1: # Dead Zone
+		return get_self_direction_sign()
+	return (-1.0 if diff_x < 0.0 else 1.0)
+
+func get_direction_to_target() -> Vector2:
+	return Vector2(get_direction_to_target_sign(), 0)
+
+func get_direction() -> Vector2:
+	if target:
+		return get_direction_to_target()
+	return get_self_direction()
+
+func is_facing_target() -> bool:
+	if not target: return false
+	return get_self_direction_sign() == get_direction_to_target_sign()
+
+func get_strike_edge_pos() -> Vector2:
+	var dir = get_direction()
+	var edge = hitbox_shape.shape.size / 2.0
+	return global_position + dir * edge + Vector2(0, 20.0)
+
+func can_spawn_effects() -> bool:
+	if not attack_uninterruptible: return false
+	if attack_effect_spawned: return false
+	if attack_power < 50: return false
+	if animation_is_finished("attack"): return false
+	if get_animation_progress() < 0.5: return false
+	return true
+
+func spawn_impact_effect():
+	var strength = remap(attack_power, 50.0, 100.0, 10.0, 30.0)
+	var fade = remap(attack_power, 50, 100, 5.0, 3.0)
+	apply_camera_shake(strength, fade)
+	
+	if attack_power >= 90:
+		spawn_boulders_on_impact()
+	else:
+		spawn_sparks_on_impact()
+	
+	attack_effect_spawned = true
+
+func spawn_boulders(pos: Vector2):
+	var boulder = boulder_effect.instantiate()
+	get_tree().current_scene.add_child(boulder)
+	boulder.global_position = pos
+	var look_target = pos + get_direction() * 100.0
+	boulder.look_at(look_target)
+
+func spawn_boulders_on_impact():
+	var impact_pos = get_strike_edge_pos()
+	spawn_boulders(impact_pos)
+
+func spawn_sparks_on_impact():
+	var impact_pos = get_strike_edge_pos()
+	var spark = spark_effect.instantiate()
+	get_tree().current_scene.add_child(spark)
+	spark.global_position = impact_pos
+	var look_target = impact_pos + get_direction() * 100.0
+	spark.look_at(look_target)

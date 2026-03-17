@@ -7,7 +7,8 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 # Generated assets
-@export var spark_scene: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
+@export var spark_effect: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
+@export var boulder_effect: PackedScene = preload("res://scenes/effects/boulders.tscn")
 
 ## --- Golden Metrics (Editable in Inspector) ---
 @export_group("Movement Metrics")
@@ -63,10 +64,12 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @export var attack_cooldown : float = 0.2
 @export var attack_cooldown_timer : float = 0.0
+@export var damage_begin_threshold = 0.3
 @export var knockback_direction : int = 0
 @export var knockback_scale : float = 1.0
 @export var fade_away_time : float = 0.7
 
+var attack_effect_spawned : bool = false
 var blocking : bool = false
 var deflected : bool = false
 var repelled: bool = false
@@ -184,17 +187,36 @@ func animation_is_finished(anim: String) -> bool:
 func set_animation_last_frame(anim: String) -> void:
 	sprite.frame = sprite.sprite_frames.get_frame_count(anim) - 1
 
+func get_animation_progress() -> float:
+	var current_anim = sprite.animation
+	var total_frames = sprite.sprite_frames.get_frame_count(current_anim)
+	return float(sprite.frame) / float(total_frames)
+
 func can_jump() -> bool:
 	return jump_enabled and (coyote_time < coyote_threshold)
+
+func get_attacker_edge_pos(target: Actor) -> Vector2:
+	var dir = (target.global_position - global_position).normalized()
+	# The point where the attacker's reach ends
+	var attacker_edge = hitbox_shape.shape.size.x / 2.0
+	return global_position + (dir * attacker_edge)
+
+func get_target_edge_pos(target: Actor) -> Vector2:
+	var dir = (target.global_position - global_position).normalized()	
+	# If you want it on the ENEMY'S surface instead:
+	var target_edge = target.hitbox_shape.shape.size.x / 2.0
+	return target.global_position - (dir * target_edge)
+
+func apply_camera_shake(strength: float, fade: float):
+	var camera = get_viewport().get_camera_2d()
+	camera.apply_shake(strength, fade)
 
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
 	if body.is_state("Hurt"): return
 	
-	if not ai and amount >= 50:
-		var camera = get_viewport().get_camera_2d()
-		var shake_strength = remap(amount, 50.0, 100.0, 7.5, 15.0)
-		camera.apply_shake(shake_strength, 2.5)
+	#if not ai and amount >= 50:
+	#	apply_camera_shake(amount, 7.5, 15.0)
 		
 	if not indestructible:
 		health -= amount
@@ -259,13 +281,17 @@ func chrome_glow() -> bool:
 	return true
 
 func spawn_spark(pos: Vector2, target_pos: Vector2):
-	var spark = spark_scene.instantiate()
+	var spark = spark_effect.instantiate()
 	get_tree().current_scene.add_child(spark)
 	spark.global_position = pos
 	
 	# Look away from the target so sparks fly toward the player/air
 	spark.look_at(target_pos)
 	spark.rotation += PI # Flip 180 degrees to face away
+
+func spawn_deflection_effect(target: Actor):
+	var impact_pos = get_attacker_edge_pos(target)
+	spawn_spark(impact_pos, target.global_position)
 
 func fade_away() -> void:
 	var tween = create_tween().set_parallel(true)

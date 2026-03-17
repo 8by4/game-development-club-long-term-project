@@ -22,9 +22,10 @@ func physics_update(_delta: float) -> void:
 		var jump_height = abs(actor.jump_height)
 		
 		if actor.can_attack_again():
-			var distance = actor.global_position.distance_to(player.global_position)
-			if distance <= actor.attack_range:
-				actor.body.transition_to("Attack")
+			if actor.is_facing_target():
+				var distance = actor.global_position.distance_to(player.global_position)
+				if distance <= actor.attack_range:
+					actor.body.transition_to("Attack")
 		
 		# Set the 'intent' variable for the FSM to read
 		if actor.turning_enabled:

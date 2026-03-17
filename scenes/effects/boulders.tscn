@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://3k77qynskhgl"]
+
+[ext_resource type="Texture2D" uid="uid://bebfq3wg3m7g3" path="res://assets/sprites/temp_sprites/effects/boulders/pngegg.png" id="1_qntmd"]
+[ext_resource type="Script" uid="uid://dpel4p703gr4i" path="res://scripts/components/particles/particle.gd" id="2_o5tap"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xolye"]
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 8
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fphwc"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(20, 1, 1)
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+direction = Vector3(1, 0.75, 0)
+spread = 50.0
+initial_velocity_min = 100.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.099999994
+scale_max = 0.39999998
+anim_offset_max = 1.0
+
+[node name="Boulder" type="GPUParticles2D" unique_id=735624109]
+material = SubResource("CanvasItemMaterial_xolye")
+emitting = false
+amount = 30
+texture = ExtResource("1_qntmd")
+lifetime = 10.0
+one_shot = true
+speed_scale = 1.5
+explosiveness = 0.98
+randomness = 1.0
+visibility_rect = Rect2(-100, -100, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_fphwc")
+script = ExtResource("2_o5tap")
