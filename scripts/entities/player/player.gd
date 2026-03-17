@@ -1,4 +1,4 @@
-## Copyright: UNCG Game Development CLub Long-term Project
+## Copyright: UNCG Game Development Club Long-term Project
 ## Contributors: Mathew Carter, Dr. Richard B. Johnson
 class_name Player
 extends Actor
