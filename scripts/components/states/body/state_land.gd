@@ -12,6 +12,7 @@ func enter() -> void:
 	# Optionally reduce velocity to simulate impact
 #	actor.velocity.x *= 0.1
 	actor.velocity = Vector2.ZERO
+	actor.start_height = actor.global_position.y
 
 func physics_update(_delta: float) -> void:
 	# Allow gravity just in case of ledges
