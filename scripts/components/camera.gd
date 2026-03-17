@@ -1,4 +1,5 @@
-## Contributors: Matthew Carter, Richard Johnson
+## Copyright: UNCG Game Development CLub Long-term Project
+## Contributors: Matthew Carter, Dr. Richard B. Johnson
 extends Camera2D
 
 @export_node_path("Node2D") var target_node : NodePath = NodePath("..")

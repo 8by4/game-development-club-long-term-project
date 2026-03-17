@@ -1,3 +1,4 @@
+## Copyright: UNCG Game Development CLub Long-term Project
 extends Node
 
 # Signals

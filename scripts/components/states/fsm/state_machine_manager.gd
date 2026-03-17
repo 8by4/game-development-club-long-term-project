@@ -1,4 +1,5 @@
-## Contributors: Richard Johnson
+## Copyright: UNCG Game Development CLub Long-term Project
+## Contributors: Dr. Richard B. Johnson
 class_name StateMachineManager
 extends Node
 

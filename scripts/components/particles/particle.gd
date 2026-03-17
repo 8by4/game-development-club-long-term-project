@@ -1,3 +1,5 @@
+## Copyright: UNCG Game Development CLub Long-term Project
+## Contributors: Dr. Richard B. Johnson
 extends GPUParticles2D
 
 func _ready():

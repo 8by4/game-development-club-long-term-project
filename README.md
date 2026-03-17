@@ -1,1 +1,1 @@
-# game development club long term project
+Copyright: UNCG Game Development CLub Long-term Project

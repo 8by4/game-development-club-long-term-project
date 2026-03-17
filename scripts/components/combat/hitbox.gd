@@ -1,4 +1,5 @@
-## Contributors: Richard Johnson
+## Copyright: UNCG Game Development CLub Long-term Project
+## Contributors: Dr. Richard B. Johnson
 extends Area2D
 
 func enter_attack_window():

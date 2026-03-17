@@ -1,3 +1,4 @@
+## Copyright: UNCG Game Development CLub Long-term Project
 extends Node2D
 
 @export_node_path("Node2D") var target_node : NodePath = NodePath("..")
