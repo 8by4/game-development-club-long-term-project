@@ -4,19 +4,26 @@ extends State
 
 func enter() -> void:
 	print_debug_log("Entered IDLE state")
-	actor.play_animation("idle")
 	actor.direction = 0
 	actor.velocity.x = 0
+	actor.update_flying_state()
+	actor.play_animation("idle")
 
-func physics_update(_delta: float) -> void:
-	if not actor.is_on_floor():
+func physics_update(delta: float) -> void:
+	if actor.flying and actor.flying_bobber:
+		actor.apply_bobbing(delta, 0.0)
+		
+	if not actor.flying and not actor.is_on_floor():
 		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Fall")
 		return
-		
+	
 	# Logic: If there is horizontal input, start walking
 	if actor.direction != 0 and actor.move_enabled:
-		state_machine_manager.transition_to("Walk")
+		if actor.flying:
+			state_machine_manager.transition_to("Fly")
+		else:
+			state_machine_manager.transition_to("Walk")
 		return
 	
 	# Logic: If jump is pressed, jump
@@ -24,5 +31,5 @@ func physics_update(_delta: float) -> void:
 		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Jump")
 		return
-		
+	
 	actor.velocity.x = 0

@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://d2fac1mea5e51" path="res://scripts/components/states/body/state_attack.gd" id="7_cidbf"]
 [ext_resource type="Script" uid="uid://s7otyxm0u08l" path="res://scripts/components/states/body/state_hurt.gd" id="8_pn2qs"]
 [ext_resource type="Script" uid="uid://dq3l5mc8yavpn" path="res://scripts/components/states/body/state_collapse.gd" id="9_hxem5"]
+[ext_resource type="Script" uid="uid://b62it2pb3rsun" path="res://scripts/components/states/body/state_fly.gd" id="10_pmaq5"]
+[ext_resource type="Script" uid="uid://cp4dbtopvpgba" path="res://scripts/components/states/body/state_swoop_attack.gd" id="11_m5gjr"]
 
 [node name="BodyFSM" type="Node" unique_id=1732092856 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_b4ir7")
@@ -37,3 +39,9 @@ script = ExtResource("8_pn2qs")
 
 [node name="Collapse" type="Node" parent="." unique_id=1289829792]
 script = ExtResource("9_hxem5")
+
+[node name="Fly" type="Node" parent="." unique_id=239360144]
+script = ExtResource("10_pmaq5")
+
+[node name="Swoop_Attack" type="Node" parent="." unique_id=279770524]
+script = ExtResource("11_m5gjr")

@@ -23,6 +23,7 @@ func _ready() -> void:
 	jump_enabled = true
 	fly_enabled = false
 	fly_always = false
+	flying_bobber = false
 	patrol_enabled = true
 	
 	# Movement

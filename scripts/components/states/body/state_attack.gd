@@ -12,44 +12,52 @@ func enter() -> void:
 func physics_update(delta: float) -> void:
 	var progress = actor.get_animation_progress()
 	
+	# Begin hitbox monitoring after a threshold of progress in the attack
 	if progress > actor.damage_begin_threshold:
 		actor.hitbox.monitoring = true
 		actor.hitbox.enter_attack_window()
 	
+	# Update the hitbox over the attack
 	if actor.hitbox_variable:
 		actor.update_hitbox_width()
 	
+	# If the attack has been deflected apply bounce (reverse attack frames)
 	if actor.deflected and not actor.repelled:
 		if progress > 0.4:
 			actor.repelled = true
 			bounce_attack()
-	elif actor.ai and actor.ai.can_spawn_effects():
+	elif actor.is_ai() and actor.ai.can_spawn_effects():
 		actor.ai.spawn_impact_effect()
 	
-	# 1. Allow continued horizontal movement/drift 
+	# Allow continued horizontal movement/drift 
 	if not actor.attack_stationary:
 		var target_velocity_x = actor.direction * actor.walk_speed
 		actor.velocity.x = lerp(actor.velocity.x, target_velocity_x, 16 * delta)
 	else:
 		actor.velocity.x = 0.0
 	
-	# 2. Continue applying gravity if they are in the air
+	# Continue applying gravity if they are in the air
+	if not actor.fly_always:
+		apply_gravity(delta)
+	
+	# 3. Transition back once the attack is done
+	if actor.animation_is_finished("attack"):
+		transition_after_attack()
+		return
+
+func apply_gravity(delta: float):
 	if not actor.is_on_floor():
 		if actor.velocity.y < 0:
 			actor.velocity.y += actor.gravity * delta / 4.0
 		else:
 			actor.velocity.y += actor.gravity * delta / 2.0
-	else:
-		var fall_distance =  actor.global_position.y - actor.start_height
-		
-		# Hard land which will leave the actor stunned
-		if fall_distance > actor.land_stun_threashold:
-			state_machine_manager.transition_to("Land")
-			return
-			
-	# 3. Transition back once the attack is done
-	if actor.animation_is_finished("attack"):
-		transition_after_attack()
+		return
+	
+	var fall_distance =  actor.global_position.y - actor.start_height
+	
+	# Hard land which will leave the actor stunned
+	if fall_distance > actor.land_stun_threashold:
+		state_machine_manager.transition_to("Land")
 		return
 
 func bounce_attack():
@@ -79,26 +87,32 @@ func _on_bounce_finished():
 	transition_after_attack()
 
 func transition_after_attack():
-	actor.set_attack_cooldown()
-	actor.hitbox.monitoring = false
-	actor.attack_effect_spawned = false
-	actor.deflected = false
-	actor.repelled = false
-	
-	if actor.ai and actor.no_more_target():
+	if actor.is_ai() and actor.no_valid_target():
 		actor.disengage_target()
 		return
 	
 	if actor.direction == 0 or not actor.move_enabled:
-		if actor.velocity.y > 0:
+		if actor.fly_always:
+			state_machine_manager.transition_to("Fly")
+		elif actor.velocity.y > 0:
 			state_machine_manager.transition_to("Fall")
 		else:
 			state_machine_manager.transition_to("Idle")
 		return
 	
 	if actor.is_on_floor():
-		state_machine_manager.transition_to("Walk")
+		if actor.fly_always:
+			state_machine_manager.transition_to("Fly")
+		else:
+			state_machine_manager.transition_to("Walk")
 	elif actor.velocity.y < 0:
 		state_machine_manager.transition_to("Jump")
 	else:
 		state_machine_manager.transition_to("Fall")
+
+func exit() -> void:
+	actor.set_attack_cooldown()
+	actor.hitbox.monitoring = false
+	actor.attack_effect_spawned = false
+	actor.deflected = false
+	actor.repelled = false

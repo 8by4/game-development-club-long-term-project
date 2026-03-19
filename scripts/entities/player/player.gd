@@ -30,6 +30,7 @@ func _ready() -> void:
 	jump_height = -400
 	
 	attack_cooldown = 0.0
+	coyote_threshold = 0.4
 	fade_away_time = 2.0
 	
 	ready() # from actor.gd

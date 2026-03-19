@@ -27,10 +27,11 @@ func _ready() -> void:
 	jump_enabled = false
 	fly_enabled = true
 	fly_always = true
+	flying_bobber = false
 	patrol_enabled = false
 	
 	# Movement
-	gravity = 512
+	gravity = 10
 	walk_speed = 100
 	jump_height = 0
 

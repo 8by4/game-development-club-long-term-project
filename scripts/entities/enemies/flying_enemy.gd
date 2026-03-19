@@ -23,11 +23,16 @@ func _ready() -> void:
 	jump_enabled = false
 	fly_enabled = true
 	fly_always = true
+	flying_bobber = true
 	patrol_enabled = false
 	
 	# Movement
-	gravity = 512
+	gravity = 10
 	walk_speed = 75
 	jump_height = 0
 	
+	flying = true
+	flying_speed = 75.0
 	fade_away_time = 0.7
+	
+	ready_enemy() # from enemy.gd

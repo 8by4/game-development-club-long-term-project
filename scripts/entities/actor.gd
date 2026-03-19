@@ -6,16 +6,14 @@ extends CharacterBody2D
 # This reference will now be shared by all children (Player/Enemies)
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-# Generated assets
-@export var spark_effect: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
-@export var boulder_effect: PackedScene = preload("res://scenes/effects/boulders.tscn")
-
 ## --- Golden Metrics (Editable in Inspector) ---
 @export_group("Movement Metrics")
 @export var walk_speed : float = 100.0
 @export var run_speed : float = 200.0
+@export var flying_speed : float = 150.0
 @export var jump_height : float = -400.0
 @export var acceleration : float = 1200.0
+@export var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 #@export var friction: float = 800.0
 
 ## The variable we use to toggle AI behavior
@@ -29,16 +27,27 @@ extends CharacterBody2D
 var direction : float = 0.0
 var start_height : float = 0.0
 var jump_queued : bool = false
+var blocking : bool = false
+var deflected : bool = false
+var repelled: bool = false
+var collapsed : bool = false
+var flying : bool = false
+
+## --- Timers ---
+var attack_cooldown_timer : float = 0.0
 var jump_timer : float = 0.0
 var coyote_time : float = 0.0
-var coyote_threshold : float = 0.3
-var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+var flying_time_passed = 0.0
 
 ## --- Entity Data ---
+@export_group("Entity Data")
 @export var max_health : int = 100
 @export var health : int = 100
 @export var attack_power : int = 10
 @export var attack_range : float = 20.0 # For AI
+@export var swoop_range : float = 60.0
+
+## --- Hitbox and Hurtbox ---
 @onready var hitbox: Area2D = $Hitbox 
 @onready var hurtbox: Area2D = $Hurtbox 
 @onready var hitbox_shape: CollisionShape2D = $Hitbox/HitCollisionShape2D
@@ -46,9 +55,9 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hitbox_max_width : float = 0.0
 @onready var hitbox_min_width : float = 0.0
 @onready var hitbox_variable : bool = false
-@export var land_stun_threashold : float = 300.0
 
 ## --- Abilities ---
+@export_group("Abilities")
 @export var move_enabled : bool = true
 @export var turning_enabled : bool = true
 @export var indestructible : bool = false
@@ -61,22 +70,24 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var jump_enabled : bool = false
 @export var fly_enabled : bool = false
 @export var fly_always : bool = false
+@export var flying_bobber: bool = false
 
+## --- Thresholds ---
+@export_group("Thresholds")
 @export var attack_cooldown : float = 0.2
-@export var attack_cooldown_timer : float = 0.0
 @export var damage_begin_threshold = 0.3
 @export var knockback_direction : int = 0
 @export var knockback_scale : float = 1.0
+@export var coyote_threshold : float = 0.3
+@export var flying_bob_height : float = 25.0
+@export var land_stun_threashold : float = 300.0
 @export var fade_away_time : float = 0.7
 
+## --- Visual Effects ---
+@export var spark_effect: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
+@export var boulder_effect: PackedScene = preload("res://scenes/effects/boulders.tscn")
 var attack_effect_spawned : bool = false
-var blocking : bool = false
-var deflected : bool = false
-var repelled: bool = false
-var collapsed : bool = false
-
-# Visual Effects
-var glow_tween : Tween
+var glow_tween : Tween # for the chrome glow effect
 
 func _ready() -> void:
 	ready()
@@ -98,6 +109,7 @@ func can_attack_again() -> bool:
 	if body.is_state("Attack"): return false
 	if not jump_attack and body.is_state("Jump"): return false
 	if not fall_attack and body.is_state("Fall"): return false
+	if not attack_uninterruptible and body.is_state("Hurt"): return false
 	if attack_stationary and not is_on_floor(): return false
 	return attack_cooldown_timer <= 0.0
 
@@ -187,13 +199,60 @@ func animation_is_finished(anim: String) -> bool:
 func set_animation_last_frame(anim: String) -> void:
 	sprite.frame = sprite.sprite_frames.get_frame_count(anim) - 1
 
-func get_animation_progress() -> float:
+func get_animation_frames_count() -> int:
 	var current_anim = sprite.animation
-	var total_frames = sprite.sprite_frames.get_frame_count(current_anim)
+	return sprite.sprite_frames.get_frame_count(current_anim)
+
+func get_animation_progress() -> float:
+	var total_frames = get_animation_frames_count()
 	return float(sprite.frame) / float(total_frames)
+
+func get_movement_speed() -> float:
+	if not move_enabled: return 0.0
+	if flying: return flying_speed
+	return walk_speed
 
 func can_jump() -> bool:
 	return jump_enabled and (coyote_time < coyote_threshold)
+
+func is_player() -> bool:
+	return not is_instance_valid(ai)
+
+func is_ai() -> bool:
+	return is_instance_valid(ai)
+
+func update_flying_state():
+	flying = fly_always or (fly_enabled and not is_on_floor())
+
+func apply_bobbing(delta: float, pursuit_vel_y: float = 0.0):
+	var bob_offset = compute_bobbing(delta)
+	velocity.y = pursuit_vel_y + bob_offset
+
+func compute_bobbing(delta: float) -> float:
+	# 1. Get the current animation data
+	var sprite_frames = sprite.sprite_frames
+	var anim_name = sprite.animation
+	
+	# 2. Calculate the loop duration in seconds
+	var frame_count = sprite_frames.get_frame_count(anim_name)
+#	var fps = sprite_frames.get_animation_speed(anim_name) # Issues!
+	
+	# Avoid division by zero if FPS is somehow 0
+#	var loop_duration = frame_count / max(fps, 0.001)
+	var loop_duration = float(frame_count)
+	
+	# 3. Factor in the sprite's specific playback speed scale
+	flying_time_passed += delta * sprite.speed_scale
+
+	# 4. Wrap the time so it stays between 0 and loop_duration
+	# This prevents floating point errors over long play sessions
+	flying_time_passed = fmod(flying_time_passed, loop_duration)
+	
+	# 5. Standard Sine math
+	var frequency = 2.0 * (2.0 * PI) / loop_duration
+	var bob_offset = sin(flying_time_passed * frequency) * flying_bob_height
+	
+	return bob_offset
 
 func get_attacker_edge_pos(target: Actor) -> Vector2:
 	var dir = (target.global_position - global_position).normalized()
@@ -215,9 +274,6 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
 	if body.is_state("Hurt"): return
 	
-	#if not ai and amount >= 50:
-	#	apply_camera_shake(amount, 7.5, 15.0)
-		
 	if not indestructible:
 		health -= amount
 		if health <= 0:
@@ -302,4 +358,4 @@ func fade_away() -> void:
 	tween.tween_property(sprite, "self_modulate", purple_tint, fade_away_time).set_trans(Tween.TRANS_SINE)
 
 	await tween.finished
-	if ai: queue_free()
+	if is_ai(): queue_free()

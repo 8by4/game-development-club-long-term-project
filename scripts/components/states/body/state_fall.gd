@@ -28,20 +28,23 @@ func physics_update(delta: float) -> void:
 	
 	# 4. THE TRANSITION: Look for the floor
 	if actor.is_on_floor():
-		if actor.collapsed:
-			actor.body.transition_to("Collapse")
-			return
-		
-		var fall_distance =  actor.global_position.y - actor.start_height
-		if fall_distance > actor.land_stun_threashold:
-			state_machine_manager.transition_to("Land")
-			return
-		
-		# This fixes the walk animation when the 
-		# entity is already moving horizontally.
-		actor.velocity = Vector2.ZERO
+		transition_after_fall()
 
-		if actor.direction == 0 or not actor.move_enabled:
-			state_machine_manager.transition_to("Idle")
-		else:
-			state_machine_manager.transition_to("Walk")
+func transition_after_fall():
+	if actor.collapsed:
+		actor.body.transition_to("Collapse")
+		return
+	
+	var fall_distance =  actor.global_position.y - actor.start_height
+	if fall_distance > actor.land_stun_threashold:
+		state_machine_manager.transition_to("Land")
+		return
+	
+	# This fixes the walk animation when the 
+	# entity is already moving horizontally.
+	actor.velocity = Vector2.ZERO
+
+	if actor.direction == 0 or not actor.move_enabled:
+		state_machine_manager.transition_to("Idle")
+	else:
+		state_machine_manager.transition_to("Walk")

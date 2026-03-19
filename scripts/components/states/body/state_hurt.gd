@@ -28,16 +28,21 @@ func enter() -> void:
 		else:
 			actor.velocity = v
 	
+	if actor.fly_always:
+		actor.gravity = 512
+	actor.flying = false
+	
 	# Reset timer
 	stun_timer = stun_duration
 
 func physics_update(delta: float) -> void:
 	# Apply Gravity while in hit-stun
 	actor.velocity.y += actor.gravity * delta 
-
+	
 	if actor.collapsed:
-		if actor.is_on_floor() and actor.get_animation_progress() > 0.2:
-			state_machine_manager.transition_to("Collapse")
+		if actor.is_on_floor() or actor.fly_always:
+			if actor.get_animation_progress() > 0.2:
+				state_machine_manager.transition_to("Collapse")
 			return
 	
 	# Handle Stun Timer
@@ -47,3 +52,11 @@ func physics_update(delta: float) -> void:
 			state_machine_manager.transition_to("Idle")
 		else:
 			state_machine_manager.transition_to("Fall")
+
+func exit():
+	if actor.fly_always:
+		if actor.collapsed:
+			actor.gravity = 128
+		else:
+			actor.gravity = 0
+			actor.flying = true

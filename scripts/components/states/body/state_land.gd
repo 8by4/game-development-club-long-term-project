@@ -22,11 +22,14 @@ func physics_update(_delta: float) -> void:
 		
 	# Transition to Idle or Walk once the landing animation finishes
 	if actor.animation_is_finished("stunned"):
-		# This fixes the walk animation when the 
-		# entity is already moving horizontally.
-		actor.velocity = Vector2.ZERO
+		transition_after_land()
 		
-		if actor.direction == 0:
-			state_machine_manager.transition_to("Idle")
-		else:
-			state_machine_manager.transition_to("Walk")
+func transition_after_land():
+	# This fixes the walk animation when the 
+	# entity is already moving horizontally.
+	actor.velocity = Vector2.ZERO
+		
+	if actor.direction == 0:
+		state_machine_manager.transition_to("Idle")
+	else:
+		state_machine_manager.transition_to("Walk")
