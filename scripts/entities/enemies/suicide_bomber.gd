@@ -5,7 +5,6 @@ extends FlyingEnemy
 
 @export var explosion_radius: float = 64.0
 @export var fuse_time: float = 0.4
-var is_primed: bool = false
 
 func _ready() -> void:
 	# Attributes
@@ -28,39 +27,30 @@ func _ready() -> void:
 	fly_enabled = true
 	fly_always = true
 	flying_bobber = false
+	suicidal = true
 	patrol_enabled = false
 	
 	# Movement
 	gravity = 0
 	walk_speed = 100
 	jump_height = 0
+	hover_height = 0.0
 	
 	super.ready() # from enemy.gd
 
-"""
-func _physics_process(delta: float) -> void:
-	if is_primed: return # Stop moving or "lunge" during fuse
-	
-	var dist = global_position.distance_to(player.global_position)
-	
-	if dist < 30.0: # "Strike" distance
-		start_detonation_sequence()
-	else:
-		hover_and_seek(delta)
-
 func start_detonation_sequence():
 	is_primed = true
-	# Visual feedback is CRITICAL in rogue-likes
-	$AnimationPlayer.play("prime_flash") 
+	velocity = Vector2.ZERO
 	await get_tree().create_timer(fuse_time).timeout
-	explode()
-
-func explode():
-	# Spawn an independent Explosion object so the damage 
-	# persists even after this Enemy is freed
-	var e = ExplosionScene.instantiate()
-	e.global_position = self.global_position
-	get_parent().add_child(e)
 	
-	self.queue_free() # The end of the Kamikaze
-"""
+	hitbox.monitoring = true
+	hitbox.enter_attack_window()
+	hitbox_shape.shape.size.x = explosion_radius * 2.0
+	hitbox_shape.shape.size.y = explosion_radius * 2.0
+	
+	effects.spawn_explosion(global_position, explosion_radius)
+	await get_tree().create_timer(0.3).timeout
+	
+	collapsed = true
+	hitbox.monitoring = false
+	body.transition_to("Collapse")

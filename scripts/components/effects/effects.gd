@@ -3,8 +3,9 @@
 class_name Effects
 #extends Resource
 
-@export var spark_effect: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
-@export var boulder_effect: PackedScene = preload("res://scenes/effects/boulders.tscn")
+@export var spark_scene: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
+@export var boulder_scene: PackedScene = preload("res://scenes/effects/boulders.tscn")
+@export var explosion_scene: PackedScene = preload("res://scenes/effects/explosion.tscn")
 var attack_effect_spawned : bool = false
 var glow_tween : Tween # for the chrome glow effect
 var actor : Actor
@@ -51,7 +52,7 @@ func chrome_glow() -> bool:
 	return true
 
 func spawn_deflection_spark(pos: Vector2, target_pos: Vector2):
-	var spark = spark_effect.instantiate()
+	var spark = spark_scene.instantiate()
 	actor.get_tree().current_scene.add_child(spark)
 	spark.global_position = pos
 	spark.look_at(target_pos)
@@ -62,16 +63,23 @@ func spawn_deflection_effect(target: Actor):
 	spawn_deflection_spark(impact_pos, target.global_position)
 
 func spawn_sparks(pos: Vector2, target_pos: Vector2):
-	var spark = spark_effect.instantiate()
+	var spark = spark_scene.instantiate()
 	actor.get_tree().current_scene.add_child(spark)
 	spark.global_position = pos
 	spark.look_at(target_pos)
 
 func spawn_boulders(pos: Vector2, target_pos: Vector2):
-	var boulder = boulder_effect.instantiate()
+	var boulder = boulder_scene.instantiate()
 	actor.get_tree().current_scene.add_child(boulder)
 	boulder.global_position = pos
 	boulder.look_at(target_pos)
+
+func spawn_explosion(pos: Vector2, _radius: float):
+	# Spawn an independent Explosion object so the damage 
+	# persists even after this Enemy is freed
+	var explosion = explosion_scene.instantiate()
+	explosion.global_position = pos
+	actor.get_parent().add_child(explosion)
 
 func apply_bobbing(delta: float, pursuit_vel_y: float = 0.0):
 	var bob_offset = compute_bobbing(delta)

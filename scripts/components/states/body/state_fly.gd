@@ -15,7 +15,8 @@ func physics_update(delta: float) -> void:
 	
 	if actor.flying:
 		if actor.is_ai() and actor.ai.has_valid_target():
-			var dir = actor.get_direction_to_valid_target()
+			var target_pos = actor.ai.target.global_position + Vector2(0, actor.hover_height)
+			var dir = target_pos - actor.global_position
 			target_velocity = dir.normalized() * speed
 		else:
 			target_velocity = Vector2(actor.direction * speed, 0)

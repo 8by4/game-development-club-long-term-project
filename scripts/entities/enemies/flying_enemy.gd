@@ -24,6 +24,7 @@ func _ready() -> void:
 	fly_enabled = true
 	fly_always = true
 	flying_bobber = true
+	suicidal = false
 	patrol_enabled = false
 	
 	# Movement
@@ -33,6 +34,9 @@ func _ready() -> void:
 	
 	flying = true
 	flying_speed = 75.0
+	hover_height = -48.0
+	attack_cooldown = 2.0
+	damage_begin_threshold = 0.2
 	fade_away_time = 0.7
 	
 	super.ready() # from enemy.gd

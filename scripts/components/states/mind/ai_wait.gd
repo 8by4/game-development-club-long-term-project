@@ -7,7 +7,7 @@ func enter() -> void:
 	if actor.is_player(): return
 	print("LOG: Entered WAIT AI state")
 	
-	if actor.body.is_state("Attack"):
+	if actor.is_attacking():
 		await actor.sprite.animation_finished
 	
 	actor.body.transition_to("Idle")

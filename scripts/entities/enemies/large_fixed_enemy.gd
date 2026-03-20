@@ -24,6 +24,7 @@ func _ready() -> void:
 	fly_enabled = false
 	fly_always = false
 	flying_bobber = false
+	suicidal = false
 	patrol_enabled = false
 	
 	# Movement

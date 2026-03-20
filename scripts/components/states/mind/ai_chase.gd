@@ -21,6 +21,9 @@ func physics_update(_delta: float) -> void:
 	if actor.collapsed: return
 	if actor.is_player(): return
 	
+	if actor.suicidal and actor.is_primed:
+		return
+	
 	if actor.target and actor.player_in_range:
 		actor.update_facing_state()
 		
@@ -40,9 +43,8 @@ func handle_attack_logic() -> bool:
 	
 	if actor.flying:
 		if distance <= actor.swoop_range:
-			pass # For now
-#			actor.body.transition_to("Swoop_Attack")
-#			return true
+			actor.body.transition_to("Swoop_Attack")
+			return true
 	elif distance <= actor.attack_range:
 		actor.body.transition_to("Attack")
 		return true
@@ -51,7 +53,7 @@ func handle_attack_logic() -> bool:
 
 func handle_jump_logic():
 	if not actor.jump_enabled: return
-	if actor.attack_stationary and actor.body.is_state("attack"):
+	if actor.attack_stationary and actor.body.is_state("Attack"):
 		return
 		
 	var player = actor.target

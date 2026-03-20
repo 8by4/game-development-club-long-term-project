@@ -24,12 +24,13 @@ func _ready() -> void:
 	fly_enabled = false
 	fly_always = false
 	flying_bobber = false
+	suicidal = false
 	patrol_enabled = true
 	
 	# Movement
 	gravity = 384
 	walk_speed = 100
-	jump_height = -384
+	jump_height = -256 #-384
 	
 	attack_cooldown = 0.5
 	damage_begin_threshold = 0.3

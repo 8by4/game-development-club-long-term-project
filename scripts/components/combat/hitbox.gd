@@ -15,10 +15,7 @@ func enter_attack_window():
 
 func _on_area_entered(area: Area2D) -> void:
 	var attacker = get_parent()
-	
-	if attacker.body.not_state("Attack"):
-		return
-	
+	if attacker.not_attacking(): return
 	var target = area.get_parent()
 	
 	if target.indestructible or target.blocking:

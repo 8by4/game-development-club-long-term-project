@@ -5,7 +5,7 @@ extends State
 func enter() -> void:
 	print_debug_log("Entered ATTACK state")
 	actor.play_animation("attack")
-		
+	
 	if actor.hitbox_variable:
 		actor.reset_hitbox_width()
 
@@ -13,7 +13,7 @@ func physics_update(delta: float) -> void:
 	var progress = actor.get_animation_progress()
 	
 	# Begin hitbox monitoring after a threshold of progress in the attack
-	if progress > actor.damage_begin_threshold:
+	if progress > actor.damage_begin_threshold and not actor.hitbox.monitoring:
 		actor.hitbox.monitoring = true
 		actor.hitbox.enter_attack_window()
 	
@@ -40,10 +40,9 @@ func physics_update(delta: float) -> void:
 	if not actor.fly_always:
 		apply_gravity(delta)
 	
-	# 3. Transition back once the attack is done
+	# Transition back once the attack is done
 	if actor.animation_is_finished("attack"):
 		transition_after_attack()
-		return
 
 func apply_gravity(delta: float):
 	if not actor.is_on_floor():
@@ -61,22 +60,19 @@ func apply_gravity(delta: float):
 		return
 
 func bounce_attack():
-	# 1. Capture the frame where the hit occurred
-#	var impact_frame = actor.sprite.frame
-	
-	# 2. Freeze the animation (Hitstop)
+	# Freeze the animation (Hitstop)
 	actor.sprite.pause() 
 	
-	# 3. Micro-delay to sell the impact 
+	# Micro-delay to sell the impact 
 	# This 'sticks' the weapon to the indestructible enemy for a moment
 	await get_tree().create_timer(0.08).timeout
 	
-	# 4. Reverse the animation
+	# Reverse the animation
 	# Setting a negative speed_scale plays the current animation backward
 	actor.sprite.speed_scale = -1.5 
 	actor.sprite.play() 
 	
-	# 5. Clean up: Stop reversing once we reach the start
+	# Clean up: Stop reversing once we reach the start
 	# We can use a signal to reset the speed for the next normal attack
 	if not actor.sprite.animation_finished.is_connected(_on_bounce_finished):
 		actor.sprite.animation_finished.connect(_on_bounce_finished, CONNECT_ONE_SHOT)
@@ -92,9 +88,7 @@ func transition_after_attack():
 		return
 	
 	if actor.direction == 0 or not actor.move_enabled:
-		if actor.fly_always:
-			state_machine_manager.transition_to("Fly")
-		elif actor.velocity.y > 0:
+		if actor.velocity.y > 0:
 			state_machine_manager.transition_to("Fall")
 		else:
 			state_machine_manager.transition_to("Idle")
@@ -105,6 +99,8 @@ func transition_after_attack():
 			state_machine_manager.transition_to("Fly")
 		else:
 			state_machine_manager.transition_to("Walk")
+	elif actor.flying:
+		state_machine_manager.transition_to("Fly")
 	elif actor.velocity.y < 0:
 		state_machine_manager.transition_to("Jump")
 	else:

@@ -32,6 +32,7 @@ var deflected : bool = false
 var repelled: bool = false
 var collapsed : bool = false
 var flying : bool = false
+@export var is_primed : bool = false
 
 ## --- Timers ---
 var attack_cooldown_timer : float = 0.0
@@ -44,8 +45,6 @@ var flying_time_passed = 0.0
 @export var max_health : int = 100
 @export var health : int = 100
 @export var attack_power : int = 10
-@export var attack_range : float = 20.0 # For AI
-@export var swoop_range : float = 60.0
 
 ## --- Hitbox and Hurtbox ---
 @onready var hitbox: Area2D = $Hitbox 
@@ -71,15 +70,19 @@ var flying_time_passed = 0.0
 @export var fly_enabled : bool = false
 @export var fly_always : bool = false
 @export var flying_bobber: bool = false
+@export var suicidal : bool = false
 
 ## --- Thresholds ---
 @export_group("Thresholds")
+@export var attack_range : float = 20.0
+@export var swoop_range : float = 200.0
 @export var attack_cooldown : float = 0.2
 @export var damage_begin_threshold = 0.3
 @export var knockback_direction : int = 0
 @export var knockback_scale : float = 1.0
 @export var coyote_threshold : float = 0.3
 @export var flying_bob_height : float = 25.0
+@export var hover_height : float = -48.0
 @export var land_stun_threashold : float = 300.0
 @export var fade_away_time : float = 0.7
 
@@ -105,7 +108,7 @@ func set_attack_cooldown() -> void:
 	attack_cooldown_timer = attack_cooldown
 
 func can_attack_again() -> bool:
-	if body.is_state("Attack"): return false
+	if is_attacking(): return false
 	if not jump_attack and body.is_state("Jump"): return false
 	if not fall_attack and body.is_state("Fall"): return false
 	if not attack_uninterruptible and body.is_state("Hurt"): return false
@@ -128,7 +131,7 @@ func reset_hitbox_width() -> void:
 	set_hitbox_width(hitbox_min_width)
 	
 func update_hitbox_width() -> void:
-	var frames = sprite.sprite_frames.get_frame_count("attack")
+	var frames = get_animation_frames_count()
 	var current = sprite.frame
 	
 	# 1. Normalize progress (0.0 at start, 1.0 at last frame)
@@ -175,7 +178,7 @@ func physics_update(delta: float) -> void:
 	if body:
 		body.physics_update(delta)
 		
-		if not body.is_state("attack"):
+		if not_attacking():
 			attack_cooldown_timer -= delta
 	
 	move_and_slide()
@@ -222,6 +225,13 @@ func can_jump() -> bool:
 
 func update_flying_state():
 	flying = fly_always or (fly_enabled and not is_on_floor())
+
+func is_attacking():
+	if body.is_state("Attack"): return true
+	return body.is_state("Swoop_Attack")
+
+func not_attacking():
+	return body.not_state("Attack") and body.not_state("Swoop_Attack")
 
 func get_attacker_edge_pos(target: Actor) -> Vector2:
 	var dir = (target.global_position - global_position).normalized()
