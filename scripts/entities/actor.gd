@@ -84,10 +84,7 @@ var flying_time_passed = 0.0
 @export var fade_away_time : float = 0.7
 
 ## --- Visual Effects ---
-@export var spark_effect: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
-@export var boulder_effect: PackedScene = preload("res://scenes/effects/boulders.tscn")
-var attack_effect_spawned : bool = false
-var glow_tween : Tween # for the chrome glow effect
+var effects : Effects;
 
 func _ready() -> void:
 	ready()
@@ -98,6 +95,8 @@ func ready() -> void:
 	
 	hitbox.monitoring = false
 	hurtbox.monitorable = true
+	
+	effects = Effects.new(self)
 	
 	if sprite and sprite.material:
 		sprite.material = sprite.material.duplicate()
@@ -181,6 +180,12 @@ func physics_update(delta: float) -> void:
 	
 	move_and_slide()
 
+func is_player() -> bool:
+	return not is_instance_valid(ai)
+
+func is_ai() -> bool:
+	return is_instance_valid(ai)
+
 func play_animation(anim_name: String) -> void:
 	if sprite: 
 		# Check if the sprite has the animation before playing it
@@ -215,44 +220,8 @@ func get_movement_speed() -> float:
 func can_jump() -> bool:
 	return jump_enabled and (coyote_time < coyote_threshold)
 
-func is_player() -> bool:
-	return not is_instance_valid(ai)
-
-func is_ai() -> bool:
-	return is_instance_valid(ai)
-
 func update_flying_state():
 	flying = fly_always or (fly_enabled and not is_on_floor())
-
-func apply_bobbing(delta: float, pursuit_vel_y: float = 0.0):
-	var bob_offset = compute_bobbing(delta)
-	velocity.y = pursuit_vel_y + bob_offset
-
-func compute_bobbing(delta: float) -> float:
-	# 1. Get the current animation data
-	var sprite_frames = sprite.sprite_frames
-	var anim_name = sprite.animation
-	
-	# 2. Calculate the loop duration in seconds
-	var frame_count = sprite_frames.get_frame_count(anim_name)
-#	var fps = sprite_frames.get_animation_speed(anim_name) # Issues!
-	
-	# Avoid division by zero if FPS is somehow 0
-#	var loop_duration = frame_count / max(fps, 0.001)
-	var loop_duration = float(frame_count)
-	
-	# 3. Factor in the sprite's specific playback speed scale
-	flying_time_passed += delta * sprite.speed_scale
-
-	# 4. Wrap the time so it stays between 0 and loop_duration
-	# This prevents floating point errors over long play sessions
-	flying_time_passed = fmod(flying_time_passed, loop_duration)
-	
-	# 5. Standard Sine math
-	var frequency = 2.0 * (2.0 * PI) / loop_duration
-	var bob_offset = sin(flying_time_passed * frequency) * flying_bob_height
-	
-	return bob_offset
 
 func get_attacker_edge_pos(target: Actor) -> Vector2:
 	var dir = (target.global_position - global_position).normalized()
@@ -265,10 +234,6 @@ func get_target_edge_pos(target: Actor) -> Vector2:
 	# If you want it on the ENEMY'S surface instead:
 	var target_edge = target.hitbox_shape.shape.size.x / 2.0
 	return target.global_position - (dir * target_edge)
-
-func apply_camera_shake(strength: float, fade: float):
-	var camera = get_viewport().get_camera_2d()
-	camera.apply_shake(strength, fade)
 
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if collapsed: return
@@ -301,61 +266,3 @@ func revive() -> void:
 	
 	set_physics_process(true)
 	set_process(true)
-
-func blink(duration: float, frequency: float) -> void:
-	var tween = create_tween().set_loops(int(duration / frequency))
-	tween.tween_property(sprite, "visible", false, frequency / 2.0)
-	tween.tween_property(sprite, "visible", true, frequency / 2.0)
-	
-	# Ensure sprite is visible when finished
-	tween.finished.connect(func(): sprite.visible = true)
-
-func chrome_glow() -> bool:
-	if not sprite or not sprite.material is ShaderMaterial:
-		return false
-		
-	var mat = sprite.material as ShaderMaterial
-	
-	# 1. THE RESET: Kill the old animation if it's still running
-	if glow_tween:
-		glow_tween.kill()
-	
-	# 2. Reset the shader parameter to max immediately
-	# This ensures that even if the last hit was at 0.2 intensity, 
-	# it snaps back to 1.0 for the new hit.
-	mat.set_shader_parameter("hit_intensity", 1.0)
-	
-	# 3. Create a fresh tween
-	glow_tween = create_tween()
-	
-	# 4. Animate back to zero
-	# Using TRANS_EXPO or TRANS_QUART makes the 'fade' feel more metallic/snappy
-	glow_tween.tween_property(mat, "shader_parameter/hit_intensity", 0.0, 0.6)\
-		.set_trans(Tween.TRANS_QUART)\
-		.set_ease(Tween.EASE_OUT)
-	
-	return true
-
-func spawn_spark(pos: Vector2, target_pos: Vector2):
-	var spark = spark_effect.instantiate()
-	get_tree().current_scene.add_child(spark)
-	spark.global_position = pos
-	
-	# Look away from the target so sparks fly toward the player/air
-	spark.look_at(target_pos)
-	spark.rotation += PI # Flip 180 degrees to face away
-
-func spawn_deflection_effect(target: Actor):
-	var impact_pos = get_attacker_edge_pos(target)
-	spawn_spark(impact_pos, target.global_position)
-
-func fade_away() -> void:
-	var tween = create_tween().set_parallel(true)
-	var purple_tint = Color(0.1, 0.05, 0.3, 0.0)
-#	var purple_tint = Color(0.15, 0.05, 0.3, 0.0) 
-#	var purple_tint = Color(0.2, 0.1, 0.4, 0.0) 
-	
-	tween.tween_property(sprite, "self_modulate", purple_tint, fade_away_time).set_trans(Tween.TRANS_SINE)
-
-	await tween.finished
-	if is_ai(): queue_free()

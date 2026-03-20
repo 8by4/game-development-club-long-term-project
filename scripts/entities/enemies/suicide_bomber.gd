@@ -31,7 +31,7 @@ func _ready() -> void:
 	patrol_enabled = false
 	
 	# Movement
-	gravity = 10
+	gravity = 0
 	walk_speed = 100
 	jump_height = 0
 

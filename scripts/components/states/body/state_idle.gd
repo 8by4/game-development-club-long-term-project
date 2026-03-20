@@ -11,8 +11,8 @@ func enter() -> void:
 
 func physics_update(delta: float) -> void:
 	if actor.flying and actor.flying_bobber:
-		actor.apply_bobbing(delta, 0.0)
-		
+		actor.effects.apply_bobbing(delta, 0.0)
+	
 	if not actor.flying and not actor.is_on_floor():
 		actor.coyote_time = 0.0
 		state_machine_manager.transition_to("Fall")

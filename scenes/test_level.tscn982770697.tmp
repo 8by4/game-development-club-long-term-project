@@ -2759,8 +2759,6 @@ position = Vector2(599, 333)
 
 [node name="MiniBat" parent="." unique_id=2078786890 instance=ExtResource("4_4asn1")]
 position = Vector2(920, 338)
-fly_enabled = false
-fly_always = false
 
 [node name="BlightBulb" parent="." unique_id=1854826014 instance=ExtResource("4_7gix3")]
 position = Vector2(-212, 167)

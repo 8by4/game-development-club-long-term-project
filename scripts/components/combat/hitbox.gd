@@ -24,7 +24,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if target.indestructible or target.blocking:
 		if not attacker.deflected:
 			attacker.deflected = true
-			attacker.spawn_deflection_effect(target)
+			attacker.effects.spawn_deflection_effect(target)
 	else:
 		attacker.deflected = false
 	

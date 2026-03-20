@@ -34,4 +34,4 @@ func physics_update(_delta: float) -> void:
 	actor.set_animation_last_frame("collapse")
 	actor.set_physics_process(false)
 	actor.set_process(false)
-	actor.fade_away()
+	actor.effects.fade_away()

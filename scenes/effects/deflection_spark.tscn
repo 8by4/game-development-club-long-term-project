@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cyytu7n56fk72"]
 
 [ext_resource type="Texture2D" uid="uid://cwlxo5qsts12o" path="res://assets/sprites/temp_sprites/effects/spark.png" id="1_212hf"]
-[ext_resource type="Script" uid="uid://dpel4p703gr4i" path="res://scripts/components/particles/particle.gd" id="1_sl77f"]
+[ext_resource type="Script" uid="uid://dpel4p703gr4i" path="res://scripts/components/effects/particle.gd" id="1_sl77f"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_212hf"]
 blend_mode = 1

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://3k77qynskhgl"]
 
 [ext_resource type="Texture2D" uid="uid://bebfq3wg3m7g3" path="res://assets/sprites/temp_sprites/effects/boulders/pngegg.png" id="1_qntmd"]
-[ext_resource type="Script" uid="uid://dpel4p703gr4i" path="res://scripts/components/particles/particle.gd" id="2_o5tap"]
+[ext_resource type="Script" uid="uid://dpel4p703gr4i" path="res://scripts/components/effects/particle.gd" id="2_o5tap"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xolye"]
 particles_animation = true

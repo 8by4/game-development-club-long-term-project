@@ -12,10 +12,10 @@ func enter() -> void:
 	actor.play_animation("hurt")
 	
 	if actor.indestructible:
-		actor.chrome_glow()
+		actor.effects.chrome_glow()
 	else:
 		# Start blinking for 1.5 seconds every 0.1 seconds
-		actor.blink(1.5, 0.1)
+		actor.effects.blink(1.5, 0.1)
 	
 	# Apply Knockback
 	if actor.knockback_enabled:

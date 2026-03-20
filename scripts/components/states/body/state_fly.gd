@@ -21,7 +21,7 @@ func physics_update(delta: float) -> void:
 			target_velocity = Vector2(actor.direction * speed, 0)
 		
 		if actor.flying_bobber:
-			target_velocity.y += actor.compute_bobbing(delta)
+			target_velocity.y += actor.effects.compute_bobbing(delta)
 	else:
 		target_velocity = Vector2(actor.direction * speed, 0)
 	

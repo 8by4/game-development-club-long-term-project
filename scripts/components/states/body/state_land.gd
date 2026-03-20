@@ -7,7 +7,7 @@ func enter() -> void:
 	actor.play_animation("stunned")
 	
 	# Start blinking for 1.5 seconds every 0.1 seconds
-	actor.blink(1.5, 0.1)
+	actor.effects.blink(1.5, 0.1)
 	
 	# Optionally reduce velocity to simulate impact
 #	actor.velocity.x *= 0.1
