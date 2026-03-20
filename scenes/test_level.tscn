@@ -2763,7 +2763,7 @@ fly_enabled = false
 fly_always = false
 
 [node name="BlightBulb" parent="." unique_id=1854826014 instance=ExtResource("4_7gix3")]
-position = Vector2(-212, 167)
+position = Vector2(848, 146)
 
 [node name="Demon" parent="." unique_id=1495329372 instance=ExtResource("4_88ety")]
 position = Vector2(1284, 187)
