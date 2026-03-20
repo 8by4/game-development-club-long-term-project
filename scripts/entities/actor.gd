@@ -235,7 +235,7 @@ func get_target_edge_pos(target: Actor) -> Vector2:
 	var target_edge = target.hitbox_shape.shape.size.x / 2.0
 	return target.global_position - (dir * target_edge)
 
-func take_damage(amount: int, source_position: Vector2) -> void:
+func take_damage(amount: int, _source_position: Vector2) -> void:
 	if collapsed: return
 	if body.is_state("Hurt"): return
 	
@@ -244,9 +244,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 		if health <= 0:
 			collapsed = true
 	
-	if body.is_state("Attack") and attack_uninterruptible:
-		pass
-	else:
+	if not (body.is_state("Attack") and attack_uninterruptible):
 		knockback_scale = (amount / 25.0) * 0.5 + 0.5
 		body.transition_to("Hurt")
 

@@ -34,6 +34,8 @@ func _ready() -> void:
 	gravity = 0
 	walk_speed = 100
 	jump_height = 0
+	
+	super.ready() # from enemy.gd
 
 """
 func _physics_process(delta: float) -> void:

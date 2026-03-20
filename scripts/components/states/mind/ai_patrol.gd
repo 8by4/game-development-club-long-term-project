@@ -14,7 +14,7 @@ func enter() -> void:
 	else:
 		actor.body.transition_to("Walk")
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	if actor.collapsed: return
 	if actor.is_player(): return
 	## I plan on using the navigation system to patrol an area.

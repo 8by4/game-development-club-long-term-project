@@ -18,11 +18,11 @@ func exit() -> void:
 	pass
 
 ## Virtual function for frame-based updates (process)
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	pass
 
 ## Virtual function for physics-based updates (physics_process)
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	pass
 
 func print_debug_log(string: String) -> void:

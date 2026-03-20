@@ -16,14 +16,16 @@ extends Actor
 @onready var nav_agent: NavigationAgent2D = get_node_or_null('NavigationAgent2D')
 
 func _ready() -> void:
-	ready_enemy()
-	
-func ready_enemy() -> void:
+	ready()
+
+func ready() -> void:
 	ai = self
+	super.ready() # from actor.gd
+
 	#ready_navigation()
-	ready() # from actor.gd
 	set_variable_hitbox()
 	update_flying_state()
+	
 	body.transition_to("Idle")
 	mind.transition_to("Wait")
 
@@ -76,6 +78,7 @@ func get_target_diff_x() -> float:
 func get_valid_target_diff_x() -> float:
 	return target.global_position.x - global_position.x
 
+"""
 ## Both ready_navigation() and process_navigation() are prototypes
 ## for navigating the scene. For now, the skeleton will just chase 
 ## the player.
@@ -95,6 +98,7 @@ func process_navigation() -> void:
 	# Determine the horizontal direction (-1, 0, or 1)
 	# Pass this "Intent" to the FSM via the shared variable
 	var new_direction = sign(next_path_pos.x - global_position.x)
+"""
 
 func update_facing_state():
 	if not turning_enabled: return

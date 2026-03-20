@@ -35,4 +35,4 @@ func _ready() -> void:
 	flying_speed = 75.0
 	fade_away_time = 0.7
 	
-	ready_enemy() # from enemy.gd
+	super.ready() # from enemy.gd

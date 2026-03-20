@@ -34,4 +34,4 @@ func _ready() -> void:
 	attack_cooldown = 5.0
 	damage_begin_threshold = 0.5
 	
-	ready_enemy() # from enemy.gd
+	super.ready() # from enemy.gd

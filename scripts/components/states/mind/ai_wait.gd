@@ -12,5 +12,5 @@ func enter() -> void:
 	
 	actor.body.transition_to("Idle")
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	pass

@@ -62,7 +62,7 @@ func apply_gravity(delta: float):
 
 func bounce_attack():
 	# 1. Capture the frame where the hit occurred
-	var impact_frame = actor.sprite.frame
+#	var impact_frame = actor.sprite.frame
 	
 	# 2. Freeze the animation (Hitstop)
 	actor.sprite.pause() 

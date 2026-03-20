@@ -35,4 +35,4 @@ func _ready() -> void:
 	damage_begin_threshold = 0.3
 	fade_away_time = 0.7
 	
-	ready_enemy() # from enemy.gd
+	super.ready() # from enemy.gd
