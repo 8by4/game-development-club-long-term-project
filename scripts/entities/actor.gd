@@ -14,6 +14,7 @@ extends CharacterBody2D
 @export var jump_height : float = -400.0
 @export var acceleration : float = 1200.0
 @export var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+@export var knockback_force: Vector2 = Vector2(-200, -200)
 #@export var friction: float = 800.0
 
 ## The variable we use to toggle AI behavior
@@ -31,15 +32,16 @@ var blocking : bool = false
 var deflected : bool = false
 var repelled: bool = false
 var collapsed : bool = false
+var is_primed : bool = false
 var flying : bool = false
-@export var is_primed : bool = false
 
 ## --- Timers ---
 var attack_cooldown_timer : float = 0.0
 var jump_timer : float = 0.0
 var coyote_time : float = 0.0
 var flying_time_passed = 0.0
-@export var fuse_time: float = 0.4
+var stun_timer: float = 0.0  # Hurt State
+var fuse_time: float = 0.4
 
 ## --- Entity Data ---
 @export_group("Entity Data")
@@ -84,6 +86,7 @@ var flying_time_passed = 0.0
 @export var coyote_threshold : float = 0.3
 @export var flying_bob_height : float = 25.0
 @export var hover_height : float = -48.0
+@export var stun_duration: float = 0.4 # Hurt State
 @export var land_stun_threashold : float = 300.0
 @export var explosion_radius: float = 64.0
 @export var fade_away_time : float = 0.7

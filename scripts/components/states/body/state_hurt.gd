@@ -2,11 +2,6 @@
 ## Contributors: Dr. Richard B. Johnson
 extends State
 
-# Configurable metrics for the hit reaction
-@export var knockback_force: Vector2 = Vector2(-200, -200)
-@export var stun_duration: float = 0.4
-var stun_timer: float = 0.0
-
 func enter() -> void:
 	print_debug_log("Entered HURT state")
 	actor.play_animation("hurt")
@@ -19,7 +14,7 @@ func enter() -> void:
 	
 	# Apply Knockback
 	if actor.knockback_enabled:
-		var f = knockback_force * actor.knockback_scale
+		var f = actor.knockback_force * actor.knockback_scale
 		var x = f.x * actor.knockback_direction
 		var v = Vector2(x, f.y)
 		
@@ -33,7 +28,7 @@ func enter() -> void:
 	actor.flying = false
 	
 	# Reset timer
-	stun_timer = stun_duration
+	actor.stun_timer = actor.stun_duration
 
 func physics_update(delta: float) -> void:
 	# Apply Gravity while in hit-stun
@@ -46,8 +41,8 @@ func physics_update(delta: float) -> void:
 			return
 	
 	# Handle Stun Timer
-	stun_timer -= delta
-	if stun_timer <= 0:
+	actor.stun_timer -= delta
+	if actor.stun_timer <= 0:
 		if actor.is_on_floor():
 			state_machine_manager.transition_to("Idle")
 		else:
