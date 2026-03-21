@@ -33,6 +33,7 @@ func _ready() -> void:
 	jump_height = 0
 	hover_height = 0.0
 	
+	look_ahead = 0.1
 	fuse_time = 1.0
 	
 	super.ready() # from enemy.gd

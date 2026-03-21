@@ -79,6 +79,7 @@ var fuse_time: float = 0.4
 @export_group("Thresholds")
 @export var attack_range : float = 20.0
 @export var swoop_range : float = 200.0
+@export var look_ahead : float = 0.3
 @export var attack_cooldown : float = 0.2
 @export var damage_begin_threshold = 0.3
 @export var knockback_direction : int = 0

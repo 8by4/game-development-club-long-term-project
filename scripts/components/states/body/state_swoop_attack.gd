@@ -49,7 +49,7 @@ func physics_update(delta: float) -> void:
 		transition_after_swoop_attack()
 
 func calculate_swoop_velocity(progress: float) -> Vector2:
-	var target_pos = get_predicted_target_pos(0.3)
+	var target_pos = get_predicted_target_pos(actor.look_ahead)
 	var current_pos = actor.global_position
 	
 	# 1. Calculate the height difference
