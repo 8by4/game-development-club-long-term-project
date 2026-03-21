@@ -145,7 +145,7 @@ func get_strike_edge_pos() -> Vector2:
 
 func can_spawn_effects() -> bool:
 	if not attack_uninterruptible: return false
-	if effects.attack_effect_spawned: return false
+	if attack_effect_spawned: return false
 	if attack_power < 50: return false
 	if animation_is_finished("attack"): return false
 	if get_animation_progress() < 0.5: return false
@@ -171,4 +171,4 @@ func spawn_impact_effect():
 	else:
 		spawn_sparks_on_impact()
 	
-	effects.attack_effect_spawned = true
+	attack_effect_spawned = true

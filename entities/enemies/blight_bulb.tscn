@@ -287,7 +287,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_mjltx")
 }],
 "loop": true,
-"name": &"countdown",
+"name": &"critical",
 "speed": 5.0
 }, {
 "frames": [{
@@ -433,7 +433,7 @@ shape = SubResource("RectangleShape2D_l42ek")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=88918661]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_6eu7i")
-animation = &"collapse"
+animation = &"critical"
 offset = Vector2(0, -10)
 script = ExtResource("3_7easo")
 

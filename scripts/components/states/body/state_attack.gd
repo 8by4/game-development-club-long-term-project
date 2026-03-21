@@ -109,6 +109,6 @@ func transition_after_attack():
 func exit() -> void:
 	actor.set_attack_cooldown()
 	actor.hitbox.monitoring = false
-	actor.effects.attack_effect_spawned = false
+	actor.attack_effect_spawned = false
 	actor.deflected = false
 	actor.repelled = false

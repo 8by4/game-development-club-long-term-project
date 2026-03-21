@@ -1,12 +1,11 @@
 ## Copyright: UNCG Game Development Club Long-term Project
 ## Contributors: Dr. Richard B. Johnson
 class_name Effects
-#extends Resource
+extends Resource
 
 @export var spark_scene: PackedScene = preload("res://scenes/effects/deflection_spark.tscn")
 @export var boulder_scene: PackedScene = preload("res://scenes/effects/boulders.tscn")
 @export var explosion_scene: PackedScene = preload("res://scenes/effects/explosion.tscn")
-var attack_effect_spawned : bool = false
 var glow_tween : Tween # for the chrome glow effect
 var actor : Actor
 

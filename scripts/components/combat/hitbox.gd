@@ -3,8 +3,6 @@
 extends Area2D
 
 func enter_attack_window():
-# Toggle monitoring to force a fresh scan of the area
-	monitoring = false
 	monitoring = true
 	
 	# Manually check for bodies already inside

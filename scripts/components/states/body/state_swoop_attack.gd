@@ -17,12 +17,12 @@ func enter() -> void:
 
 func physics_update(delta: float) -> void:
 	if actor.suicidal and actor.is_primed: return
+	if state_machine_manager.not_state("Swoop_Attack"): return
 	
 	var progress = actor.get_animation_progress()
 	
 	if actor.suicidal and progress > actor.damage_begin_threshold:
-		actor.play_animation("countdown")
-		actor.start_detonation_sequence()
+		state_machine_manager.transition_to("Critical")
 		return
 	
 	# Begin hitbox monitoring after a threshold of progress in the attack
@@ -96,4 +96,4 @@ func transition_after_swoop_attack():
 func exit() -> void:
 	actor.set_attack_cooldown()
 	actor.hitbox.monitoring = false
-	actor.effects.attack_effect_spawned = false
+	actor.attack_effect_spawned = false

@@ -39,6 +39,7 @@ var attack_cooldown_timer : float = 0.0
 var jump_timer : float = 0.0
 var coyote_time : float = 0.0
 var flying_time_passed = 0.0
+@export var fuse_time: float = 0.4
 
 ## --- Entity Data ---
 @export_group("Entity Data")
@@ -84,9 +85,11 @@ var flying_time_passed = 0.0
 @export var flying_bob_height : float = 25.0
 @export var hover_height : float = -48.0
 @export var land_stun_threashold : float = 300.0
+@export var explosion_radius: float = 64.0
 @export var fade_away_time : float = 0.7
 
 ## --- Visual Effects ---
+var attack_effect_spawned : bool = false
 var effects : Effects;
 
 func _ready() -> void:
@@ -228,10 +231,11 @@ func update_flying_state():
 
 func is_attacking():
 	if body.is_state("Attack"): return true
-	return body.is_state("Swoop_Attack")
+	if body.is_state("Swoop_Attack"): return true
+	return body.is_state("Critical")
 
 func not_attacking():
-	return body.not_state("Attack") and body.not_state("Swoop_Attack")
+	return not is_attacking()
 
 func get_attacker_edge_pos(target: Actor) -> Vector2:
 	var dir = (target.global_position - global_position).normalized()
