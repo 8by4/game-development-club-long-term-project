@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkjypjkr8a7ws"]
 
-[ext_resource type="Script" uid="uid://bxa6bfe4b7bfg" path="res://scripts/entities/enemies/light_enemy.gd" id="1_7jn65"]
+[ext_resource type="Script" uid="uid://bypdmih8tv273" path="res://scripts/entities/enemies/large_slow_enemy.gd" id="1_0wq6w"]
 [ext_resource type="Shader" uid="uid://bnks7tfion52n" path="res://shaders/chrome_glow.gdshader" id="2_0wq6w"]
 [ext_resource type="Texture2D" uid="uid://dq30cgst6hla4" path="res://assets/sprites/temp_sprites/sprite_sheets/demon_slime.png" id="2_7jn65"]
 [ext_resource type="Script" uid="uid://cbbnn5jxtdbip" path="res://scripts/components/physics_interpolation.gd" id="3_einmy"]
@@ -477,7 +477,7 @@ size = Vector2(74, 86)
 
 [node name="Demon" type="CharacterBody2D" unique_id=242127989]
 collision_layer = 8
-script = ExtResource("1_7jn65")
+script = ExtResource("1_0wq6w")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1919799425]
 shape = SubResource("RectangleShape2D_l42ek")

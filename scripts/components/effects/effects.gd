@@ -50,6 +50,43 @@ func chrome_glow() -> bool:
 	
 	return true
 
+func countdown_effect(duration: float):
+	change_color(Color(10, 0, 0), duration)
+	var shake_tween = shake_effect(1.0)
+	
+	await start_accelerating_pulse(duration)
+	
+	# Cleanup
+	change_color(Color(1, 1, 1), 0.0)
+	shake_tween.kill()
+
+func change_color(color: Color, duration: float):
+	var tween = actor.sprite.create_tween().set_parallel(true)
+	tween.tween_property(actor.sprite, "self_modulate", color, duration)
+
+func shake_effect(offset: float):
+	var shake_tween = actor.sprite.create_tween().set_loops()
+	shake_tween.tween_property(actor.sprite, "offset", Vector2(offset, -offset), 0.05)
+	shake_tween.tween_property(actor.sprite, "offset", Vector2(-offset, offset), 0.05)
+	return shake_tween
+
+func start_accelerating_pulse(duration: float):
+	var time_passed = 0.0
+	
+	while time_passed < duration:
+		# Calculate how fast to flash (shorter wait = faster flash)
+		# Starts at 0.2s, ends at 0.04s
+		var flash_speed = lerp(0.2, 0.04, time_passed / duration)
+		
+		var pulse = actor.sprite.create_tween()
+		pulse.tween_property(actor.sprite, "self_modulate:a", 0.3, flash_speed)
+		pulse.tween_property(actor.sprite, "self_modulate:a", 1.0, flash_speed)
+		
+		await pulse.finished
+		pulse.kill()
+		
+		time_passed += (flash_speed * 2)
+
 func spawn_deflection_spark(pos: Vector2, target_pos: Vector2):
 	var spark = spark_scene.instantiate()
 	actor.get_tree().current_scene.add_child(spark)

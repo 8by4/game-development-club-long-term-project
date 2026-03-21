@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://d2rj62hptj1nl" path="res://entities/enemies/blight_bulb.tscn" id="4_7gix3"]
 [ext_resource type="PackedScene" uid="uid://bkjypjkr8a7ws" path="res://entities/enemies/demon.tscn" id="4_88ety"]
 [ext_resource type="PackedScene" uid="uid://xacvi83ho0ld" path="res://entities/enemies/golem.tscn" id="4_tmr53"]
-[ext_resource type="Script" uid="uid://bypdmih8tv273" path="res://scripts/entities/enemies/large_slow_enemy.gd" id="5_ahbqi"]
 [ext_resource type="Script" uid="uid://chn7n2rgg76fu" path="res://scripts/entities/enemies/large_fixed_enemy.gd" id="7_ahbqi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p835"]
@@ -2767,7 +2766,6 @@ position = Vector2(848, 146)
 
 [node name="Demon" parent="." unique_id=1495329372 instance=ExtResource("4_88ety")]
 position = Vector2(1284, 187)
-script = ExtResource("5_ahbqi")
 
 [node name="Golem" parent="." unique_id=2056629210 instance=ExtResource("4_tmr53")]
 position = Vector2(1494, 474)

@@ -12,6 +12,8 @@ func physics_update(_delta: float) -> void:
 
 func start_fuse() -> void:
 	actor.is_primed = true
+	
+	actor.effects.countdown_effect(actor.fuse_time)
 	await actor.get_tree().create_timer(actor.fuse_time).timeout
 	
 	# Use a direct call to verify if the logic works without the state machine interrupting
