@@ -7,7 +7,7 @@ This repository serves as the central documentation and architectural hub for th
 ---
 
 ## 🚀 Project Overview: Codename 'Seraph's Despair'
-A systemic space-survival simulation focused on high-agent-count AI, complex state machines, and performant systems architecture. 
+A rogue-like game focused on AI, complex state machines, and performant systems architecture. 
 
 * **Engine:** Godot 4.x (GDExtension / C++)
 * **Core Systems:** Universal Movement System, Data-Driven Agent Framework, Finite State Machines (FSM).
