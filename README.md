@@ -1,5 +1,5 @@
 # 🎮 UNCG Game Development Club: Long-Term Project
-**Lead Architect & Technical Director: Dr. Richard B. Johnson**
+**Lead Architect & Technical Director: Dr. Richard B. Johnson**<br/>
 **Lead Programmer: Matthew Carter**
 
 This repository serves as the central documentation and architectural hub for the UNCG Game Development Club's primary multi-year project.
