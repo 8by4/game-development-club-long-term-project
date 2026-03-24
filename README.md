@@ -12,7 +12,7 @@ This repository serves as the central documentation and architectural hub for th
 ## 🚀 Project Overview: Codename 'Seraph's Despair'
 A rogue-like game focused on AI, complex state machines, and performant systems architecture. 
 
-* **Engine:** Godot 4.x (GDExtension / C++)
+* **Engine:** Godot 4.6 (GDScript, Godot Shaders, GDExtension / C++)
 * **Core Systems:** Universal Movement System, Data-Driven Agent Framework, Finite State Machines (FSM).
 * **Architecture:** Modular, systems-first design to facilitate collaborative student contributions and high-performance execution.
 
