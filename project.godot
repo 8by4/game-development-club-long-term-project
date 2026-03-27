@@ -41,6 +41,7 @@ folder_colors={
 "res://entities/": "purple",
 "res://scenes/": "red",
 "res://scripts/": "yellow",
+"res://shaders/": "pink",
 "res://ui/": "teal"
 }
 
