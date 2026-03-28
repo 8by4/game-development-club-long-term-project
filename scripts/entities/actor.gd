@@ -96,6 +96,9 @@ var fuse_time: float = 0.4
 var attack_effect_spawned : bool = false
 var effects : Effects;
 
+## --- Signals ---
+signal death ()
+
 func _ready() -> void:
 	ready()
 
@@ -261,6 +264,7 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 		health -= amount
 		if health <= 0:
 			collapsed = true
+			death.emit()
 	
 	if not (body.is_state("Attack") and attack_uninterruptible):
 		knockback_scale = (amount / 25.0) * 0.5 + 0.5

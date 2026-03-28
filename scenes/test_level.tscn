@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dqdtdl2fa2y7e"]
 
 [ext_resource type="PackedScene" uid="uid://coyqn671c8x0q" path="res://entities/player/player.tscn" id="1_2venv"]
+[ext_resource type="Script" uid="uid://57p4qvsbru1q" path="res://scripts/level.gd" id="1_4asn1"]
 [ext_resource type="Texture2D" uid="uid://cmebfj1ovhbsm" path="res://assets/sprites/temp_sprites/props1.png" id="2_paw1w"]
 [ext_resource type="PackedScene" uid="uid://ddofh18fctxbv" path="res://entities/enemies/large_skeleton.tscn" id="3_j6w7d"]
 [ext_resource type="PackedScene" uid="uid://dy38vgb5rwiup" path="res://entities/enemies/crab.tscn" id="3_x4b8f"]
@@ -2735,6 +2736,7 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_j6w7d")
 
 [node name="Test" type="Node2D" unique_id=67312560]
+script = ExtResource("1_4asn1")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1113961349]
 position = Vector2(640, 520)
