@@ -23,11 +23,23 @@ A rogue-like game focused on AI, complex state machines, and performant systems 
 
 ---
 
-## 🛠️ Technical Leadership & Mentorship
-As Technical Director, my role involves:
-* **Architectural Oversight:** Designing the core "engine-level" systems and frameworks that students build upon.
-* **Code Review & Standards:** Enforcing professional-grade codebase management, documentation, and performance optimization.
-* **Project Management:** Guiding student officers through the software development lifecycle (SDLC) in a collaborative volunteer environment.
+## 🏛️ Lead Architect (Technical Director)
+**The Systems Visionary.** Provides the overarching technical vision and high-level framework for the project.
+* **Primary Goal:** To design a robust, scalable "skeleton" that allows for modular development without architectural collapse.
+* **Key Tasks:** Solving "Mission Impossible" problems (high-performance systems, custom engine modules), defining inter-system APIs, conducting high-level architectural reviews, and ensuring the project’s long-term technical survival.
+* **The Vibe:** *"The Universal Movement System is now live; here is the interface for hooking in your specific character states."*
+
+## 💻 Lead Programmer
+**The Implementation Authority.** Focuses on the execution, integration, and health of the codebase.
+* **Primary Goal:** To transform technical requirements into functional, maintainable, and documented code.
+* **Key Tasks:** Writing core gameplay systems, performing peer code reviews for student volunteers, and ensuring "low-barrier" tasks are correctly integrated.
+* **The Vibe:** *"I’ve reviewed your pull request; the logic is sound, but let's move these variables to the Signal bus for better decoupling."*
+
+## 🎬 Producer
+**The Project Manager & Shield.** Focuses on the "Software Development Lifecycle" (SDLC), people, and delivery.
+* **Primary Goal:** To maintain project momentum and ensure the game actually reaches the "Finished" state.
+* **Key Tasks:** Maintaining the project roadmap, managing task assignments/deadlines, resolving non-technical blockers, and ensuring clear communication between technical leads and volunteers.
+* **The Vibe:** *"What is the status of the Health UI? Do you have the assets you need to hit the Friday milestone?"*
 
 ---
 
