@@ -1,7 +1,10 @@
 ## Copyright: UNCG Game Development Club Long-term Project
-## Contributors: Mathew Carter, Dr. Richard B. Johnson
+## Contributors: Mathew Carter, Dr. Richard B. Johnson, Brenden Reyes
 class_name Player
 extends Actor
+
+
+
 
 func _ready() -> void:
 	# Attributes

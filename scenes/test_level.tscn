@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bkjypjkr8a7ws" path="res://entities/enemies/demon.tscn" id="4_88ety"]
 [ext_resource type="PackedScene" uid="uid://xacvi83ho0ld" path="res://entities/enemies/golem.tscn" id="4_tmr53"]
 [ext_resource type="Script" uid="uid://chn7n2rgg76fu" path="res://scripts/entities/enemies/large_fixed_enemy.gd" id="7_ahbqi"]
+[ext_resource type="Script" uid="uid://bpx08203bi7ij" path="res://scenes/HealthBar.gd" id="11_dw7u0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p835"]
 size = Vector2(2048, 20)
@@ -2775,3 +2776,20 @@ script = ExtResource("7_ahbqi")
 
 [node name="Player" parent="." unique_id=1237976974 instance=ExtResource("1_2venv")]
 position = Vector2(911, 493)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2102170897]
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=249509818 node_paths=PackedStringArray("target_actor")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -239.0
+offset_bottom = 27.0
+grow_horizontal = 0
+value = 100.0
+script = ExtResource("11_dw7u0")
+target_actor = NodePath("../../Player")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=797070228]
+offset_right = 40.0
+offset_bottom = 40.0

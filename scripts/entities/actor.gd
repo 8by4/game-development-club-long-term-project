@@ -1,5 +1,5 @@
 ## Copyright: UNCG Game Development Club Long-term Project
-## Contributors: Dr. Richard B. Johnson
+## Contributors: Dr. Richard B. Johnson, Brenden Reyes
 class_name Actor
 extends CharacterBody2D
 
@@ -98,6 +98,8 @@ var effects : Effects;
 
 ## --- Signals ---
 signal death ()
+signal HealthChanged
+
 
 func _ready() -> void:
 	ready()
@@ -261,15 +263,21 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 	if body.is_state("Hurt"): return
 	
 	if not indestructible:
+		# Reduce health and keep it within 0 and max_health
 		health -= amount
+		health = clampi(health, 0, max_health) 
+		
+		# ⚡ THIS ALERTS THE HEALTH BAR
+		HealthChanged.emit() 
+		
 		if health <= 0:
 			collapsed = true
 			death.emit()
 	
+	# Transition to Hurt state for knockback/animation
 	if not (body.is_state("Attack") and attack_uninterruptible):
 		knockback_scale = (amount / 25.0) * 0.5 + 0.5
 		body.transition_to("Hurt")
-
 func revive() -> void:
 	health = max_health
 	velocity = Vector2.ZERO
