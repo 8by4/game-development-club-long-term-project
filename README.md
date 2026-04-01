@@ -28,3 +28,4 @@ As Technical Director, my role involves:
 
 ## 🔒 Intellectual Property
 **Copyright © 2025-2026 UNCG Game Development Club. All rights reserved.**
+
