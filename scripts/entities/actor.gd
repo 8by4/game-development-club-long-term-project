@@ -275,6 +275,7 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 	if not (body.is_state("Attack") and attack_uninterruptible):
 		knockback_scale = (amount / 25.0) * 0.5 + 0.5
 		body.transition_to("Hurt")
+
 func revive() -> void:
 	health = max_health
 	velocity = Vector2.ZERO
