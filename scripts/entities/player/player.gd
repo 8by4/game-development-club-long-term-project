@@ -3,9 +3,6 @@
 class_name Player
 extends Actor
 
-
-
-
 func _ready() -> void:
 	# Attributes
 	max_health = 100

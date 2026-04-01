@@ -2,12 +2,17 @@
 
 [ext_resource type="Script" uid="uid://cokdmm3piyv2j" path="res://scripts/ui/player_hud.gd" id="1_wcf1j"]
 
-[node name="PlayerHud" type="Control" unique_id=1905799776]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="PlayerHud" type="CanvasLayer" unique_id=1259659034]
 script = ExtResource("1_wcf1j")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1671598931]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -304.0
+offset_top = 64.0
+offset_right = -65.0
+offset_bottom = 91.0
+grow_horizontal = 0
+step = 1.0
+value = 100.0

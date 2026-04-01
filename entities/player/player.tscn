@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://iji6kubl20t3" path="res://scripts/components/camera.gd" id="4_bls4j"]
 [ext_resource type="PackedScene" uid="uid://dv65al7lyd1yu" path="res://assets/prefabs/body_fsm.tscn" id="6_8fjmc"]
 [ext_resource type="PackedScene" uid="uid://blejtpw18blt3" path="res://ui/menus/player_hud.tscn" id="7_qiwj3"]
-[ext_resource type="Script" uid="uid://bpx08203bi7ij" path="res://scenes/HealthBar.gd" id="8_26q78"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sglur"]
 
@@ -479,22 +478,5 @@ script = ExtResource("4_bls4j")
 [node name="BodyFSM" parent="." unique_id=1732092856 instance=ExtResource("6_8fjmc")]
 
 [node name="PlayerHud" parent="." unique_id=1905799776 instance=ExtResource("7_qiwj3")]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=102955251]
-
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=540779721 node_paths=PackedStringArray("target_actor")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -239.0
-offset_bottom = 27.0
-grow_horizontal = 0
-value = 100.0
-script = ExtResource("8_26q78")
-target_actor = NodePath("")
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=1072854283]
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]

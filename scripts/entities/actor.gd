@@ -97,9 +97,8 @@ var attack_effect_spawned : bool = false
 var effects : Effects;
 
 ## --- Signals ---
+signal health_changed (int)
 signal death ()
-signal HealthChanged
-
 
 func _ready() -> void:
 	ready()
@@ -266,9 +265,7 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 		# Reduce health and keep it within 0 and max_health
 		health -= amount
 		health = clampi(health, 0, max_health) 
-		
-		# ⚡ THIS ALERTS THE HEALTH BAR
-		HealthChanged.emit() 
+		health_changed.emit(health)
 		
 		if health <= 0:
 			collapsed = true
