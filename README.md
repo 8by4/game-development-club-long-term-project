@@ -3,7 +3,7 @@
 ### 👥 Project Leadership
 * **Technical Director & Lead Architect:** [Dr. Richard B. Johnson](https://github.com/rbjohns8)
 * **Lead Programmer:** [Mathew R. Carter](https://github.com/TuxTheAstronaut)
-* **Producer:** [Jack Freitag](https://github.com/JackFreitag)
+* **Producer & Vice President:** [Jack Freitag](https://github.com/JackFreitag)
 * **Interim Art Director:** [Brendan "BeanBoi"](https://github.com/BeanBoiOfficial)
 * **Narrative Lead:** [Jackson "Error404"](https://github.com/Fatal3rror6o6)
 
